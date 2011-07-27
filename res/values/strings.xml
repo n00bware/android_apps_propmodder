@@ -4,6 +4,7 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
+    <string name="general_title">PropModder</string>
     <string name="main_title_head">Prop Modder v1.0</string>
     <string name="main_title_subhead">Settings to increase performance</string>
 
@@ -13,7 +14,7 @@
 
     <!-- LCD density -->
     <string name="pref_lcd_density_title">LCD density</string>
-    <string name="pref_lcd_dendity_summary">This is the screen density allowing more high defination look (requires reboot)</string>
+    <string name="pref_lcd_density_summary">This is the screen density allowing more high defination look (requires reboot)</string>
 
     <!-- Max events per second -->
     <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
@@ -40,6 +41,6 @@
 
     <!-- NOT OUR FAULT Dialoge -->
     <string name="propmodder_warning_title">ROOT IS REQUIRED</string>
-    <string name="propmodder_warning">This program changes system properties in /system/build.prop DO NOT USE if you don't know what you are doing. We (n00bware, makers of PropModder) are not responsible for your device PERIOD. You have been warned</string>
+    <string name="propmodder_warning">This program changes system properties in /system/build.prop DO NOT USE if you don\'t know what you are doing. We (n00bware, makers of PropModder) are not responsible for your device PERIOD. You have been warned</string>
 
 </resources>

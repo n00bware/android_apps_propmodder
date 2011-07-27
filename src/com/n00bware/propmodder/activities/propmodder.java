@@ -3,6 +3,7 @@ package com.n00bware.propmodder.activities;
 import com.n00bware.propmodder.R;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -15,17 +16,9 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import java.io.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.lang.Object;
 
-public class PerformanceSettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+public class propmodder extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
    /*
     *Strings for wifi_scan
@@ -91,6 +84,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
     private ListPreference mRingDelayPref;
     private ListPreference mVmHeapsizePref;
     //private ListPreference mModVersionPref;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +95,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
         PreferenceScreen prefSet = getPreferenceScreen();
         
-        PreferenceCategory generalCategory = (PreferenceCategory)prefSet.findPreference(GENERAL_CATEGORY);
+//        PreferenceCategory generalCategory = (PreferenceCategory)prefSet.findPreference(GENERAL_CATEGORY);
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
@@ -125,12 +119,12 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
         mRingDelayPref = (ListPreference) prefSet.findPreference(RING_DELAY_PREF);
         mRingDelayPref.setValue(SystemProperties.get(RING_DELAY_PERSIST_PROP,
-                SystemProperties,get(RING_DELAY_PROP, RING_DELAY_DEFAULT)));
-        mRingDelaypref.setOnPreferenceChangeListener(this);
+                SystemProperties.get(RING_DELAY_PROP, RING_DELAY_DEFAULT)));
+        mRingDelayPref.setOnPreferenceChangeListener(this);
 
         mVmHeapsizePref = (ListPreference) prefSet.findPreference(VM_HEAPSIZE_PREF);
-        mVmHeapsizePref.setValue(SystemProperties.get(VM_HEAPSIZE_PERSIST_PROP;
-                SystemProperties.get(VM_HEAPSIZE_PROP, VM_HEAPSIZE_DEFAILT)));
+        mVmHeapsizePref.setValue(SystemProperties.get(VM_HEAPSIZE_PERSIST_PROP,
+                SystemProperties.get(VM_HEAPSIZE_PROP, VM_HEAPSIZE_DEFAULT)));
         mVmHeapsizePref.setOnPreferenceChangeListener(this);
 
      /*
@@ -141,6 +135,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
       *         SystemProperties.get(MODVERSION_PROP, MODVERSION_DEFAILT)));
       * mModVersionPref.setOnPreferenceChangeListener(this);
       */
+
 
         alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(R.string.propmodder_warning_title);
@@ -334,7 +329,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
         }
 
             if (preference == mVmHeapsizePref) {
-                SystemProperties.set(VM_HEAP_PERSIST_PROP, (String)newValue);
+                SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
@@ -372,3 +367,4 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
         }
     return false;
     }
+}
