@@ -16,6 +16,7 @@ import android.provider.Settings;
 
 import java.io.*;
 import java.lang.Object;
+import java.lang.Process;
 
 public class propmodder extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
