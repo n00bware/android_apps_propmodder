@@ -265,11 +265,6 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
             if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
-
-                /*
-                 * read /system/build.prop then find and replace wifi.supplicant_scan_interval = ###
-                 */
-
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
@@ -377,6 +372,3 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
         }
     return false;
     }
-
-
-//TODO finish this
