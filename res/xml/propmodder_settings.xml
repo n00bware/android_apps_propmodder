@@ -23,7 +23,7 @@
             android:entries="@array/entries_max_events"
             android:entryValues="@array/entries_max_events" />
 
-        <ListPreference android:key="pref_usb_mode_interval"
+        <ListPreference android:key="pref_usb_mode"
             android:dialogTitle="@string/pref_usb_mode_title"
             android:title="@string/pref_usb_mode_title" android:summary="@string/pref_usb_mode_summary"
             android:entries="@array/entries_usb_mode"
