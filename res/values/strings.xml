@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Generic -->
+    <string name="app_name">PropModder</string>
+    <string name="main_title_head">Prop Modder v1.0</string>
+    <string name="main_title_subhead">Settings to increase performance</string>
+
+    <!-- Wifi scan policy -->
+    <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>
+    <string name="pref_wifi_scan_interval_summary">The time between wifi scans when no stored access points are available (requires reboot)</string>
+
+    <!-- LCD density -->
+    <string name="pref_lcd_density_title">LCD density</string>
+    <string name="pref_lcd_dendity_summary">This is the screen density allowing more high defination look (requires reboot)</string>
+
+    <!-- Max events per second -->
+    <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
+    <!--TODO find good explaination of this value -->
+    <string name="pref_max_events_summary">TODO explain (requires reboot)</string>
+
+    <!-- Default USB mode -->
+    <string name="pref_usb_mode_title">Default USB mode</string>
+    <!-- TODO this isn't very clear -->
+    <string name="pref_usb_mode_summary">This decides what the system does when you use USB with your computer (requires reboot)</string>
+
+    <!-- Telephony ring delay -->
+    <string name="pref_ring_delay_title">Telephone ringer delay</string>
+    <string name="pref_ring_delay_summary">The amount of time from when the system registars an incoming phonecall till the ringer starts (requires reboot)</string>
+
+    <!-- Dalvik heapsize -->
+    <string name="pref_vm_heapsize_title">Dalvik cache heapsize</string>
+    <!-- TODO this isn't very clear -->
+    <string name="pref_vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to (requires reboot)</string>
+
+    <!--ModVersion -->
+    <string name="pref_modversion_title">Mod Version in settings</string>
+    <string name="pref_modversion_summary">This is strictly for appearances and serves NO other purpose</string>
+
+    <!-- NOT OUR FAULT Dialoge -->
+    <string name="propmodder_warning_title">ROOT IS REQUIRED</string>
+    <string name="propmodder_warning">This program changes system properties in /system/build.prop DO NOT USE if you don't know what you are doing. We (n00bware, makers of PropModder) are not responsible for your device PERIOD. You have been warned</string>
+
+</resources>

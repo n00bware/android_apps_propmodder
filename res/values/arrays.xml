@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * Copyright (C) 2011 n00bware
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<resources>
+
+<!--*
+    * Values for wifi.supplicant_scan_interval
+    *-->
+    <string-array name="entries_wifi_scan" translatable="false">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+    </string-array>
+
+<!--*
+    * Values for ro.sf.lcd_density
+    * -->
+    <string-array name="entries_lcd_density" translatable="false">
+        <item>160</item>
+        <item>168</item>
+        <item>176</item>
+        <item>184</item>
+        <item>192</item>
+        <item>200</item>
+        <item>208</item>
+        <item>216</item>
+        <item>224</item>
+        <item>232</item>
+        <item>240</item>
+    </string-array>
+
+<!--*
+    * Values for windowsmgr.max_events_per_sec
+    * -->
+    <string-array name="entries_max_events" translatable="false">
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>65</item>
+        <item>70</item>
+        <item>75</item>
+        <item>80</item>
+        <item>85</item>
+        <item>90</item>
+        <item>95</item>
+        <item>100</item>
+        <item>105</item>
+        <item>110</item>
+    </string-array>
+
+<!--*
+    * Values for ro.default_usb_mode
+    *-->
+    <string-array name="entries_usb_mode" translatable="flase">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <!--* TODO explaing mount points
+        * Explaing the usb mounting values
+        *-->
+        <string-array name="entries_usb_mode_values">
+            <item>This is the explaination of usb mode 1</item>
+            <item>This is the explaination of usb mode 2</item>
+            <item>This is the explaination of usb mode 3</item>
+            <item>This is the explaination of usb mode 4</item>
+        </string-array>
+<!--*
+    * Values for ro.telephony.call_ring.delay
+    *-->
+    <string-array name="entries_ring_delay" translatable="false">
+        <item>0</item>
+        <item>200</item>
+        <item>400</item>
+        <item>600</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>1200</item>
+        <item>1400</item>
+    </string-array>
+
+<!--*
+    * Values for dalvik.vm.heapsize
+    *-->
+    <string-array name="entries_vm_heapsize" translatable="false">
+        <item>12m</item>
+        <item>16m</item>
+        <item>20m</item>
+        <item>24m</item>
+        <item>28m</item>
+        <item>32m</item>
+        <item>36m</item>
+        <item>40m</item>
+        <item>44m</item>
+        <item>48m</item>
+        <item>52m</item>
+        <item>56m</item>
+        <item>60m</item>
+        <item>64m</item>
+        <item>68m</item>
+        <item>72m</item>
+        <item>76m</item>
+        <item>80m</item>
+        <item>84m</item>
+        <item>96m</item>
+        <item>124m</item>
+    </string-array>
+
+</resources>

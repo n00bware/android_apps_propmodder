@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.n00bware.propmodder">
+
+    <uses-sdk android:minSdkVersion="8" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <application android:label="@string/app_name"
+        android:icon="@drawable/nw_icon">
+
+        <activity android:name=".activities.MainActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.WifiScan"
+            android:label="@string/wifi_scan">
+            <intent-filter>
+                <action android:name="android.intent.action.WIFI.SCAN" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.LcdDensity"
+            android:label="@string/lcd_density">
+            <intent-filter>
+                <action android:name="android.intent.action.LCD.DENSITY" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.MaxEvents"
+            android:label="@string/max_events">
+            <intent-filter>
+                <action android:name="android.intent.action.MAX.EVENTS" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.ModVersion"
+            android:label="@string/mod_version">
+            <intent-filter>
+                <action android:name="android.intent.action.MOD_VERSION" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>

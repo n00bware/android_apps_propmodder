@@ -1,0 +1,5 @@
+THIS PROGRAM IS IN ACTIVE DEVELOPMENT
+
+7-26-2011:
++initial fork from github.com/CyanogenMod/android_packages_apps_CMParts and removed all but frame of the app
++initial commit of PropModder by n00bware ... untested probably broken
