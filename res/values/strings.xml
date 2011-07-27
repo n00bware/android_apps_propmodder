@@ -7,6 +7,8 @@
     <string name="general_title">PropModder</string>
     <string name="main_title_head">Prop Modder v1.0</string>
     <string name="main_title_subhead">Settings to increase performance</string>
+    <string name="versionCode">1.0</string>
+    <string name="versionName">First Edition</string>
 
     <!-- Wifi scan policy -->
     <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.n00bware.propmodder">
+    package="com.n00bware.propmodder"
+    android:versionCode="@string/versionCode"
+    android:versionName="@string/versionName"
+    android:installLocation="auto">
 
     <uses-sdk android:minSdkVersion="8" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
