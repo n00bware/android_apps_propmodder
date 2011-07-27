@@ -18,7 +18,7 @@
             android:summary="@string/pref_lcd_density_summary"
             android:persistent="false"
             android:entries="@array/entries_lcd_density"
-            android:entryValues="@array/entires_lcd_density" />
+            android:entryValues="@array/entries_lcd_density" />
 
         <ListPreference
             android:key="max_events"
@@ -26,7 +26,7 @@
             android:summary="@string/pref_max_events_summary"
             android:persistent="false"
             android:entries="@array/entries_max_events"
-            android:entryValues="@array/entires_max_events" />
+            android:entryValues="@array/entries_max_events" />
 
         <ListPreference
             android:key="usb_mode"
@@ -34,7 +34,7 @@
             android:summary="@string/pref_usb_mode_summary"
             android:persistent="false"
             android:entries="@array/entries_usb_mode"
-            android:entryValues="@array/entires_usb_mode_values" />
+            android:entryValues="@array/entries_usb_mode_values" />
 
         <ListPreference
             android:key="ring_delay"
@@ -42,7 +42,7 @@
             android:summary="@string/pref_ring_delay_summary"
             android:persistent="false"
             android:entries="@array/entries_ring_delay"
-            android:entryValues="@array/entires_ring_delay" />
+            android:entryValues="@array/entries_ring_delay" />
 
         <ListPreference
             android:key="vm_heapsize"
@@ -50,6 +50,6 @@
             android:summary="@string/pref_vm_heapsize_summary"
             android:persistent="false"
             android:entries="@array/entries_vm_heapsize"
-            android:entryValues="@array/entires_vm_heapsize" />
+            android:entryValues="@array/entries_vm_heapsize" />
 
 </PreferenceScreen>
