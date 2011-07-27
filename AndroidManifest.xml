@@ -16,30 +16,30 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.WifiScan"
-            android:label="@string/wifi_scan">
+            android:label="@string/pref_wifi_scan_interval_title">
             <intent-filter>
                 <action android:name="android.intent.action.WIFI.SCAN" />
                 <category android:name="com.n00bware.propmodder.SHORTCUT" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.LcdDensity"
-            android:label="@string/lcd_density">
+            android:label="@string/pref_lcd_density_title">
             <intent-filter>
                 <action android:name="android.intent.action.LCD.DENSITY" />
                 <category android:name="com.n00bware.propmodder.SHORTCUT" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.MaxEvents"
-            android:label="@string/max_events">
+            android:label="@string/pref_max_events_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAX.EVENTS" />
                 <category android:name="com.n00bware.propmodder.SHORTCUT" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.ModVersion"
-            android:label="@string/mod_version">
+            android:label="@string/pref_modversion_title">
             <intent-filter>
-                <action android:name="android.intent.action.MOD_VERSION" />
+                <action android:name="android.intent.action.MODVERSION" />
                 <category android:name="com.n00bware.propmodder.SHORTCUT" />
             </intent-filter>
         </activity>

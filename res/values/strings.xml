@@ -6,6 +6,11 @@
     <string name="main_title_head">Prop Modder v1.0</string>
     <string name="main_title_subhead">Settings to increase performance</string>
 
+    <!-- Labels -->
+    <string name="wifi_scan">WifiScan</item>
+    <string name="lcd_density">LcdDensity</item>
+    <string name="max_events">MaxEvents</item>
+
     <!-- Wifi scan policy -->
     <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>
     <string name="pref_wifi_scan_interval_summary">The time between wifi scans when no stored access points are available (requires reboot)</string>
