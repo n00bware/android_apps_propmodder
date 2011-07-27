@@ -5,6 +5,12 @@
     <PreferenceCategory android:key="general_category"
         android:title="@string/general_title">
 
+        <PreferenceScreen android:key="propmodder" android:title="@string/main_title_head" android:summary="@string/main_title_subhead">
+            <intent android:action="android.intent.action.MAIN"
+                android:targetPackage="com.n00bware.propmodder"
+                android:targetClass="com.n00bware.propmodder.main" />
+        </PreferenceScreen>
+
         <ListPreference android:key="pref_wifi_scan_interval"
             android:dialogTitle="@string/pref_wifi_scan_interval_title"
             android:title="@string/pref_wifi_scan_interval_title" android:summary="@string/pref_wifi_scan_interval_summary"
