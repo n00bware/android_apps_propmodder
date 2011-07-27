@@ -65,7 +65,7 @@
     <!--* TODO explaing mount points
         * Explaing the usb mounting values
         *-->
-        <string-array name="entries_usb_mode_values">
+        <string-array name="entries_usb_mode_values" translatable="true">
             <item>This is the explaination of usb mode 1</item>
             <item>This is the explaination of usb mode 2</item>
             <item>This is the explaination of usb mode 3</item>
