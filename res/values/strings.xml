@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
     <string name="main_title_head">Prop Modder v1.0</string>
     <string name="main_title_subhead">Settings to increase performance</string>
-
-    <!-- Labels -->
-    <string name="wifi_scan">WifiScan</item>
-    <string name="lcd_density">LcdDensity</item>
-    <string name="max_events">MaxEvents</item>
 
     <!-- Wifi scan policy -->
     <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>
