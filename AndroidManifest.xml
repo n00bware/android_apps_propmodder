@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.n00bware.propmodder"
-    android:versionCode="@string/versionCode"
+    android:versionCode="1"
     android:versionName="@string/versionName"
     android:installLocation="auto">
 
