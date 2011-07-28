@@ -14,17 +14,27 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.Object;
 import java.lang.Process;
 
 public class propmodder extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+
+   /*
+    * Strings for the PropModder
+    */
+    private static final String GENERAL_CATEGORY = "general_category";
+    private static String TAG = "PropModder";
 
    /*
     *Strings for wifi_scan
@@ -94,27 +104,38 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
+     /* Log program as loading 
+      * TODO Set logging to proper channels ie info debug error
+      * TODO all logging is currently set to Log.i
+      */ 
+        Log.i(TAG, "loading PropModder");
+
         super.onCreate(savedInstanceState);
 
         setTitle(R.string.main_title_subhead);
         addPreferencesFromResource(R.xml.propmodder_settings);
 
         PreferenceScreen prefSet = getPreferenceScreen();
+        PreferenceCategory generalCategory = (PreferenceCategory)prefSet.findPreference(GENERAL_CATEGORY);
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
                 SystemProperties.get(WIFI_SCAN_PROP, WIFI_SCAN_DEFAULT)));
         mWifiScanPref.setOnPreferenceChangeListener(this);
+        Log.i(TAG, "loaded mWifiScanPref");
 
         mLcdDensityPref = (ListPreference) prefSet.findPreference(LCD_DENSITY_PREF);
         mLcdDensityPref.setValue(SystemProperties.get(LCD_DENSITY_PERSIST_PROP,
                 SystemProperties.get(LCD_DENSITY_PROP, LCD_DENSITY_DEFAULT)));
         mLcdDensityPref.setOnPreferenceChangeListener(this);
+        Log.i(TAG, "loaded mLcdDensityPref");
 
         mMaxEventsPref = (ListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
         mMaxEventsPref.setValue(SystemProperties.get(MAX_EVENTS_PERSIST_PROP,
                 SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
         mMaxEventsPref.setOnPreferenceChangeListener(this);
+        Log.i(TAG, "loaded mMaxEventsPref");
 
         mUsbModePref = (ListPreference) prefSet.findPreference(USB_MODE_PREF);
         mUsbModePref.setValue(SystemProperties.get(USB_MODE_PERSIST_PROP,
@@ -130,6 +151,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
         mVmHeapsizePref.setValue(SystemProperties.get(VM_HEAPSIZE_PERSIST_PROP,
                 SystemProperties.get(VM_HEAPSIZE_PROP, VM_HEAPSIZE_DEFAULT)));
         mVmHeapsizePref.setOnPreferenceChangeListener(this);
+        }
 
      /*
       * TODO: We don't want to use ListPreferece this should be a text box entry
@@ -140,20 +162,20 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
       * mModVersionPref.setOnPreferenceChangeListener(this);
       */
 
-
-        alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(R.string.propmodder_warning_title);
-        alertDialog.setMessage(getResources().getString(R.string.propmodder_warning));
-        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                getResources().getString(com.android.internal.R.string.ok),
-                new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                return;
-            }
-        });
-
-        alertDialog.show();
-    }
+      /*
+       * TODO our warning isn't working; we can just fix later not our biggest concern right now
+       *alertDialog = new AlertDialog.Builder(this).create();
+       *alertDialog.setTitle(R.string.propmodder_warning_title);
+       *alertDialog.setMessage(getResources().getString(R.string.propmodder_warning));
+       *alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+       *        getResources().getString(com.android.internal.R.string.ok),
+       *        new DialogInterface.OnClickListener() {
+       *    public void onClick(DialogInterface dialog, int which) {
+       *        return;
+       *    }
+       *});
+       *alertDialog.show();       
+       */
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
@@ -171,8 +193,11 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     if (params[0].equalsIgnoreCase("wifi.supplicant_scan_interval ") ||
                         params[0].equalsIgnoreCase("wifi.supplicant_scan_interval")) {
                         out.println("wifi.supplicant_scan_interval=" + newValue);
+                        Log.i(TAG, "Wifi Policy wrote to /tmp/wifi.prop");
+                        
                     } else {
                         out.println(line);
+                        Log.i(TAG, "Wifi Policy not set");
                         }
                     }
 
@@ -181,6 +206,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     out.close();
 
                     // open su shell and write commands to the OutStream for execution
+                    Log.i(TAG, "requesting root shell");
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
@@ -188,7 +214,9 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     pw.println("exit");
                     pw.close();
 
-                }catch(Exception e) { e.printStackTrace(); }
+                } catch (Exception e) {
+                Log.d("mWifiScanPref", e.toString());
+            }
                 return true;
             }
 
