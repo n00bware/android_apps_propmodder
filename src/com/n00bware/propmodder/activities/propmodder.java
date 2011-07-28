@@ -35,9 +35,9 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
     */
     public static final String GENERAL_CATEGORY = "general_category";
     public static String TAG = "PropModder";
-    public static int CHOKE_VALUE;
+    public static Object CHOKE_VALUE;
     public static String tmpFile = "/tmp/build.prop";
-    public static CHOKE_PROP = " ";
+    public static String CHOKE_PROP = " ";
 
    /*
     *Strings for wifi_scan
@@ -186,31 +186,31 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 CHOKE_PROP = WIFI_SCAN_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 WriteTmp();
-            } else if (preference == mLcdDensity) {
+            } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = LCD_DENSITY_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 WriteTmp();
-            } else if (preference == mLcdDensity) {
+            } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = MAX_EVENTS_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 WriteTmp();
-            } else if (preference == mUsbMode) {
+            } else if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = USB_MODE_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 WriteTmp();
-            } else if (preference == mRingDelay) {
+            } else if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = RING_DELAY_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 WriteTmp();
-            } else if (preference == mVmHeapsize) {
+            } else if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = VM_HEAPSIZE_PROP;
@@ -219,11 +219,13 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
             }
             return true;
         }
+   return true;
    }   
 
 
 
-   public static void WriteTmp(); { try {
+   public static void WriteTmp() 
+                 { try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File(tmpFile));
 
@@ -234,7 +236,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                         params = line.split("="); // some devices have values in ' = ' format vs '='
                     if (params[0].equalsIgnoreCase(CHOKE_PROP + " ") ||
                         params[0].equalsIgnoreCase(CHOKE_PROP)) {
-                        out.println(CHOKE_PROP + "=" + newValue);
+                        out.println(CHOKE_PROP + "=" + CHOKE_VALUE);
                     } else {
                         out.println(line);
                         }
@@ -245,9 +247,9 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     out.close();
                     WriteProps();
                     } catch(Exception e) { e.printStackTrace(); }
-    }
+    };
 
-    public static void WriteProps(); {
+    public static void WriteProps() {
         try {
             Process p = Runtime.getRuntime().exec("su");
             PrintWriter pw = new PrintWriter(p.getOutputStream());
@@ -259,4 +261,4 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
             }catch(Exception e) { e.printStackTrace();
         }
     }
-}
+};
