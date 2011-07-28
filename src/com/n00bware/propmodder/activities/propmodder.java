@@ -181,7 +181,9 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
+          Log.i(TAG, "new preference selected: newValue");
             if (preference == mWifiScanPref) {
+                Log.i(TAG, "init mWifiScanPref get wifi_scan_persist_prop");
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
@@ -199,10 +201,6 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     } else {
                         out.println(line);
                         Log.i(TAG, "Wifi Policy not set");
-                       
-                    } else {
-                        out.println(line);
-                        Log.e(TAG, "Wifi Policy not set");
                         }
                     }
 
@@ -211,7 +209,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     out.close();
 
                     // open su shell and write commands to the OutStream for execution
-                    Log.e(TAG, "requesting root shell");
+                    Log.i(TAG, "requesting root shell");
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
@@ -220,7 +218,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     pw.close();
 
                 } catch (Exception e) {
-                Log.d("mWifiScanPref", e.toString());
+                Log.i(TAG, "root operations failed");
             }
                 return true;
             }
