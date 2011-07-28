@@ -218,12 +218,12 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     pw.close();
 
                 } catch (Exception e) {
-                Log.i(TAG, "root operations failed");
+                Log.i(TAG, "root operations failed", e);
             }
                 return true;
             }
 
-            if (preference == mLcdDensityPref) {
+            else if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
@@ -258,7 +258,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 return true;
             }
 
-            if (preference == mMaxEventsPref) {
+            else if (preference == mMaxEventsPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
@@ -293,7 +293,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 return true;
             }
 
-            if (preference == mUsbModePref) {
+            else if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
@@ -328,7 +328,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 return true;
             }
 
-            if (preference == mRingDelayPref) {
+            else if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
@@ -363,7 +363,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 return true;
         }
 
-            if (preference == mVmHeapsizePref) {
+            else if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
