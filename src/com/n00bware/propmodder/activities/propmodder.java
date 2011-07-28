@@ -34,7 +34,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
     * Strings for the PropModder
     */
     public static final String GENERAL_CATEGORY = "general_category";
-    public static String TAG = "PropModder";
+    private static final String TAG = "PropModder";
     public static Object CHOKE_VALUE;
     public static String tmpFile = "/tmp/build.prop";
     public static String CHOKE_PROP = " ";
