@@ -100,8 +100,6 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
         addPreferencesFromResource(R.xml.propmodder_settings);
 
         PreferenceScreen prefSet = getPreferenceScreen();
-        
-//        PreferenceCategory generalCategory = (PreferenceCategory)prefSet.findPreference(GENERAL_CATEGORY);
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
@@ -163,7 +161,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/wifi.prop"));
 
                     String line;
                     String params[];
@@ -186,7 +184,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("mv /tmp/wifi.prop /system/build.prop");
                     pw.println("exit");
                     pw.close();
 
@@ -198,7 +196,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/lcd.prop"));
 
                     String line;
                     String params[];
@@ -221,7 +219,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("mv /tmp/lcd.prop /system/build.prop");
                     pw.println("exit");
                     pw.close();
 
@@ -233,7 +231,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/events.prop"));
 
                     String line;
                     String params[];
@@ -256,7 +254,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("mv /tmp/events.prop /system/build.prop");
                     pw.println("exit");
                     pw.close();
 
@@ -268,7 +266,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/usb.prop"));
 
                     String line;
                     String params[];
@@ -291,7 +289,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("mv /tmp/usb.prop /system/build.prop");
                     pw.println("exit");
                     pw.close();
 
@@ -303,7 +301,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/ring.prop"));
 
                     String line;
                     String params[];
@@ -326,7 +324,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("mv /tmp/ring.prop /system/build.prop");
                     pw.println("exit");
                     pw.close();
 
@@ -338,7 +336,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/heapsize.prop"));
 
                     String line;
                     String params[];
@@ -361,7 +359,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("mv /tmp/heapsize.prop /system/build.prop");
                     pw.println("exit");
                     pw.close();
 
