@@ -107,17 +107,10 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
         
      /* Log program as loading 
       * TODO Set logging to proper channels ie info debug error
-<<<<<<< HEAD
       * TODO all logging is currently set to Log.i
       */ 
         Log.i(TAG, "loading PropModder");
-=======
-      * TODO all logging is currently set to Log.e
-      */ 
-        Log.e(TAG, "loading PropModder");
->>>>>>> 7d0aac304511e14e1dfff60e3c6dce087268ccc3
-
-        super.onCreate(savedInstanceState);
+       super.onCreate(savedInstanceState);
 
         setTitle(R.string.main_title_subhead);
         addPreferencesFromResource(R.xml.propmodder_settings);
@@ -129,46 +122,37 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
                 SystemProperties.get(WIFI_SCAN_PROP, WIFI_SCAN_DEFAULT)));
         mWifiScanPref.setOnPreferenceChangeListener(this);
-<<<<<<< HEAD
         Log.i(TAG, "loaded mWifiScanPref");
-=======
-        Log.e(TAG, "loaded mWifiScanPref");
->>>>>>> 7d0aac304511e14e1dfff60e3c6dce087268ccc3
 
         mLcdDensityPref = (ListPreference) prefSet.findPreference(LCD_DENSITY_PREF);
         mLcdDensityPref.setValue(SystemProperties.get(LCD_DENSITY_PERSIST_PROP,
                 SystemProperties.get(LCD_DENSITY_PROP, LCD_DENSITY_DEFAULT)));
         mLcdDensityPref.setOnPreferenceChangeListener(this);
-<<<<<<< HEAD
         Log.i(TAG, "loaded mLcdDensityPref");
-=======
-        Log.e(TAG, "loaded mLcdDensityPref");
->>>>>>> 7d0aac304511e14e1dfff60e3c6dce087268ccc3
 
         mMaxEventsPref = (ListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
         mMaxEventsPref.setValue(SystemProperties.get(MAX_EVENTS_PERSIST_PROP,
                 SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
         mMaxEventsPref.setOnPreferenceChangeListener(this);
-<<<<<<< HEAD
         Log.i(TAG, "loaded mMaxEventsPref");
-=======
-        Log.e(TAG, "loaded mMaxEventsPref");
->>>>>>> 7d0aac304511e14e1dfff60e3c6dce087268ccc3
 
         mUsbModePref = (ListPreference) prefSet.findPreference(USB_MODE_PREF);
         mUsbModePref.setValue(SystemProperties.get(USB_MODE_PERSIST_PROP,
                 SystemProperties.get(USB_MODE_PROP, USB_MODE_DEFAULT)));
         mUsbModePref.setOnPreferenceChangeListener(this);
+        Log.i(TAG, "loaded mUsbModePref");
 
         mRingDelayPref = (ListPreference) prefSet.findPreference(RING_DELAY_PREF);
         mRingDelayPref.setValue(SystemProperties.get(RING_DELAY_PERSIST_PROP,
                 SystemProperties.get(RING_DELAY_PROP, RING_DELAY_DEFAULT)));
         mRingDelayPref.setOnPreferenceChangeListener(this);
+        Log.i(TAG, "loaded mRingDelayPref");
 
         mVmHeapsizePref = (ListPreference) prefSet.findPreference(VM_HEAPSIZE_PREF);
         mVmHeapsizePref.setValue(SystemProperties.get(VM_HEAPSIZE_PERSIST_PROP,
                 SystemProperties.get(VM_HEAPSIZE_PROP, VM_HEAPSIZE_DEFAULT)));
         mVmHeapsizePref.setOnPreferenceChangeListener(this);
+        Log.i(TAG, "loaded mVmHeapsizePref");
         }
 
      /*
@@ -211,19 +195,14 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     if (params[0].equalsIgnoreCase("wifi.supplicant_scan_interval ") ||
                         params[0].equalsIgnoreCase("wifi.supplicant_scan_interval")) {
                         out.println("wifi.supplicant_scan_interval=" + newValue);
-<<<<<<< HEAD
                         Log.i(TAG, "Wifi Policy wrote to /tmp/wifi.prop");
-                        
                     } else {
                         out.println(line);
                         Log.i(TAG, "Wifi Policy not set");
-=======
-                        Log.e(TAG, "Wifi Policy wrote to /tmp/wifi.prop");
-                        
+                       
                     } else {
                         out.println(line);
                         Log.e(TAG, "Wifi Policy not set");
->>>>>>> 7d0aac304511e14e1dfff60e3c6dce087268ccc3
                         }
                     }
 
@@ -232,11 +211,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     out.close();
 
                     // open su shell and write commands to the OutStream for execution
-<<<<<<< HEAD
-                    Log.i(TAG, "requesting root shell");
-=======
                     Log.e(TAG, "requesting root shell");
->>>>>>> 7d0aac304511e14e1dfff60e3c6dce087268ccc3
                     Process p = Runtime.getRuntime().exec("su");
                     PrintWriter pw = new PrintWriter(p.getOutputStream());
                     pw.println("busybox mount -o remount,rw /system");
