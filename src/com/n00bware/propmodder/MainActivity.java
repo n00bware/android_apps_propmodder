@@ -25,10 +25,15 @@ import java.*;
 import android.*;
 
 public class MainActivity extends PreferenceActivity {
+        
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
+
+    Toast msg = Toast.makeText(MainActivity.this, "Starting MainActivity", Toast.LENGTH_SHORT);
+    msg.show();
+     
+     super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.propmodder);
     }

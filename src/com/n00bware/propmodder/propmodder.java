@@ -31,8 +31,6 @@ import java.lang.Process;
 
 public class propmodder extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
-    Toast.makeText(getBaseContext(), "Starting propmodder.java", Toast.LENGTH_SHORT).show();
-
    /*
     * Strings for the PropModder
     */
@@ -105,6 +103,9 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    Toast msg = Toast.makeText(propmodder.this, "Starting propmodder.java", Toast.LENGTH_SHORT);
+    msg.show();
+    
         
      /* Log program as loading 
       * TODO Set logging to proper channels ie info debug error
@@ -187,7 +188,11 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
        */
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (newValue != null) {
+        
+        Toast msg = Toast.makeText(propmodder.this, "onPreferenceChange", Toast.LENGTH_SHORT);
+        msg.show();
+	
+	if (newValue != null) {
           Log.i(TAG, "new preference selected: " + newValue);
             if (preference == mWifiScanPref) {
                 Toast.makeText(getBaseContext(), "selected wifiscan", Toast.LENGTH_SHORT).show();
@@ -236,7 +241,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
 
 
    public static void WriteTmp() 
-                 { try {
+		 { try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File(tmpFile));
 
@@ -261,7 +266,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
     };
 
     public static void WriteProps() {
-        try {
+	try {
             Process p = Runtime.getRuntime().exec("su");
             PrintWriter pw = new PrintWriter(p.getOutputStream());
             pw.println("busybox mount -o remount,rw /system");
