@@ -1,75 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.n00bware.propmodder"
-    android:versionCode="1"
-    android:versionName="@string/versionName"
-    android:installLocation="auto">
-
-    <uses-sdk android:minSdkVersion="8" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.MANAGE_USB" />
-    <application android:label="@string/app_name"
-        android:icon="@drawable/ic_launcher_application">
-
-        <activity android:name=".MainActivity" android:label="@string/app_name">
+      package="com.n00bware.propmodder"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/ic_launcher_application" android:label="@string/app_name">
+        <activity android:name=".MainActivity"
+                  android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.WifiScan"
-            android:label="@string/pref_wifi_scan_interval_title">
-            <intent-filter>
-                <action android:name="android.intent.action.WIFI.SCAN" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.LcdDensity"
-            android:label="@string/pref_lcd_density_title">
-            <intent-filter>
-                <action android:name="android.intent.action.LCD.DENSITY" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.MaxEvents"
-            android:label="@string/pref_max_events_title">
-            <intent-filter>
-                <action android:name="android.intent.action.MAX.EVENTS" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.ModVersion"
-            android:label="@string/pref_modversion_title">
-            <intent-filter>
-                <action android:name="android.intent.action.MODVERSION" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.UsbMode"
-            android:label="@string/pref_usb_mode_title">
-            <intent-filter>
-                <action android:name="android.intent.action.USB_MODE" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.RingDelay"
-            android:label="@string/pref_ring_delay_title">
-            <intent-filter>
-                <action android:name="android.intent.action.RING.DELAY" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.VmHeapsize"
-            android:label="@string/pref_ring_delay_title">
-            <intent-filter>
-                <action android:name="android.intent.action.VM_HEAPSIZE" />
-                <category android:name="com.n00bware.propmodder.SHORTCUT" />
-            </intent-filter>
-        </activity>
-
-    </application>
+</application>
+<uses-sdk android:minSdkVersion="8" />
 </manifest>
