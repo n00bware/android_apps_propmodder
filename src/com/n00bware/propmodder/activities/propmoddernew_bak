@@ -40,7 +40,7 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
     public static String CHOKE_PROP = " ";
 
    /*
-    *Strings for wifi_scan
+    * Strings for wifi_scan
     */
     public static final String WIFI_SCAN_PREF = "pref_wifi_scan_interval";
     public static final String WIFI_SCAN_PROP = "wifi.supplicant_scan_interval";
@@ -185,40 +185,47 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = WIFI_SCAN_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                return true;
+                WriteTmp();
             } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = LCD_DENSITY_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
-                return true;
+                WriteTmp();
             } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = MAX_EVENTS_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
-                return true;
+                WriteTmp();
             } else if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = USB_MODE_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
-                return true;
+                WriteTmp();
             } else if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = RING_DELAY_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
-                return true;
+                WriteTmp();
             } else if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = VM_HEAPSIZE_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
-                return true;
+                WriteTmp();
             }
+            return true;
+        }
+   return true;
+   }   
 
-                try {
+
+
+   public static void WriteTmp() 
+                 { try {
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File(tmpFile));
 
@@ -240,6 +247,9 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
                     out.close();
                     WriteProps();
                     } catch(Exception e) { e.printStackTrace(); }
+    };
+
+    public static void WriteProps() {
         try {
             Process p = Runtime.getRuntime().exec("su");
             PrintWriter pw = new PrintWriter(p.getOutputStream());
@@ -250,15 +260,5 @@ public class propmodder extends PreferenceActivity implements Preference.OnPrefe
 
             }catch(Exception e) { e.printStackTrace();
         }
-
-
-
-            return true;
-        }
-   return true;
-   }   
-
-
-
     }
 };
