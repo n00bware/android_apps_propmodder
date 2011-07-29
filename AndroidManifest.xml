@@ -49,6 +49,27 @@
                 <category android:name="com.n00bware.propmodder.SHORTCUT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.UsbMode"
+            android:label="@string/pref_UsbMode_title">
+            <intent-filter>
+                <action android:name="android.intent.action.USB_MODE" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.RingDelay"
+            android:label="@string/pref_ring_delay_title">
+            <intent-filter>
+                <action android:name="android.intent.action.RING.DELAY" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.VmHeapsize"
+            android:label="@string/pref_ring_delay_title">
+            <intent-filter>
+                <action android:name="android.intent.action.VM_HEAPSIZE" />
+                <category android:name="com.n00bware.propmodder.SHORTCUT" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>
