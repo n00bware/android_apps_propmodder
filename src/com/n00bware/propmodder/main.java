@@ -146,6 +146,8 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
             if (preference == mWifiScanPref) {
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
                 try {
+                    Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
+                    Process i = Runtime.getRuntime().exec("su");
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
 
@@ -159,6 +161,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                         out.println("wifi.supplicant_scan_interval=" + newValue);
                     } else {
                         out.println(line);
+                        Log.e(TAG, "println failed");
                         }
                     }
 
