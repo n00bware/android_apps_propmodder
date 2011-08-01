@@ -13,11 +13,15 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.Log;
 
 import java.io.*;
 import java.lang.Object;
+import java.lang.Process;
 
 public class main extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+
+    private static String TAG = "PropModder";
 
    /*
     *Strings for wifi_scan
@@ -93,8 +97,8 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
         addPreferencesFromResource(R.xml.main);
 
         PreferenceScreen prefSet = getPreferenceScreen();
-        
-//        PreferenceCategory generalCategory = (PreferenceCategory)prefSet.findPreference(GENERAL_CATEGORY);
+
+        Log.i(TAG, "loading prefs");
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
