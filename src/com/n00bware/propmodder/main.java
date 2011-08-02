@@ -139,8 +139,20 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
       * mModVersionPref.setOnPreferenceChangeListener(this);
       */
 
-    }
+        // WARN THE MASSES THIS CAN BE DANGEROUS!!!
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(R.string.main_warning_title);
+        alertDialog.setMessage(getResources().getString(R.string.main_warning_summary));
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                getResources().getString(com.android.internal.R.string.ok),
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
 
+        alertDialog.show();
+    }
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
             if (preference == mWifiScanPref) {
