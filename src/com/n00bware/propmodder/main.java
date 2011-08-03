@@ -21,6 +21,12 @@ import java.lang.Process;
 
 public class main extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
+    public static ApplicationContext instance = null;
+
+    public void ApplicationContext() {
+        instance = this;
+    }
+
     private static String TAG = "PropModder";
 
    /*

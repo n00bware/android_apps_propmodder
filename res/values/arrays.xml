@@ -66,10 +66,10 @@
         * Explaing the usb mounting values
         *-->
         <string-array name="entries_usb_mode_values" translatable="true">
-            <item>This is the explaination of usb mode 1</item>
-            <item>This is the explaination of usb mode 2</item>
-            <item>This is the explaination of usb mode 3</item>
-            <item>This is the explaination of usb mode 4</item>
+            <item>Portal and Tools</item>
+            <item>Windows Media Sync</item>
+            <item>Memory Card Access</item>
+            <item>Charge Only</item>
         </string-array>
 <!--*
     * Values for ro.telephony.call_ring.delay

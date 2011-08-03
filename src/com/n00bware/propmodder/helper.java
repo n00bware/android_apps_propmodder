@@ -9,10 +9,13 @@ import java.io.InputStreamReader;
 import java.io.File;
 import java.lang.*;
 import java.text.*;
+import java.*;
+import android.*;
 import android.app.*;
 import android.app.Dialog;
 import android.content.*;
 import android.text.*;
+import android.view.*;
 import android.widget.*;
 
 import android.util.Log;
@@ -56,8 +59,8 @@ public class helper {
 	}
 
 public void credit() {
-
-Dialog dialog = new Dialog();
+Context mContext = getApplicationContext();
+Dialog dialog = new Dialog(mContext);
 
 dialog.setContentView(R.layout.credit);
 dialog.setTitle("Custom Dialog");
