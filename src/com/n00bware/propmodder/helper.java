@@ -7,13 +7,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.File;
-import android.widget.Toast;
-import android.content.Context;
+import java.lang.*;
+import java.text.*;
+import android.app.*;
+import android.app.Dialog;
+import android.content.*;
+import android.text.*;
+import android.widget.*;
 
 import android.util.Log;
 
 public class helper {
     public static String TAG = "PropModder";
+
 	public static boolean runRootCommand(String command) {
               Log.i(TAG, "runRootCommand started");
 	      Process process = null;
@@ -40,12 +46,26 @@ public class helper {
 	}
 
 	public static boolean RemountRW(){
-                Log.i(TAG, "RemountRW");
+                Log.i(TAG, "Mount /system as READ/WRITE: RemountRW");
 		return helper.runRootCommand("mount -o rw,remount -t yaffs2 /dev/block/mtdblock1 /system");
 	}
 
 	public static boolean RemountROnly(){
-                Log.i(TAG, "RemountROnly");
+                Log.i(TAG, "Mount /system as READ ONLY: RemountROnly");
 		return helper.runRootCommand("mount -o ro,remount -t yaffs2 /dev/block/mtdblock1 /system");
 	}
+
+public void credit() {
+
+Dialog dialog = new Dialog();
+
+dialog.setContentView(R.layout.credit);
+dialog.setTitle("Custom Dialog");
+
+TextView text = (TextView) dialog.findViewById(R.id.text);
+text.setText("This is a test for our CREDIT SCREEN\nCode from:\nhttp://developer.android.com/guide/topics/ui/dialogs.html#ShowingADialog");
+ImageView image = (ImageView) dialog.findViewById(R.id.image);
+image.setImageResource(R.drawable.ic_launcher_settings);
+}
+
 }

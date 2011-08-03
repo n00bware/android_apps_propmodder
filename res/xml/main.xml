@@ -17,11 +17,18 @@
             android:entries="@array/entries_wifi_scan"
             android:entryValues="@array/entries_wifi_scan" />
 
-        <ListPreference android:key="pref_lcd_density"
+<!-- TEST
+
+            <ListPreference android:key="pref_lcd_density"
             android:dialogTitle="@string/pref_lcd_density_title"
             android:title="@string/pref_lcd_density_title" android:summary="@string/pref_lcd_density_summary"
             android:entries="@array/entries_lcd_density"
             android:entryValues="@array/entries_lcd_density" />
+-->
+
+        <com.n00bware.propmodder.seekbar android:key="seekbar"
+            android:title="@string/pref_lcd_density_title"
+            android:dialogTitle="@string/pref_lcd_density_title" />
 
         <ListPreference android:key="pref_max_events"
             android:dialogTitle="@string/pref_max_events_title"
@@ -46,6 +53,7 @@
             android:title="@string/pref_vm_heapsize_title" android:summary="@string/pref_vm_heapsize_summary"
             android:entries="@array/entries_vm_heapsize"
             android:entryValues="@array/entries_vm_heapsize" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
