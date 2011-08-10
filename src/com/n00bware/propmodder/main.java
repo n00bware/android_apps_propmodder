@@ -164,36 +164,48 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_PROP = WIFI_SCAN_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.RemountROnly();
             } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = LCD_DENSITY_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.RemountROnly();
             } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = MAX_EVENTS_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.RemountROnly();
             } else if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = USB_MODE_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.RemountROnly();
             } else if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = RING_DELAY_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.RemountROnly();
             } else if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = VM_HEAPSIZE_PROP;
                 Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                helper.RemountROnly();
             }
             return true;
         }

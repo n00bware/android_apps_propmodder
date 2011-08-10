@@ -17,29 +17,29 @@ import android.util.Log;
 public class helper {
     public static String TAG = "PropModder";
 
-	public static boolean runRootCommand(String command) {
-              Log.i(TAG, "runRootCommand started");
-	      Process process = null;
-	      DataOutputStream os = null;
-	      try {
-                        Log.i(TAG, "attempt to get root");
-	                process = Runtime.getRuntime().exec("su");
-	                os = new DataOutputStream(process.getOutputStream());
-	                os.writeBytes(command+"\n");
-	                os.writeBytes("exit\n");
-	                os.flush();
-	                process.waitFor();
-	                } catch (Exception e) {
-	                        Log.d("*** DEBUG ***", "Unexpected error - Here is what I know: "+e.getMessage());
-	                        return false;
-	                }
-	                finally {
-	                        try {
-	                             if (os != null) os.close();
-	                             process.destroy();
-	                        } catch (Exception e) {}
-	                }
-	                return true;
+        public static boolean runRootCommand(String command) {
+            Log.i(TAG, "runRootCommand started");
+	    Process process = null;
+	    DataOutputStream os = null;
+	    try {
+                Log.i(TAG, "attempt to get root");
+	        process = Runtime.getRuntime().exec("su");
+	        os = new DataOutputStream(process.getOutputStream());
+	        os.writeBytes(command+"\n");
+	        os.writeBytes("exit\n");
+	        os.flush();
+	        process.waitFor();
+	        } catch (Exception e) {
+	            Log.d("*** DEBUG ***", "Unexpected error - Here is what I know: "+e.getMessage());
+	            return false;
+	        }
+                    finally {
+	                try {
+	                    if (os != null) os.close();
+	                        process.destroy();
+	                    } catch (Exception e) {}
+	              }
+	              return true;
 	}
 
 	public static boolean RemountRW(){
@@ -55,7 +55,7 @@ public class helper {
         public static void SetProp(String CHOKE_PROP, String CHOKE_VALUE){
             try {
                     Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
-                    Process i = Runtime.getRuntime().exec("su");
+                    Process checkRoot = Runtime.getRuntime().exec("su");
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
 
@@ -66,7 +66,7 @@ public class helper {
                         params = line.split("="); // some devices have values in ' = ' format vs '='
                     if (params[0].equalsIgnoreCase(CHOKE_PROP) ||
                         params[0].equalsIgnoreCase(CHOKE_PROP + " ")) {
-                        out.println(CHOKE_PROP + CHOKE_VALUE);
+                        out.println(CHOKE_PROP + "=" + CHOKE_VALUE);
                     } else {
                         out.println(line);
                         Log.e(TAG, "println failed");
@@ -88,4 +88,8 @@ public class helper {
                 }catch(Exception e) { e.printStackTrace(); }
                 return;
             }
+    public static void ClearChokes(String CHOKE_PROP, String CHOKE_VALUE){
+        CHOKE_PROP = null;
+        CHOKE_VALUE = null;
+    }
 }
