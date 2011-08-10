@@ -54,7 +54,8 @@ public class helper {
 
         public static void SetProp(String CHOKE_PROP, String CHOKE_VALUE){
             try {
-                    Process i = Runtime.getRuntime().exec("su");
+                Log.i(TAG, "helper.SetProp initiated and recieved the args " + CHOKE_PROP + " & " + CHOKE_VALUE);
+                    helper.RemountRW();
                     Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
@@ -69,7 +70,15 @@ public class helper {
                         params[0].equalsIgnoreCase(CHOKE_PROP + " ")) {
                         Log.i(TAG, "start attempting to write to tmp");
                         out.println(CHOKE_PROP + "=" + CHOKE_VALUE);
-                        Log.i(TAG, "attempt to write" + out);
+                        Log.i(TAG, "attempt to write " + out);
+                        // open su shell and write commands to the OutStream for execution
+                        Log.i(TAG, "asking for root to move /tmp/build.prop to /system/build.prop");
+                        Process p = Runtime.getRuntime().exec("su");
+                        PrintWriter pw = new PrintWriter(p.getOutputStream());
+                        pw.println("busybox mount -o remount,rw /system");
+                        pw.println("mv /tmp/build.prop /system/build.prop");
+                        pw.println("exit");
+                        pw.close();
                     } else {
                         out.println(line);
                         Log.e(TAG, "println failed @ " + line);
@@ -79,14 +88,6 @@ public class helper {
                     in.close();
                     out.flush();
                     out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
 
                 }catch(Exception e) { e.printStackTrace(); }
                 return;

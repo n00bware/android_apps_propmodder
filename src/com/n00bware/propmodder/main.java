@@ -31,7 +31,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private static final String WIFI_SCAN_PREF = "pref_wifi_scan_interval";
     private static final String WIFI_SCAN_PROP = "wifi.supplicant_scan_interval";
     private static final String WIFI_SCAN_PERSIST_PROP = "persist.wifi_scan_interval";
-    private static final String WIFI_SCAN_DEFAULT = System.getProperty("wifi.supplicant_scan_interval");
+    private static String WIFI_SCAN_DEFAULT = System.getProperty("wifi.supplicant_scan_interval");
 
    /*
     * Strings for lcd_density
@@ -39,7 +39,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private static final String LCD_DENSITY_PREF = "pref_lcd_density";
     private static final String LCD_DENSITY_PROP = "ro.sf.lcd_density";
     private static final String LCD_DENSITY_PERSIST_PROP = "persist.lcd_density";
-    private static final String LCD_DENSITY_DEFAULT = System.getProperty("ro.sf.lcd_density");
+    private static String LCD_DENSITY_DEFAULT = System.getProperty("ro.sf.lcd_density");
 
    /*
     * Strings for max_events
@@ -47,7 +47,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private static final String MAX_EVENTS_PREF = "pref_max_events";
     private static final String MAX_EVENTS_PROP = "windowsmgr.max_events_per_sec";
     private static final String MAX_EVENTS_PERSIST_PROP = "persist.max_events";
-    private static final String MAX_EVENTS_DEFAULT = System.getProperty("windowsmgr.max_events_per_sec");
+    private static String MAX_EVENTS_DEFAULT = System.getProperty("windowsmgr.max_events_per_sec");
 
    /*
     * Strings for usb_mode
@@ -55,7 +55,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private static final String USB_MODE_PREF = "pref_usb_mode";
     private static final String USB_MODE_PROP = "ro.default_usb_mode";
     private static final String USB_MODE_PERSIST_PROP = "persist.usb_mode";
-    private static final String USB_MODE_DEFAULT = System.getProperty("ro.default_usb_mode");
+    private static String USB_MODE_DEFAULT = System.getProperty("ro.default_usb_mode");
 
    /*
     * Strings for ring_delay
@@ -63,7 +63,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private static final String RING_DELAY_PREF = "pref_ring_delay";
     private static final String RING_DELAY_PROP = "ro.telephony.call_ring.delay";
     private static final String RING_DELAY_PERSIST_PROP = "persist.call_ring.delay";
-    private static final String RING_DELAY_DEFAULT = System.getProperty("ro.telephony.call_ring");
+    private static String RING_DELAY_DEFAULT = System.getProperty("ro.telephony.call_ring");
 
    /*
     * Strings for vm_heapsize
@@ -71,7 +71,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private static final String VM_HEAPSIZE_PREF = "pref_vm_heapsize";
     private static final String VM_HEAPSIZE_PROP = "dalvik.vm.heapsize";
     private static final String VM_HEAPSIZE_PERSIST_PROP = "persist.vm_heapsize";
-    private static final String VM_HEAPSIZE_DEFAULT = System.getProperty("dalvik.vm.heapsize");
+    private static String VM_HEAPSIZE_DEFAULT = System.getProperty("dalvik.vm.heapsize");
 
    /*
     * Strings for modversion
@@ -79,7 +79,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     *private static final String MODVERSION_PREF = "pref_modversion";
     *private static final String MODVERSION_PROP = "ro.modversion";
     *private static final String MODVERSION_PERSIST_PROP = "persist.modversion";
-    *private static final String MODVERSION_DEFAULT = System.getProperty("ro.modversion");
+    *private static String MODVERSION_DEFAULT = System.getProperty("ro.modversion");
     */
 
     private ListPreference mWifiScanPref;
@@ -170,6 +170,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 newValue = null;
                 Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
+                Log.i(TAG, "default value is " + WIFI_SCAN_DEFAULT + " but it just changed so reevaluate.");
+                WIFI_SCAN_DEFAULT = System.getProperty("wifi.supplicant_scan_interval");
+                Log.i(TAG, "new wifi default is {" + WIFI_SCAN_DEFAULT + "}"); 
             return true;
 
             } if (preference == mLcdDensityPref) {
