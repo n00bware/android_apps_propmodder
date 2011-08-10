@@ -92,7 +92,9 @@ public class helper {
                 return;
             }
     public static void ClearChokes(String CHOKE_PROP, String CHOKE_VALUE){
+        Log.i(TAG, "SENDING values of CHOKE_PROP and CHOKE_VALUES to null " + CHOKE_PROP + " " + CHOKE_VALUE);
         CHOKE_PROP = null;
         CHOKE_VALUE = null;
+        Log.i(TAG, "values of CHOKE_PROP and CHOKE_VALUES should be null " + CHOKE_PROP + " " + CHOKE_VALUE);
     }
 }
