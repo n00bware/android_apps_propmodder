@@ -23,7 +23,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
     private static String TAG = "PropModder";
     public Object CHOKE_VALUE;
-    public static String CHOKE_PROP = " ";
+    public static String CHOKE_PROP = "";
 
    /*
     *Strings for wifi_scan
