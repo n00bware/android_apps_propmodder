@@ -16,18 +16,14 @@ import android.provider.Settings;
 import android.util.Log;
 
 import java.io.*;
-import java.lang.Object;
-import java.lang.Process;
+import java.lang.*;
+import java.lang.String;
 
 public class main extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
-    public static ApplicationContext instance = null;
-
-    public void ApplicationContext() {
-        instance = this;
-    }
-
     private static String TAG = "PropModder";
+    public Object CHOKE_VALUE;
+    public static String CHOKE_PROP = " ";
 
    /*
     *Strings for wifi_scan
@@ -160,221 +156,46 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
         alertDialog.show();
     }
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (newValue != null) {
+	if (newValue != null) {
+          Log.i(TAG, "new preference selected: " + newValue);
             if (preference == mWifiScanPref) {
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
-                try {
-                    Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
-                    Process i = Runtime.getRuntime().exec("su");
-                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
-
-                    String line;
-                    String params[];
-
-                    while ((line = in.readLine()) != null) {
-                        params = line.split("="); // some devices have values in ' = ' format vs '='
-                    if (params[0].equalsIgnoreCase("wifi.supplicant_scan_interval ") ||
-                        params[0].equalsIgnoreCase("wifi.supplicant_scan_interval")) {
-                        out.println("wifi.supplicant_scan_interval=" + newValue);
-                    } else {
-                        out.println(line);
-                        Log.e(TAG, "println failed");
-                        }
-                    }
-
-                    in.close();
-                    out.flush();
-                    out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
-
-                }catch(Exception e) { e.printStackTrace(); }
-                return true;
-            }
-
-            if (preference == mLcdDensityPref) {
+                CHOKE_VALUE = newValue;
+                CHOKE_PROP = WIFI_SCAN_PROP;
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+            } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
-                try {
-                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
-
-                    String line;
-                    String params[];
-
-                    while ((line = in.readLine()) != null) {
-                        params = line.split("="); // some devices have values in ' = ' format vs '='
-                    if (params[0].equalsIgnoreCase("ro.sf.lcd_density ") ||
-                        params[0].equalsIgnoreCase("ro.sf.lcd_density")) {
-                        out.println("ro.sf.lcd_density=" + newValue);
-                    } else {
-                        out.println(line);
-                        }
-                    }
-
-                    in.close();
-                    out.flush();
-                    out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
-
-                }catch(Exception e) { e.printStackTrace(); }
-                return true;
-            }
-
-            if (preference == mMaxEventsPref) {
+                CHOKE_VALUE = newValue;
+                CHOKE_PROP = LCD_DENSITY_PROP;
+                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+            } else if (preference == mLcdDensityPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
-                try {
-                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
-
-                    String line;
-                    String params[];
-
-                    while ((line = in.readLine()) != null) {
-                        params = line.split("="); // some devices have values in ' = ' format vs '='
-                    if (params[0].equalsIgnoreCase("windowsmgr.max_events_per_sec ") ||
-                        params[0].equalsIgnoreCase("windowsmgr.max_events_per_sec")) {
-                        out.println("windowsmgr.max_events_per_sec=" + newValue);
-                    } else {
-                        out.println(line);
-                        }
-                    }
-
-                    in.close();
-                    out.flush();
-                    out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
-
-                }catch(Exception e) { e.printStackTrace(); }
-                return true;
-            }
-
-            if (preference == mUsbModePref) {
+                CHOKE_VALUE = newValue;
+                CHOKE_PROP = MAX_EVENTS_PROP;
+                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+            } else if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
-                try {
-                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
-
-                    String line;
-                    String params[];
-
-                    while ((line = in.readLine()) != null) {
-                        params = line.split("="); // some devices have values in ' = ' format vs '='
-                    if (params[0].equalsIgnoreCase("ro.default_usb_mode ") ||
-                        params[0].equalsIgnoreCase("ro.default_usb_mode")) {
-                        out.println("ro.default_usb_mode=" + newValue);
-                    } else {
-                        out.println(line);
-                        }
-                    }
-
-                    in.close();
-                    out.flush();
-                    out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
-
-                }catch(Exception e) { e.printStackTrace(); }
-                return true;
-            }
-
-            if (preference == mRingDelayPref) {
+                CHOKE_VALUE = newValue;
+                CHOKE_PROP = USB_MODE_PROP;
+                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+            } else if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
-                try {
-                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
-
-                    String line;
-                    String params[];
-
-                    while ((line = in.readLine()) != null) {
-                        params = line.split("="); // some devices have values in ' = ' format vs '='
-                    if (params[0].equalsIgnoreCase("ro.telephony.call_ring.delay ") ||
-                        params[0].equalsIgnoreCase("ro.telephony.call_ring.delay")) {
-                        out.println("ro.telephony.call_ring.delay=" + newValue);
-                    } else {
-                        out.println(line);
-                        }
-                    }
-
-                    in.close();
-                    out.flush();
-                    out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
-
-                }catch(Exception e) { e.printStackTrace(); }
-                return true;
-        }
-
-            if (preference == mVmHeapsizePref) {
+                CHOKE_VALUE = newValue;
+                CHOKE_PROP = RING_DELAY_PROP;
+                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+            } else if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
-                try {
-                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
-
-                    String line;
-                    String params[];
-
-                    while ((line = in.readLine()) != null) {
-                        params = line.split("="); // some devices have values in ' = ' format vs '='
-                    if (params[0].equalsIgnoreCase("dalvik.vm.heapsize ") ||
-                        params[0].equalsIgnoreCase("dalvik.vm.heapsize")) {
-                        out.println("dalvik.vm.heapsize=" + newValue);
-                    } else {
-                        out.println(line);
-                        }
-                    }
-
-                    in.close();
-                    out.flush();
-                    out.close();
-
-                    // open su shell and write commands to the OutStream for execution
-                    Process p = Runtime.getRuntime().exec("su");
-                    PrintWriter pw = new PrintWriter(p.getOutputStream());
-                    pw.println("busybox mount -o remount,rw /system");
-                    pw.println("mv /tmp/build.prop /system/build.prop");
-                    pw.println("exit");
-                    pw.close();
-
-                }catch(Exception e) { e.printStackTrace(); }
-                return true;
-        }
-
-        return false;
+                CHOKE_VALUE = newValue;
+                CHOKE_PROP = VM_HEAPSIZE_PROP;
+                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+            }
+            return true;
         }
     return false;
     }

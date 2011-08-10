@@ -1,15 +1,9 @@
 package com.n00bware.propmodder;
 import com.n00bware.propmodder.R;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.File;
+import java.io.*;
 import java.lang.*;
 import java.text.*;
-import java.*;
 import android.*;
 import android.app.*;
 import android.app.Dialog;
@@ -49,26 +43,49 @@ public class helper {
 	}
 
 	public static boolean RemountRW(){
-                Log.i(TAG, "Mount /system as READ/WRITE: RemountRW");
-		return helper.runRootCommand("mount -o rw,remount -t yaffs2 /dev/block/mtdblock1 /system");
+            Log.i(TAG, "Mount /system as READ/WRITE: RemountRW");
+            return helper.runRootCommand("mount -o rw,remount -t yaffs2 /dev/block/mtdblock1 /system");
 	}
 
 	public static boolean RemountROnly(){
-                Log.i(TAG, "Mount /system as READ ONLY: RemountROnly");
-		return helper.runRootCommand("mount -o ro,remount -t yaffs2 /dev/block/mtdblock1 /system");
+            Log.i(TAG, "Mount /system as READ ONLY: RemountROnly");
+            return helper.runRootCommand("mount -o ro,remount -t yaffs2 /dev/block/mtdblock1 /system");
 	}
 
-public void credit() {
-Context mContext = getApplicationContext();
-Dialog dialog = new Dialog(mContext);
+        public static void SetProp(String CHOKE_PROP, String CHOKE_VALUE){
+            try {
+                    Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
+                    Process i = Runtime.getRuntime().exec("su");
+                    BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
+                    PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
 
-dialog.setContentView(R.layout.credit);
-dialog.setTitle("Custom Dialog");
+                    String line;
+                    String params[];
 
-TextView text = (TextView) dialog.findViewById(R.id.text);
-text.setText("This is a test for our CREDIT SCREEN\nCode from:\nhttp://developer.android.com/guide/topics/ui/dialogs.html#ShowingADialog");
-ImageView image = (ImageView) dialog.findViewById(R.id.image);
-image.setImageResource(R.drawable.ic_launcher_settings);
-}
+                    while ((line = in.readLine()) != null) {
+                        params = line.split("="); // some devices have values in ' = ' format vs '='
+                    if (params[0].equalsIgnoreCase(CHOKE_PROP) ||
+                        params[0].equalsIgnoreCase(CHOKE_PROP + " ")) {
+                        out.println(CHOKE_PROP + CHOKE_VALUE);
+                    } else {
+                        out.println(line);
+                        Log.e(TAG, "println failed");
+                        }
+                    }
 
+                    in.close();
+                    out.flush();
+                    out.close();
+
+                    // open su shell and write commands to the OutStream for execution
+                    Process p = Runtime.getRuntime().exec("su");
+                    PrintWriter pw = new PrintWriter(p.getOutputStream());
+                    pw.println("busybox mount -o remount,rw /system");
+                    pw.println("mv /tmp/build.prop /system/build.prop");
+                    pw.println("exit");
+                    pw.close();
+
+                }catch(Exception e) { e.printStackTrace(); }
+                return;
+            }
 }
