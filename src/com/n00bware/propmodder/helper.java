@@ -55,7 +55,6 @@ public class helper {
         public static void SetProp(String CHOKE_PROP, String CHOKE_VALUE){
             try {
                     Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
-                    Process checkRoot = Runtime.getRuntime().exec("su");
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
 

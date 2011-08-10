@@ -157,7 +157,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     }
     public boolean onPreferenceChange(Preference preference, Object newValue) {
 	if (newValue != null) {
-          Log.i(TAG, "new preference selected: " + newValue);
+            Log.i(TAG, "new preference selected: " + newValue);
             if (preference == mWifiScanPref) {
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
@@ -166,7 +166,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
-            } else if (preference == mLcdDensityPref) {
+            return true;
+
+            } if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = LCD_DENSITY_PROP;
@@ -174,7 +176,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
-            } else if (preference == mLcdDensityPref) {
+            return true;
+
+            } if (preference == mLcdDensityPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = MAX_EVENTS_PROP;
@@ -182,7 +186,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
-            } else if (preference == mUsbModePref) {
+            return true;
+
+            } if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = USB_MODE_PROP;
@@ -190,7 +196,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
-            } else if (preference == mRingDelayPref) {
+            return true;
+
+            } if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = RING_DELAY_PROP;
@@ -198,7 +206,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
-            } else if (preference == mVmHeapsizePref) {
+            return true;
+
+            } if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = VM_HEAPSIZE_PROP;
@@ -206,6 +216,8 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+            return true;
+
             }
             return true;
         }
