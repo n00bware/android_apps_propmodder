@@ -162,66 +162,84 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = WIFI_SCAN_PROP;
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                helper.RemountROnly();
                 newValue = null;
+                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
             return true;
 
             } if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = LCD_DENSITY_PROP;
-                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                helper.RemountROnly();
                 newValue = null;
+                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
             return true;
 
             } if (preference == mLcdDensityPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = MAX_EVENTS_PROP;
-                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                helper.RemountROnly();
                 newValue = null;
+                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
             return true;
 
             } if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = USB_MODE_PROP;
-                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                helper.RemountROnly();
                 newValue = null;
+                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
             return true;
 
             } if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = RING_DELAY_PROP;
-                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                helper.RemountROnly();
                 newValue = null;
+                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
             return true;
 
             } if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = VM_HEAPSIZE_PROP;
-                Log.i(TAG, "new value {" + CHOKE_VALUE + "} set to CHOKE_VALUE");
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                helper.RemountROnly();
                 newValue = null;
+                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
             return true;
 
             }

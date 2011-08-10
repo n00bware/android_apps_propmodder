@@ -54,9 +54,11 @@ public class helper {
 
         public static void SetProp(String CHOKE_PROP, String CHOKE_VALUE){
             try {
+                    Process i = Runtime.getRuntime().exec("su");
                     Log.i(TAG, "bufferedReader about to start loading /system/build.prop");
                     BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
                     PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+                    Log.i(TAG, "PrintWriter says " + out);
 
                     String line;
                     String params[];
@@ -65,10 +67,12 @@ public class helper {
                         params = line.split("="); // some devices have values in ' = ' format vs '='
                     if (params[0].equalsIgnoreCase(CHOKE_PROP) ||
                         params[0].equalsIgnoreCase(CHOKE_PROP + " ")) {
+                        Log.i(TAG, "start attempting to write to tmp");
                         out.println(CHOKE_PROP + "=" + CHOKE_VALUE);
+                        Log.i(TAG, "attempt to write" + out);
                     } else {
                         out.println(line);
-                        Log.e(TAG, "println failed");
+                        Log.e(TAG, "println failed @ " + line);
                         }
                     }
 
