@@ -166,6 +166,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+                newValue = null;
             return true;
 
             } if (preference == mLcdDensityPref) {
@@ -176,6 +177,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+                newValue = null;
             return true;
 
             } if (preference == mLcdDensityPref) {
@@ -186,6 +188,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+                newValue = null;
             return true;
 
             } if (preference == mUsbModePref) {
@@ -196,6 +199,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+                newValue = null;
             return true;
 
             } if (preference == mRingDelayPref) {
@@ -206,6 +210,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+                newValue = null;
             return true;
 
             } if (preference == mVmHeapsizePref) {
@@ -216,6 +221,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
                 helper.RemountROnly();
+                newValue = null;
             return true;
 
             }
