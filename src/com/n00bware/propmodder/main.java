@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -14,6 +15,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.*;
 
 import java.io.*;
 import java.lang.*;
@@ -75,12 +77,11 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
    /*
     * Strings for modversion
-    *
-    *private static final String MODVERSION_PREF = "pref_modversion";
-    *private static final String MODVERSION_PROP = "ro.modversion";
-    *private static final String MODVERSION_PERSIST_PROP = "persist.modversion";
-    *private static String MODVERSION_DEFAULT = System.getProperty("ro.modversion");
     */
+    private static final String MOD_VERSION_PREF = "pref_modversion";
+    private static final String MOD_VERSION_PROP = "ro.modversion";
+    private static final String MOD_VERSION_PERSIST_PROP = "persist.modversion";
+    private static String MOD_VERSION_DEFAULT = System.getProperty("ro.modversion");
 
     private ListPreference mWifiScanPref;
     private ListPreference mLcdDensityPref;
@@ -88,7 +89,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
     private ListPreference mUsbModePref;
     private ListPreference mRingDelayPref;
     private ListPreference mVmHeapsizePref;
-    //private ListPreference mModVersionPref;
+    private EditTextPreference mModVersionPref;
     private AlertDialog alertDialog;
 
     @Override
@@ -113,8 +114,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
         mLcdDensityPref.setOnPreferenceChangeListener(this);
 
         mMaxEventsPref = (ListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
-        mMaxEventsPref.setValue(SystemProperties.get(MAX_EVENTS_PERSIST_PROP,
-                SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
+        mMaxEventsPref.setValue(SystemProperties.get(MAX_EVENTS_PERSIST_PROP, SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
         mMaxEventsPref.setOnPreferenceChangeListener(this);
 
         mUsbModePref = (ListPreference) prefSet.findPreference(USB_MODE_PREF);
@@ -134,12 +134,11 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
      /*
       * TODO: We don't want to use ListPreferece this should be a text box entry
-      *
-      * mModVersionPref = (ListPreference) prefSet.findPreference(MODVERSION_PREF);
-      * mModVersionPref.setValue(SystemProperties.get(MODVERSION_PERSIST_PROP;
-      *         SystemProperties.get(MODVERSION_PROP, MODVERSION_DEFAILT)));
-      * mModVersionPref.setOnPreferenceChangeListener(this);
       */
+        mModVersionPref = (EditTextPreference) findPreference(MOD_VERSION_PREF);
+
+        //another example not yet modded
+        //EditText myEditText = (EditText)myEditTextPreference.getEditText(); myEditText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 
         // WARN THE MASSES THIS CAN BE DANGEROUS!!!
         alertDialog = new AlertDialog.Builder(this).create();
@@ -166,12 +165,8 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                newValue = null;
-                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
                 Log.i(TAG, "default value is " + WIFI_SCAN_DEFAULT + " but it just changed so reevaluate.");
-                WIFI_SCAN_DEFAULT = System.getProperty("wifi.supplicant_scan_interval");
+                WIFI_SCAN_DEFAULT = System.getProperty(CHOKE_PROP);
                 Log.i(TAG, "new wifi default is {" + WIFI_SCAN_DEFAULT + "}"); 
             return true;
 
@@ -183,13 +178,12 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                newValue = null;
-                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
+                Log.i(TAG, "default value is " + LCD_DENSITY_DEFAULT + " but it just changed so reevaluate.");
+                LCD_DENSITY_DEFAULT = System.getProperty(CHOKE_PROP);
+                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + LCD_DENSITY_DEFAULT + "}"); 
             return true;
 
-            } if (preference == mLcdDensityPref) {
+            } if (preference == mMaxEventsPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
                 CHOKE_PROP = MAX_EVENTS_PROP;
@@ -197,10 +191,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                newValue = null;
-                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
+                Log.i(TAG, "default value is " + MAX_EVENTS_DEFAULT + " but it just changed so reevaluate.");
+                MAX_EVENTS_DEFAULT = System.getProperty(CHOKE_PROP);
+                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + MAX_EVENTS_DEFAULT + "}"); 
             return true;
 
             } if (preference == mUsbModePref) {
@@ -211,10 +204,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                newValue = null;
-                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
+                Log.i(TAG, "default value is " + USB_MODE_DEFAULT + " but it just changed so reevaluate.");
+                USB_MODE_DEFAULT = System.getProperty(CHOKE_PROP);
+                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + USB_MODE_DEFAULT + "}"); 
             return true;
 
             } if (preference == mRingDelayPref) {
@@ -225,10 +217,9 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                newValue = null;
-                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
+                Log.i(TAG, "default value is " + RING_DELAY_DEFAULT + " but it just changed so reevaluate.");
+                RING_DELAY_DEFAULT = System.getProperty(CHOKE_PROP);
+                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + RING_DELAY_DEFAULT + "}"); 
             return true;
 
             } if (preference == mVmHeapsizePref) {
@@ -239,10 +230,22 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
                 Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
                 helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "calling method ClearChokes with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.ClearChokes((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                newValue = null;
-                Log.i(TAG, "newValue should be set to null now: newValue: " + newValue);
+                Log.i(TAG, "default value is " + VM_HEAPSIZE_DEFAULT + " but it just changed so reevaluate.");
+                VM_HEAPSIZE_DEFAULT = System.getProperty(CHOKE_PROP);
+                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + VM_HEAPSIZE_DEFAULT + "}"); 
+            return true;
+
+            } if (preference == mModVersionPref) {
+                SystemProperties.set(MOD_VERSION_PROP, (String)newValue);
+                CHOKE_VALUE = mModVersionPref.getText();
+                CHOKE_PROP = MOD_VERSION_PROP;
+                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
+                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
+                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
+                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
+                Log.i(TAG, "default value is " + MOD_VERSION_DEFAULT + " but it just changed so reevaluate.");
+                MOD_VERSION_DEFAULT = System.getProperty(CHOKE_PROP);
+                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + MOD_VERSION_DEFAULT + "}"); 
             return true;
 
             }

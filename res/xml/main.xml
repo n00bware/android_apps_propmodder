@@ -46,6 +46,13 @@
             android:title="@string/pref_vm_heapsize_title" android:summary="@string/pref_vm_heapsize_summary"
             android:entries="@array/entries_vm_heapsize"
             android:entryValues="@array/entries_vm_heapsize" />
+
+        <EditTextPreference
+            android:key="mod_version"
+            android:title="@string/pref_mod_version_title"
+            android:summary="@string/pref_mod_version_summary"
+            android:inputType="text"></EditTextPreference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

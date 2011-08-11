@@ -42,8 +42,8 @@
     <string name="pref_vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to (requires reboot)</string>
 
     <!--ModVersion -->
-    <string name="pref_modversion_title">Mod Version in settings</string>
-    <string name="pref_modversion_summary">This is strictly for appearances and serves NO other purpose</string>
+    <string name="pref_mod_version_title">Mod Version in settings</string>
+    <string name="pref_mod_version_summary">This is strictly for appearances and serves NO other purpose</string>
 
     <!-- NOT OUR FAULT Dialoge -->
     <string name="propmodder_warning_title">ROOT IS REQUIRED</string>
