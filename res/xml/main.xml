@@ -50,8 +50,7 @@
         <EditTextPreference
             android:key="mod_version"
             android:title="@string/pref_mod_version_title"
-            android:summary="@string/pref_mod_version_summary"
-            android:inputType="text"></EditTextPreference>
+            android:summary="@string/pref_mod_version_summary"></EditTextPreference>
 
     </PreferenceCategory>
 

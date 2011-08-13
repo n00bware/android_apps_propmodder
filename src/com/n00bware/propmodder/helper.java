@@ -19,6 +19,7 @@ public class helper {
 
     public static boolean runRootCommand(String command) {
         Log.i(TAG, "runRootCommand started");
+        Log.i(TAG, "Attempting to run: " + command);
         Process process = null;
         DataOutputStream os = null;
         try {
@@ -42,22 +43,27 @@ public class helper {
         return true;
     }
 
-    public static boolean RemountRW(){
+    public static boolean MakeTmp() {
+        Log.i(TAG, "Copying build.prop to /tmp/build.prop for modding");
+        return helper.runRootCommand("cp /system/build.prop /tmp/build.prop");
+    }
+
+    public static boolean RemountRW() {
         Log.i(TAG, "Mount /system as READ/WRITE: RemountRW");
-        return helper.runRootCommand("mount -o rw,remount -t yaffs2 /dev/block/mtdblock1 /system");
+        return helper.runRootCommand("busybox mount -o rw,remount -t yaffs2 /dev/block/mtdblock1 /system");
     }
 
     public static boolean RemountROnly(){
         Log.i(TAG, "Mount /system as READ ONLY: RemountROnly");
-        return helper.runRootCommand("mount -o ro,remount -t yaffs2 /dev/block/mtdblock1 /system");
+        return helper.runRootCommand("busybox mount -o ro,remount -t yaffs2 /dev/block/mtdblock1 /system");
     }
 
     public static void SetProp(String CHOKE_PROP, String CHOKE_VALUE){
         Log.i(TAG, "start SetProp method with args: " + CHOKE_PROP + " & " + CHOKE_VALUE);
         try {
             helper.RemountRW();
-            BufferedReader in = new BufferedReader(new FileReader("/system/build.prop"));
-            PrintWriter out = new PrintWriter(new File("/tmp/build.prop"));
+            BufferedReader in = new BufferedReader(new FileReader("/tmp/build.prop"));
+            PrintWriter out = new PrintWriter(new File("/tmp/build_hack.prop"));
 
             String line;
             String params[];
@@ -78,15 +84,6 @@ public class helper {
                 in.close();
                 out.flush();
                 out.close();
-
-                // open su shell and write commands to the OutStream for execution
-                Log.i(TAG, "***START HACKING***");
-                Process p = Runtime.getRuntime().exec("su");
-                PrintWriter pw = new PrintWriter(p.getOutputStream());
-                pw.println("busybox mount -o remount,rw /system");
-                pw.println("cp /tmp/build.prop /system/build.prop");
-                pw.println("exit");
-                pw.close();
 
         }catch(Exception e) { e.printStackTrace();
            Log.e(TAG, "***DEBUG***: " + e);}

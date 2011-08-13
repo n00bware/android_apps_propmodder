@@ -25,7 +25,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
     private static String TAG = "PropModder";
     public Object CHOKE_VALUE;
-    public static String CHOKE_PROP = "";
+    public static String function = "";
 
    /*
     *Strings for wifi_scan
@@ -103,6 +103,8 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
         Log.i(TAG, "loading prefs");
 
+        helper.MakeTmp();
+
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
                 SystemProperties.get(WIFI_SCAN_PROP, WIFI_SCAN_DEFAULT)));
@@ -114,7 +116,8 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
         mLcdDensityPref.setOnPreferenceChangeListener(this);
 
         mMaxEventsPref = (ListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
-        mMaxEventsPref.setValue(SystemProperties.get(MAX_EVENTS_PERSIST_PROP, SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
+        mMaxEventsPref.setValue(SystemProperties.get(MAX_EVENTS_PERSIST_PROP,
+                SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
         mMaxEventsPref.setOnPreferenceChangeListener(this);
 
         mUsbModePref = (ListPreference) prefSet.findPreference(USB_MODE_PREF);
@@ -154,88 +157,71 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
         alertDialog.show();
     }
+
+/* TODO This is not right
+ *   void onDialogClosed(boolean positiveResult) {
+ *      mModVersionPref.getText(MOD_VERSION_PERSIST_PROP);
+ *      if (MOD_VERSION_PREF != MOD_VERSION_DEFAULT) {
+ *          CHOKE_VALUE = mModVersionPref.getText();
+ *          function = "mod_version";
+ *          Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+ *          helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
+ *      }
+ *  }
+ */
+
     public boolean onPreferenceChange(Preference preference, Object newValue) {
 	if (newValue != null) {
             Log.i(TAG, "new preference selected: " + newValue);
             if (preference == mWifiScanPref) {
                 SystemProperties.set(WIFI_SCAN_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
-                CHOKE_PROP = WIFI_SCAN_PROP;
-                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
-                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "default value is " + WIFI_SCAN_DEFAULT + " but it just changed so reevaluate.");
-                WIFI_SCAN_DEFAULT = System.getProperty(CHOKE_PROP);
-                Log.i(TAG, "new wifi default is {" + WIFI_SCAN_DEFAULT + "}"); 
+                function = "wifi";
+                Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+                helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mLcdDensityPref) {
                 SystemProperties.set(LCD_DENSITY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
-                CHOKE_PROP = LCD_DENSITY_PROP;
-                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
-                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "default value is " + LCD_DENSITY_DEFAULT + " but it just changed so reevaluate.");
-                LCD_DENSITY_DEFAULT = System.getProperty(CHOKE_PROP);
-                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + LCD_DENSITY_DEFAULT + "}"); 
+                function = "lcd";
+                Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+                helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mMaxEventsPref) {
                 SystemProperties.set(MAX_EVENTS_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
-                CHOKE_PROP = MAX_EVENTS_PROP;
-                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
-                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "default value is " + MAX_EVENTS_DEFAULT + " but it just changed so reevaluate.");
-                MAX_EVENTS_DEFAULT = System.getProperty(CHOKE_PROP);
-                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + MAX_EVENTS_DEFAULT + "}"); 
+                function = "max_events";
+                Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+                helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mUsbModePref) {
                 SystemProperties.set(USB_MODE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
-                CHOKE_PROP = USB_MODE_PROP;
-                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
-                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "default value is " + USB_MODE_DEFAULT + " but it just changed so reevaluate.");
-                USB_MODE_DEFAULT = System.getProperty(CHOKE_PROP);
-                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + USB_MODE_DEFAULT + "}"); 
+                function = "usb_mode";
+                Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+                helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mRingDelayPref) {
                 SystemProperties.set(RING_DELAY_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
-                CHOKE_PROP = RING_DELAY_PROP;
-                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
-                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "default value is " + RING_DELAY_DEFAULT + " but it just changed so reevaluate.");
-                RING_DELAY_DEFAULT = System.getProperty(CHOKE_PROP);
-                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + RING_DELAY_DEFAULT + "}"); 
+                function = "ring_delay";
+                Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+                helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mVmHeapsizePref) {
                 SystemProperties.set(VM_HEAPSIZE_PERSIST_PROP, (String)newValue);
                 CHOKE_VALUE = newValue;
-                CHOKE_PROP = VM_HEAPSIZE_PROP;
-                Log.i(TAG, "new value {" + CHOKE_PROP +"} set to CHOKE_PROP");
-                Log.i(TAG, "new value {" + CHOKE_VALUE +"} set to CHOKE_VALUE");
-                Log.i(TAG, "calling method SetProp with args " + CHOKE_PROP + " and " + CHOKE_VALUE);
-                helper.SetProp((String)CHOKE_PROP, (String)CHOKE_VALUE);
-                Log.i(TAG, "default value is " + VM_HEAPSIZE_DEFAULT + " but it just changed so reevaluate.");
-                VM_HEAPSIZE_DEFAULT = System.getProperty(CHOKE_PROP);
-                Log.i(TAG, "new " + CHOKE_PROP + " default is {" + VM_HEAPSIZE_DEFAULT + "}"); 
+                function = "vm_heapsize";
+                Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
+                helper.runRootCommand("pm.sh " + function + " " + CHOKE_VALUE);
             return true;
 
-            } if (preference == mModVersionPref) {
+/*          } if (preference == mModVersionPref) {
                 SystemProperties.set(MOD_VERSION_PROP, (String)newValue);
                 CHOKE_VALUE = mModVersionPref.getText();
                 CHOKE_PROP = MOD_VERSION_PROP;
@@ -246,7 +232,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 Log.i(TAG, "default value is " + MOD_VERSION_DEFAULT + " but it just changed so reevaluate.");
                 MOD_VERSION_DEFAULT = System.getProperty(CHOKE_PROP);
                 Log.i(TAG, "new " + CHOKE_PROP + " default is {" + MOD_VERSION_DEFAULT + "}"); 
-            return true;
+            return true; */
 
             }
             return true;
