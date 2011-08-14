@@ -44,8 +44,8 @@ public class helper {
     }
 
     public static boolean MakeTmp() {
-        Log.i(TAG, "Copying build.prop to /tmp/build.prop for modding");
-        return helper.runRootCommand("cp /system/build.prop /tmp/build.prop");
+        Log.i(TAG, "Copying build.prop to /tmp/pm_build.prop for modding");
+        return helper.runRootCommand("cp /system/build.prop /tmp/pm_build.prop");
     }
 
     public static boolean RemountRW() {
@@ -62,7 +62,7 @@ public class helper {
         Log.i(TAG, "start SetProp method with args: " + CHOKE_PROP + " & " + CHOKE_VALUE);
         try {
             helper.RemountRW();
-            BufferedReader in = new BufferedReader(new FileReader("/tmp/build.prop"));
+            BufferedReader in = new BufferedReader(new FileReader("/tmp/pm_build.prop"));
             PrintWriter out = new PrintWriter(new File("/tmp/build_hack.prop"));
 
             String line;
