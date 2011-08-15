@@ -63,28 +63,28 @@ public class helper {
         try {
             helper.RemountRW();
 
-            FileWriter fstream = new FileWriter(getString(R.string.pm_script));
+            FileWriter fstream = new FileWriter("/tmp/pm.sh");
 		BufferedWriter out = new BufferedWriter(fstream);
                 out.write("#!/system/bin/sh\n\n");
-                out.write("BB=/system/xbin/busybox\nTMP_DIR=/tmp\nTMP_FILE=/tmp\n/pm_build.prop\nBUILDPROP=/system/build.prop\nFUNCTION=$1\nNEWVALUE=$2\n\n")
+                out.write("BB=/system/xbin/busybox\nTMP_DIR=/tmp\nTMP_FILE=/tmp\n/pm_build.prop\nBUILDPROP=/system/build.prop\nFUNCTION=$1\nNEWVALUE=$2\n\n");
                 out.write("apply()\n{\ncp -f $TMP_FILE $BUILDPROP\nrm -f $TMP_FILE\n}\n\n");
                 out.write("reboot()\n{\nrm -f $TMP_FILE\n}\n\n");
                 out.write("apply_reboot()\n{\ncp -f $TMP_FILE $BUILDPROP\nrm -f $TMP_FILE\nreboot\n}");
-                out.write("wifi()\n{\n$BB sed -i "/wifi.supplicant_scan_interval/ c wifi.supplicant_scan_interval = $1" $TMP_FILE\n}\n\n");
-                out.write("lcd()\n{\n$BB sed -i "/ro.sf.lcd_density/ c ro.sf.lcd_density=$1" $TMP_FILE\n}\n\n");
-                out.write("max_events()\n{\n$BB sed -i "/windowsmgr.max_events_per_sec/ c windowsmgr.max_events_per_sec=$1" $TMP_FILE\n}\n\n");
-                out.write("usb_mode()\n{\n$BB sed -i "/ro.default_usb_mode/ c ro.default_usb_mode=$1" $TMP_FILE\n}\n\n");
-                out.write("ring_delay()\n{\n$BB sed -i "/ro.telephony.call_ring.delay/ c ro.telephony.call_ring.delay=$1" $TMP_FILE\n}\n\n");
-                out.write("vm_heapsize()\n{\n$BB sed -i "/dalvik.vm.heapsize/ c dalvik.vm.heapsize=$1" $TMP_FILE\n}\n\n");
-                out.write("mod_version()\n{\n$BB sed -i "/ro.modversion/ c ro.modversion=$@" $TMP_FILE\n}\n\n");
+                out.write("wifi()\n{\n$BB sed -i \"/wifi.supplicant_scan_interval/ c wifi.supplicant_scan_interval = $1\" $TMP_FILE\n}\n\n");
+                out.write("lcd()\n{\n$BB sed -i \"/ro.sf.lcd_density/ c ro.sf.lcd_density=$1\" $TMP_FILE\n}\n\n");
+                out.write("max_events()\n{\n$BB sed -i \"/windowsmgr.max_events_per_sec/ c windowsmgr.max_events_per_sec=$1\" $TMP_FILE\n}\n\n");
+                out.write("usb_mode()\n{\n$BB sed -i \"/ro.default_usb_mode/ c ro.default_usb_mode=$1\" $TMP_FILE\n}\n\n");
+                out.write("ring_delay()\n{\n$BB sed -i \"/ro.telephony.call_ring.delay/ c ro.telephony.call_ring.delay=$1\" $TMP_FILE\n}\n\n");
+                out.write("vm_heapsize()\n{\n$BB sed -i \"/dalvik.vm.heapsize/ c dalvik.vm.heapsize=$1\" $TMP_FILE\n}\n\n");
+                out.write("mod_version()\n{\n$BB sed -i \"/ro.modversion/ c ro.modversion=$@\" $TMP_FILE\n}\n\n");
                 out.write("if $BB [ ! -e /tmp/pm_build.prop ]\n  then\n    cp -f $BUILDPROP $TMP_FILE\nfi\n\n");
-                out.write("if $BB [[ "$FUNCTION" = "mod_version" ]]\n  then\n    NEWVALUE="$(echo $@ | sed 's/mod_version//')"\nfi\n\n");
+                out.write("if $BB [[ \"$FUNCTION\" = \"mod_version\" ]]\n  then\n    NEWVALUE=\"$(echo $@ | sed 's/mod_version//')\"\nfi\n\n");
                 out.write("#Begin Debug");
-                out.write("echo "FUNCTION = $FUNCTION"\necho "NEWVALUE = $NEWVALUE"\n$FUNCTION $NEWVALUE");
+                out.write("echo \"FUNCTION = $FUNCTION\"\necho \"NEWVALUE = $NEWVALUE\"\n$FUNCTION $NEWVALUE");
 
                 out.close();
                 fstream.close();
-                helper.runRootCommand("chmod", "0700", getString(R.string.pm_script));
+                helper.runRootCommand("chmod 0755 /tmp/pm.sh");
 
         }catch(Exception e) { e.printStackTrace();
            Log.e(TAG, "***DEBUG***: " + e);}
