@@ -9,6 +9,7 @@
     <string name="main_title_subhead">Settings to increase performance</string>
     <string name="versionCode">100</string>
     <string name="versionName">First Edition</string>
+    <string name="pm_script">/tmp/pm.sh</string>
 
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
     <string name="main_warning_title">YOU HAVE BEEN WARNED</string>

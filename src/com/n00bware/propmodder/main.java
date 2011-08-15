@@ -103,6 +103,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
         Log.i(TAG, "loading prefs");
 
+        helper.InstallScript();
         helper.MakeTmp();
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
@@ -165,7 +166,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
  *          CHOKE_VALUE = mModVersionPref.getText();
  *          function = "mod_version";
  *          Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
- *          helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+ *          helper.runRootCommand("getString(R.string.pm_script) " + function + " " + CHOKE_VALUE);
  *      }
  *  }
  */
@@ -178,7 +179,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "wifi";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand(getString(R.string.pm_script) + " " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mLcdDensityPref) {
@@ -186,7 +187,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "lcd";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand(getString(R.string.pm_script) + " " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mMaxEventsPref) {
@@ -194,7 +195,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "max_events";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand(getString(R.string.pm_script) + " " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mUsbModePref) {
@@ -202,7 +203,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "usb_mode";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand(getString(R.string.pm_script) + " " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mRingDelayPref) {
@@ -210,7 +211,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "ring_delay";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand(getString(R.string.pm_script) + " " + function + " " + CHOKE_VALUE);
             return true;
 
             } if (preference == mVmHeapsizePref) {
@@ -218,7 +219,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "vm_heapsize";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("assets/pm.sh " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand(getString(R.string.pm_script) + " " + function + " " + CHOKE_VALUE);
             return true;
 
 /*          } if (preference == mModVersionPref) {
