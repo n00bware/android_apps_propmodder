@@ -122,10 +122,13 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 SystemProperties.get(MAX_EVENTS_PROP, MAX_EVENTS_DEFAULT)));
         mMaxEventsPref.setOnPreferenceChangeListener(this);
 
-        mUsbModePref = (ListPreference) prefSet.findPreference(USB_MODE_PREF);
-        mUsbModePref.setValue(SystemProperties.get(USB_MODE_PERSIST_PROP,
-                SystemProperties.get(USB_MODE_PROP, USB_MODE_DEFAULT)));
-        mUsbModePref.setOnPreferenceChangeListener(this);
+      /* This may added again later
+       *
+       *mUsbModePref = (ListPreference) prefSet.findPreference(USB_MODE_PREF);
+       *mUsbModePref.setValue(SystemProperties.get(USB_MODE_PERSIST_PROP,
+       *        SystemProperties.get(USB_MODE_PROP, USB_MODE_DEFAULT)));
+       *mUsbModePref.setOnPreferenceChangeListener(this);
+       */
 
         mRingDelayPref = (ListPreference) prefSet.findPreference(RING_DELAY_PREF);
         mRingDelayPref.setValue(SystemProperties.get(RING_DELAY_PERSIST_PROP,

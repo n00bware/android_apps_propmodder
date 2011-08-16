@@ -55,7 +55,7 @@
 <!--*
     * Values for ro.default_usb_mode
     *-->
-    <string-array name="entries_usb_mode" translatable="flase">
+    <string-array name="entries_usb_mode_values" translatable="flase">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -65,7 +65,7 @@
     <!--* TODO explaing mount points
         * Explaing the usb mounting values
         *-->
-        <string-array name="entries_usb_mode_values" translatable="true">
+        <string-array name="entries_usb_mode" translatable="true">
             <item>Portal and Tools</item>
             <item>Windows Media Sync</item>
             <item>Memory Card Access</item>
