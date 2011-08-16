@@ -33,8 +33,8 @@
             android:title="@string/pref_usb_mode_title"
             android:summary="@string/pref_usb_mode_summary"
             android:persistent="false"
-            android:entries="@array/entries_usb_mode"
-            android:entryValues="@array/entries_usb_mode_values" />
+            android:entryValues="@array/entries_usb_mode"
+            android:entries="@array/entries_usb_mode_values" />
 
         <ListPreference
             android:key="ring_delay"
