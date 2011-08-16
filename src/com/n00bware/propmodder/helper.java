@@ -70,7 +70,7 @@ public class helper {
                 out.write("apply()\n{\ncp -f $TMP_FILE $BUILDPROP\nrm -f $TMP_FILE\n}\n\n");
                 out.write("reboot()\n{\nrm -f $TMP_FILE\n}\n\n");
                 out.write("apply_reboot()\n{\ncp -f $TMP_FILE $BUILDPROP\nrm -f $TMP_FILE\nreboot\n}");
-                out.write("wifi()\n{\n$BB sed -i \"/wifi.supplicant_scan_interval/ c wifi.supplicant_scan_interval = $1\" $TMP_FILE\n}\n\n");
+                out.write("wifi()\n{\n####debug\nsu\ntouch /tmp/pm_proof\n$BB sed -i \"/wifi.supplicant_scan_interval/ c wifi.supplicant_scan_interval = $1\" $TMP_FILE\n}\n\n");
                 out.write("lcd()\n{\n$BB sed -i \"/ro.sf.lcd_density/ c ro.sf.lcd_density=$1\" $TMP_FILE\n}\n\n");
                 out.write("max_events()\n{\n$BB sed -i \"/windowsmgr.max_events_per_sec/ c windowsmgr.max_events_per_sec=$1\" $TMP_FILE\n}\n\n");
                 out.write("usb_mode()\n{\n$BB sed -i \"/ro.default_usb_mode/ c ro.default_usb_mode=$1\" $TMP_FILE\n}\n\n");

@@ -105,6 +105,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
         helper.InstallScript();
         helper.MakeTmp();
+        helper.RemountRW();
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(WIFI_SCAN_PERSIST_PROP,
@@ -179,7 +180,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "wifi";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("/tmp/pm.sh" + " " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand("busybox sed -i \"/wifi.supplicant_scan_interval/ c wifi.supplicant_scan_interval=" + newValue + "\" /system/build.prop");
             return true;
 
             } if (preference == mLcdDensityPref) {
@@ -187,7 +188,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "lcd";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("/tmp/pm.sh" + " " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand("busybox sed -i \"/ro.sf.lcd_density/ c ro.sf.lcd_density=" + newValue + "\" /system/build.prop");
             return true;
 
             } if (preference == mMaxEventsPref) {
@@ -195,7 +196,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "max_events";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("/tmp/pm.sh" + " " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand("busybox sed -i \"/windowsmgr.max_events_per_sec/ c windowsmgr.max_events_per_sec=" + newValue + "\" /system/build.prop");
             return true;
 
             } if (preference == mUsbModePref) {
@@ -203,7 +204,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "usb_mode";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("/tmp/pm.sh" + " " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand("busybox sed -i \"/ro.default_usb_mode/ c ro.default_usb_mode=" + newValue + "\" /system/build.prop");
             return true;
 
             } if (preference == mRingDelayPref) {
@@ -211,7 +212,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "ring_delay";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("/tmp/pm.sh" + " " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand("busybox sed -i \"/ro.telephony.call_ring.delay/ c ro.telephony.call_ring.delay=" + newValue + "\" /system/build.prop");
             return true;
 
             } if (preference == mVmHeapsizePref) {
@@ -219,7 +220,7 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
                 CHOKE_VALUE = newValue;
                 function = "vm_heapsize";
                 Log.i(TAG, "calling script with args " + function + " and " + CHOKE_VALUE);
-                helper.runRootCommand("/tmp/pm.sh" + " " + function + " " + CHOKE_VALUE);
+                helper.runRootCommand("busybox sed -i \"/dalvik.vm.heapsize/ c dalvik.vm.heapsize=" + newValue + "\" /system/build.prop");
             return true;
 
 /*          } if (preference == mModVersionPref) {
