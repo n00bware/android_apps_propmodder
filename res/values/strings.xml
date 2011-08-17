@@ -21,7 +21,7 @@
 
     <!-- LCD density -->
     <string name="pref_lcd_density_title">LCD density</string>
-    <string name="pref_lcd_density_summary">This is the screen density allowing more high defination look (requires reboot)</string>
+    <string name="pref_lcd_density_summary">This is the screen density allowing more high definition look (requires reboot)</string>
 
     <!-- Max events per second -->
     <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
@@ -31,11 +31,11 @@
     <!-- Default USB mode -->
     <string name="pref_usb_mode_title">Default USB mode</string>
     <!-- TODO this isn't very clear -->
-    <string name="pref_usb_mode_summary">This decides what the system does when you use USB with your computer (requires reboot)</string>
+    <string name="pref_usb_mode_summary">This decides what the default setting is when you plug in to a computer via USB (requires reboot)</string>
 
     <!-- Telephony ring delay -->
     <string name="pref_ring_delay_title">Telephone ringer delay</string>
-    <string name="pref_ring_delay_summary">The amount of time from when the system registars an incoming phonecall till the ringer starts (requires reboot)</string>
+    <string name="pref_ring_delay_summary">The amount of time from when the system registars an incoming phone call until the ringer starts (requires reboot)</string>
 
     <!-- Dalvik heapsize -->
     <string name="pref_vm_heapsize_title">Dalvik cache heapsize</string>
