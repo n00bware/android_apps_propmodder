@@ -103,8 +103,6 @@ public class main extends PreferenceActivity implements Preference.OnPreferenceC
 
         Log.i(TAG, "loading prefs");
 
-        helper.InstallScript();
-        helper.MakeTmp();
         helper.RemountRW();
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);

@@ -5,10 +5,10 @@
     <!-- Generic -->
     <string name="app_name">PropModder</string>
     <string name="general_title">PropModder</string>
-    <string name="main_title_head">Prop Modder v1.0</string>
-    <string name="main_title_subhead">Settings to increase performance</string>
-    <string name="versionCode">100</string>
-    <string name="versionName">First Edition</string>
+    <string name="main_title_head">Prop Modder v1.1</string>
+    <string name="main_title_subhead">Click here to reinitialize the app</string>
+    <string name="versionCode">110</string>
+    <string name="versionName">Release v1.1</string>
     <string name="pm_script">/tmp/pm.sh</string>
 
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
@@ -26,7 +26,7 @@
     <!-- Max events per second -->
     <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
     <!--TODO find good explaination of this value -->
-    <string name="pref_max_events_summary">TODO explain (requires reboot)</string>
+    <string name="pref_max_events_summary">This is a runtime value that controls the number of events the system will allow in a second (requires reboot)</string>
 
     <!-- Default USB mode -->
     <string name="pref_usb_mode_title">Default USB mode</string>
