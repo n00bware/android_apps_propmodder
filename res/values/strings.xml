@@ -50,4 +50,13 @@
     <string name="propmodder_warning_title">ROOT IS REQUIRED</string>
     <string name="propmodder_warning">This program changes system properties in /system/build.prop DO NOT USE if you don\'t know what you are doing. We (n00bware, makers of PropModder) are not responsible for your device PERIOD. You have been warned</string>
 
+    <!-- Change Log strings -->
+    <string name="showbuild_title">Do you know what is in your build.prop</string>
+    <string name="showbuild_dialog">This is your /system/build.prop</string>
+    <string name="showbuild_loading">Loading build.prop\u2026</string>
+    <string name="showbuild_error">Error loading build.prop\u2026</string>
+    <string name="showbuild_unknown">Unknown</string>
+    <string name="showbuild_version">Version</string>
+    <string name="showbuild_label">We should look because knowing is half the battle</string>
+
 </resources>
