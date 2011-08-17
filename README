@@ -1,0 +1,22 @@
+THIS PROGRAM IS IN ACTIVE DEVELOPMENT
+
++Commit history line will serve as a ChangLog for now
+
+We love Github's issue tracker(Please submit bugs here) and encourage people to fork and submit pull requests
+
++Make note of the git tags the main tree isn't always buildable as the app is still in development.  If you want to compile a working version of the app be sure to use the version tags
+
++This app is free(RootzWiki)/donation(Android Market) or you can compile it yourself
+
+################################################################
+To Compile PropModder using android source code:
+
+git clone http://github.com/n00bware/android_apps_propmodder
+cd android_apps_propmodder
+TOP=~/path/to/android/source/code
+source $TOP/build/envsetup.sh
+mm
+
+To Compile PropModder using Eclipse:
+
+... don't ask us we don't use it.
