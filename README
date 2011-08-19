@@ -19,4 +19,10 @@ mm
 
 To Compile PropModder using Eclipse:
 
-... don't ask us we don't use it.
+Create a new Android project.
+Choose to create one using existing source. Use this source of course.
+Copy development/ide/eclipse/.classpath to the root of your project directory.
+Refresh the project in Eclipse.
+
+This assumes you have the CyanogenMod source loaded into Eclipse.
+If you don't you will have to adjust the build path.
