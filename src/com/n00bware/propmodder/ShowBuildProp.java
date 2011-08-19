@@ -16,57 +16,54 @@
 
 package com.n00bware.propmodder;
 
-import com.n00bware.propmodder.R;
-
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Config;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.android.internal.app.AlertActivity;
 import com.android.internal.app.AlertController;
 
-public class showbuild extends AlertActivity {
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+
+public class ShowBuildProp extends AlertActivity {
+
+    private static final String TAG = "PropModder";
 
     private static final String SHOWBUILD_PATH = "/tmp/showbuild";
-    private static String TAG = "PropModder";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        InputStreamReader inputReader = null;
+        Reader reader = null;
         StringBuilder data = null;
-        helper.runRootCommand("cp /system/build.prop " + SHOWBUILD_PATH);
-        helper.runRootCommand("chmod 777 " + SHOWBUILD_PATH);
+        RootHelper.runRootCommand("cp /system/build.prop " + SHOWBUILD_PATH);
+        RootHelper.runRootCommand("chmod 777 " + SHOWBUILD_PATH);
         try {
             data = new StringBuilder(2048);
             char tmp[] = new char[2048];
             int numRead;
-            inputReader = new FileReader(SHOWBUILD_PATH);
-            while ((numRead = inputReader.read(tmp)) >= 0) {
+            reader = new BufferedReader(new FileReader(SHOWBUILD_PATH));
+            while ((numRead = reader.read(tmp)) >= 0) {
                 data.append(tmp, 0, numRead);
             }
         } catch (IOException e) {
-            Log.i(TAG, "This is what we know: " + e);
+            Log.e(TAG, "IOException while reading file:", e);
             showErrorAndFinish();
             return;
         } finally {
             try {
-                if (inputReader != null) {
-                    inputReader.close();
+                if (reader != null) {
+                    reader.close();
                 }
             } catch (IOException e) {
-                Log.i(TAG, "This is what we know: " + e);
+                Log.e(TAG, "IOException while closing reader:", e);
             }
         }
 
@@ -77,7 +74,7 @@ public class showbuild extends AlertActivity {
 
         WebView webView = new WebView(this);
 
-        // Begin the loading.  This will be done in a separate thread in WebView.
+        // Begin the loading. This will be done in a separate thread in WebView.
         webView.loadDataWithBaseURL(null, data.toString(), "text/plain", "utf-8", null);
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -95,8 +92,7 @@ public class showbuild extends AlertActivity {
     }
 
     private void showErrorAndFinish() {
-        Toast.makeText(this, R.string.showbuild_error, Toast.LENGTH_LONG)
-                .show();
+        Toast.makeText(this, R.string.showbuild_error, Toast.LENGTH_LONG).show();
         finish();
     }
 
