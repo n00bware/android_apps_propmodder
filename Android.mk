@@ -5,7 +5,7 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
-LOCAL_PACKAGE_NAME := propmodder
+LOCAL_PACKAGE_NAME := PropModder
 
 include $(BUILD_PACKAGE)
 
