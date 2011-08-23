@@ -43,6 +43,7 @@ public class ShowBuildProp extends AlertActivity {
 
         Reader reader = null;
         StringBuilder data = null;
+        RootHelper.remountRW();
         RootHelper.runRootCommand("cp /system/build.prop " + SHOWBUILD_PATH);
         RootHelper.runRootCommand("chmod 777 " + SHOWBUILD_PATH);
         try {
