@@ -27,6 +27,7 @@ import com.android.internal.app.AlertActivity;
 import com.android.internal.app.AlertController;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -44,6 +45,14 @@ public class ShowBuildProp extends AlertActivity {
         Reader reader = null;
         StringBuilder data = null;
         RootHelper.remountRW();
+
+        /* Determin if /tmp exists if it doesn't we make it */
+        File tmpDir=new File("/tmp");
+        boolean exists = tmpDir.exists();
+        if (!exists) {
+            RootHelper.runRootCommand("mkdir /tmp");
+        }
+
         RootHelper.runRootCommand("cp /system/build.prop " + SHOWBUILD_PATH);
         RootHelper.runRootCommand("chmod 777 " + SHOWBUILD_PATH);
         try {
