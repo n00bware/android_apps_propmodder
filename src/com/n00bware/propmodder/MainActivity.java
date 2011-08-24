@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemProperties;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -18,7 +19,9 @@ public class MainActivity extends PreferenceActivity implements
 
     private static final String TAG = "PropModder";
 
-    private static final String ROOT_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
+    private static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
+
+    private static final String APPEND_CMD = "echo \"%s=%s\" >> /system/build.prop";
 
     private ListPreference mWifiScanPref;
 
@@ -31,6 +34,8 @@ public class MainActivity extends PreferenceActivity implements
     private ListPreference mVmHeapsizePref;
 
     private ListPreference mFastUpPref;
+
+    private CheckBoxPreference mDisableBootAnimPref;
 
     private AlertDialog mAlertDialog;
 
@@ -74,12 +79,26 @@ public class MainActivity extends PreferenceActivity implements
                 SystemProperties.get(Constants.FAST_UP_PROP, Constants.FAST_UP_DEFAULT)));
         mFastUpPref.setOnPreferenceChangeListener(this);
 
-        /* Mount /system RW and determine if /system/tmp exists; if it doesn't we make it */
-        RootHelper.remountRW();
-        File tmpDir=new File("/system/tmp");
+        mDisableBootAnimPref = (CheckBoxPreference) prefSet
+                .findPreference(Constants.DISABLE_BOOT_ANIM_PREF);
+        boolean bootAnim1 = SystemProperties.getBoolean(Constants.DISABLE_BOOT_ANIM_PROP_1, true);
+        boolean bootAnim2 = SystemProperties.getBoolean(Constants.DISABLE_BOOT_ANIM_PROP_2, false);
+        mDisableBootAnimPref.setChecked(SystemProperties.getBoolean(
+                Constants.DISABLE_BOOT_ANIM_PERSIST_PROP, !bootAnim1 && bootAnim2));
+
+        /*
+         * Mount /system RW and determine if /system/tmp exists; if it doesn't
+         * we make it
+         */
+        File tmpDir = new File("/system/tmp");
         boolean exists = tmpDir.exists();
         if (!exists) {
-            RootHelper.runRootCommand("mkdir /system/tmp");
+            try {
+                RootHelper.runRootCommand("mkdir /system/tmp");
+                RootHelper.remountRW();
+            } finally {
+                RootHelper.remountRO();
+            }
         }
 
         // WARN THE MASSES THIS CAN BE DANGEROUS!!!
@@ -94,6 +113,18 @@ public class MainActivity extends PreferenceActivity implements
                     }
                 });
         mAlertDialog.show();
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        boolean value;
+        if (preference == mDisableBootAnimPref) {
+            value = mDisableBootAnimPref.isChecked();
+            return doMod(null, Constants.DISABLE_BOOT_ANIM_PROP_1, String.valueOf(value ? 0 : 1))
+                    && doMod(Constants.DISABLE_BOOT_ANIM_PERSIST_PROP,
+                            Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
+        }
+        return false;
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -124,7 +155,9 @@ public class MainActivity extends PreferenceActivity implements
     }
 
     private boolean doMod(String persist, String key, String value) {
-        SystemProperties.set(persist, value);
+        if (persist != null) {
+            SystemProperties.set(persist, value);
+        }
         Log.d(TAG, String.format("Calling script with args '%s' and '%s'", key, value));
         RootHelper.backupBuildProp();
         if (!RootHelper.remountRW()) {
@@ -132,7 +165,11 @@ public class MainActivity extends PreferenceActivity implements
         }
         boolean success = false;
         try {
-            success = RootHelper.runRootCommand(String.format(ROOT_CMD, key, value));
+            if (RootHelper.propExists(key)) {
+                success = RootHelper.runRootCommand(String.format(REPLACE_CMD, key, value));
+            } else {
+                success = RootHelper.runRootCommand(String.format(APPEND_CMD, key, value));
+            }
             if (!success) {
                 RootHelper.restoreBuildProp();
             }

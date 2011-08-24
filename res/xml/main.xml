@@ -55,6 +55,11 @@
             android:entries="@array/entries_fast_up_explain"
             android:entryValues="@array/entries_fast_up"
             android:enabled="true" />
+
+        <CheckBoxPreference android:key="pref_disable_boot_anim"
+            android:title="@string/pref_disable_boot_anim_title"
+            android:summary="@string/pref_disable_boot_anim_summary" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
