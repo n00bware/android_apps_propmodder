@@ -75,7 +75,6 @@ public final class Constants {
 
     public static final String VM_HEAPSIZE_DEFAULT = System.getProperty(VM_HEAPSIZE_PROP);
 
-
     /*
      * Strings for HSUPA (faster upload speed)
      */
@@ -86,5 +85,16 @@ public final class Constants {
     public static final String FAST_UP_PERSIST_PROP = "persist.fast_up";
 
     public static final String FAST_UP_DEFAULT = System.getProperty(FAST_UP_PROP);
+
+    /*
+     * Strings for disabling the boot animation
+     */
+    public static final String DISABLE_BOOT_ANIM_PREF = "pref_disable_boot_anim";
+
+    public static final String DISABLE_BOOT_ANIM_PROP_1 = "ro.kernel.android.bootanim";
+
+    public static final String DISABLE_BOOT_ANIM_PROP_2 = "debug.sf.nobootanimation";
+
+    public static final String DISABLE_BOOT_ANIM_PERSIST_PROP = "persist.disable_boot_anim";
 
 }
