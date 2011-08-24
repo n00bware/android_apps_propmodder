@@ -13,6 +13,8 @@ public final class RootHelper {
 
     private static final String REMOUNT_CMD = "busybox mount -o %s,remount -t yaffs2 /dev/block/mtdblock1 /system";
 
+    private static final String PROP_EXISTS_CMD = "grep -q %s /system/build.prop";
+
     private RootHelper() {
         // private constructor so nobody can instantiate this class
     }
@@ -48,6 +50,11 @@ public final class RootHelper {
                 process.destroy();
             }
         }
+    }
+
+    public static boolean propExists(String prop) {
+        Log.d(TAG, "Checking if prop " + prop + " exists in /system/build.prop");
+        return RootHelper.runRootCommand(String.format(PROP_EXISTS_CMD, prop));
     }
 
     public static boolean backupBuildProp() {
