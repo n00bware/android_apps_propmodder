@@ -11,6 +11,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
+import java.io.File;
+
 public class MainActivity extends PreferenceActivity implements
         Preference.OnPreferenceChangeListener {
 
@@ -28,13 +30,15 @@ public class MainActivity extends PreferenceActivity implements
 
     private ListPreference mVmHeapsizePref;
 
+    private ListPreference mFastUpPref;
+
     private AlertDialog mAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(R.string.general_title);
+        setTitle(R.string.main_title_head);
         addPreferencesFromResource(R.xml.main);
 
         Log.d(TAG, "Loading prefs");
@@ -64,6 +68,19 @@ public class MainActivity extends PreferenceActivity implements
         mVmHeapsizePref.setValue(SystemProperties.get(Constants.VM_HEAPSIZE_PERSIST_PROP,
                 SystemProperties.get(Constants.VM_HEAPSIZE_PROP, Constants.VM_HEAPSIZE_DEFAULT)));
         mVmHeapsizePref.setOnPreferenceChangeListener(this);
+
+        mFastUpPref = (ListPreference) prefSet.findPreference(Constants.FAST_UP_PREF);
+        mFastUpPref.setValue(SystemProperties.get(Constants.FAST_UP_PERSIST_PROP,
+                SystemProperties.get(Constants.FAST_UP_PROP, Constants.FAST_UP_DEFAULT)));
+        mFastUpPref.setOnPreferenceChangeListener(this);
+
+        /* Mount /system RW and determine if /system/tmp exists; if it doesn't we make it */
+        RootHelper.remountRW();
+        File tmpDir=new File("/system/tmp");
+        boolean exists = tmpDir.exists();
+        if (!exists) {
+            RootHelper.runRootCommand("mkdir /system/tmp");
+        }
 
         // WARN THE MASSES THIS CAN BE DANGEROUS!!!
         mAlertDialog = new AlertDialog.Builder(this).create();
@@ -95,8 +112,12 @@ public class MainActivity extends PreferenceActivity implements
                 return doMod(Constants.RING_DELAY_PERSIST_PROP, Constants.RING_DELAY_PROP,
                         newValue.toString());
             } else if (preference == mVmHeapsizePref) {
-                return doMod(Constants.VM_HEAPSIZE_PERSIST_PROP,
-                        Constants.VM_HEAPSIZE_PERSIST_PROP, newValue.toString());
+                return doMod(Constants.VM_HEAPSIZE_PERSIST_PROP, Constants.VM_HEAPSIZE_PROP,
+                        newValue.toString());
+            } else if (preference == mFastUpPref) {
+                RootHelper.injectFastUp();
+                return doMod(Constants.FAST_UP_PERSIST_PROP, Constants.FAST_UP_PROP,
+                        newValue.toString());
             }
         }
         return false;

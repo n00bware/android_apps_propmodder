@@ -36,8 +36,6 @@ public class ShowBuildProp extends AlertActivity {
 
     private static final String TAG = "PropModder";
 
-    private static final String SHOWBUILD_PATH = "/tmp/showbuild";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +44,12 @@ public class ShowBuildProp extends AlertActivity {
         StringBuilder data = null;
         RootHelper.remountRW();
 
-        /* Determin if /tmp exists if it doesn't we make it */
-        File tmpDir=new File("/tmp");
-        boolean exists = tmpDir.exists();
-        if (!exists) {
-            RootHelper.runRootCommand("mkdir /tmp");
-        }
-
-        RootHelper.runRootCommand("cp /system/build.prop " + SHOWBUILD_PATH);
-        RootHelper.runRootCommand("chmod 777 " + SHOWBUILD_PATH);
+        RootHelper.updateShowBuild();
         try {
             data = new StringBuilder(2048);
             char tmp[] = new char[2048];
             int numRead;
-            reader = new BufferedReader(new FileReader(SHOWBUILD_PATH));
+            reader = new BufferedReader(new FileReader(Constants.SHOWBUILD_PATH));
             while ((numRead = reader.read(tmp)) >= 0) {
                 data.append(tmp, 0, numRead);
             }

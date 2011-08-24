@@ -7,6 +7,8 @@ public final class Constants {
         // private constructor so nobody can instantiate this class
     }
 
+    public static final String SHOWBUILD_PATH = "/system/tmp/showbuild";
+
     /*
      * Strings for wifi_scan
      */
@@ -73,15 +75,16 @@ public final class Constants {
 
     public static final String VM_HEAPSIZE_DEFAULT = System.getProperty(VM_HEAPSIZE_PROP);
 
+
     /*
-     * Strings for modversion
+     * Strings for HSUPA (faster upload speed)
      */
-    public static final String MOD_VERSION_PREF = "pref_modversion";
+    public static final String FAST_UP_PREF = "pref_fast_up";
 
-    public static final String MOD_VERSION_PROP = "ro.modversion";
+    public static final String FAST_UP_PROP = "ro.ril.hsxpa";
 
-    public static final String MOD_VERSION_PERSIST_PROP = "persist.modversion";
+    public static final String FAST_UP_PERSIST_PROP = "persist.fast_up";
 
-    public static final String MOD_VERSION_DEFAULT = System.getProperty(MOD_VERSION_PROP);
+    public static final String FAST_UP_DEFAULT = System.getProperty(FAST_UP_PROP);
 
 }

@@ -49,12 +49,12 @@
             android:entries="@array/entries_vm_heapsize"
             android:entryValues="@array/entries_vm_heapsize" />
 
-<!-- Not working yet
-        <EditTextPreference
-            android:key="mod_version"
-            android:title="@string/pref_mod_version_title"
-            android:summary="@string/pref_mod_version_summary"></EditTextPreference>
--->
+        <ListPreference android:key="pref_fast_up"
+            android:dialogTitle="@string/pref_fast_up_title"
+            android:title="@string/pref_fast_up_title" android:summary="@string/pref_fast_up_summary"
+            android:entries="@array/entries_fast_up_explain"
+            android:entryValues="@array/entries_fast_up"
+            android:enabled="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>

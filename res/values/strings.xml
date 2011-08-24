@@ -4,11 +4,11 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder</string>
-    <string name="main_title_head">Prop Modder v1.1</string>
+    <string name="general_title">PropModder v1.3.2</string>
+    <string name="main_title_head">Prop Modder by n00bware</string>
     <string name="main_title_subhead">Click here to reinitialize the app</string>
-    <string name="versionCode">110</string>
-    <string name="versionName">Release v1.1</string>
+    <string name="versionCode">132</string>
+    <string name="versionName">Release v1.3.2</string>
     <string name="pm_script">/tmp/pm.sh</string>
 
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
@@ -58,5 +58,9 @@
     <string name="showbuild_unknown">Unknown</string>
     <string name="showbuild_version">Version</string>
     <string name="showbuild_label">We should look because knowing is half the battle</string>
+
+    <!-- HSUPA settings for faster upload speeds -->
+    <string name="pref_fast_up_title">HSUPA upload speed hack</string>
+    <string name="pref_fast_up_summary">*WARNING* if you change this value it will add the needed values to your build.prop if they are not already present (requires reboot)</string>
 
 </resources>

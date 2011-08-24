@@ -143,4 +143,16 @@
         <item>124m</item>
     </string-array>
 
+    <string-array name="entries_fast_up_explain">
+        <item>Stock HSUPA disabled (Upload speeds capped)</item>
+        <item>HSUPA enabled</item>
+        <item>HSUPA enabled (Upload speeds uncapped)</item>
+    </string-array>
+
+    <string-array name="entries_fast_up" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 </resources>

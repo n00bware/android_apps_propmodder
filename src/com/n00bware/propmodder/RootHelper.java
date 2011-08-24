@@ -51,13 +51,13 @@ public final class RootHelper {
     }
 
     public static boolean backupBuildProp() {
-        Log.d(TAG, "Backing up build.prop to /tmp/pm_build.prop");
-        return RootHelper.runRootCommand("cp /system/build.prop /tmp/pm_build.prop");
+        Log.d(TAG, "Backing up build.prop to /system/tmp/pm_build.prop");
+        return RootHelper.runRootCommand("cp /system/build.prop /system/tmp/pm_build.prop");
     }
     
     public static boolean restoreBuildProp() {
-        Log.d(TAG, "Restoring build.prop from /tmp/pm_build.prop");
-        return RootHelper.runRootCommand("cp /tmp/pm_build.prop /system/build.prop");
+        Log.d(TAG, "Restoring build.prop from /system/tmp/pm_build.prop");
+        return RootHelper.runRootCommand("cp /system/tmp/pm_build.prop /system/build.prop");
     }
 
     public static boolean remountRW() {
@@ -66,7 +66,21 @@ public final class RootHelper {
     }
 
     public static boolean remountRO() {
-        Log.d(TAG, "Remounting /system rw");
-        return RootHelper.runRootCommand(String.format(REMOUNT_CMD, "rw"));
+        Log.d(TAG, "Remounting /system ro");
+        return RootHelper.runRootCommand(String.format(REMOUNT_CMD, "ro"));
+    }
+
+    public static void updateShowBuild() {
+        Log.d(TAG, "Setting up /system/tmp/showbuild");
+        RootHelper.runRootCommand("cp /system/build.prop " + Constants.SHOWBUILD_PATH);
+        RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
+    }
+
+    public static boolean injectFastUp() {
+        Log.d(TAG, "begin injecting props needed for HSUPA");
+        RootHelper.remountRW();
+        RootHelper.updateShowBuild();
+        RootHelper.runRootCommand("if [ -z \"(grep -i \'ro.ril.hsxpa\' /system/build.prop)\" ]; then; echo \"ro.ril.hsxpa= \">> " + Constants.SHOWBUILD_PATH + "; fi");
+        return RootHelper.runRootCommand("cp " + Constants.SHOWBUILD_PATH + " /system/build.prop");
     }
 }
