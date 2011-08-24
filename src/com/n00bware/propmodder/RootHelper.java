@@ -82,12 +82,4 @@ public final class RootHelper {
         RootHelper.runRootCommand("cp /system/build.prop " + Constants.SHOWBUILD_PATH);
         RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
     }
-
-    public static boolean injectFastUp() {
-        Log.d(TAG, "begin injecting props needed for HSUPA");
-        RootHelper.remountRW();
-        RootHelper.updateShowBuild();
-        RootHelper.runRootCommand("if [ -z \"(grep -i \'ro.ril.hsxpa\' /system/build.prop)\" ]; then; echo \"ro.ril.hsxpa= \">> " + Constants.SHOWBUILD_PATH + "; fi");
-        return RootHelper.runRootCommand("cp " + Constants.SHOWBUILD_PATH + " /system/build.prop");
-    }
 }

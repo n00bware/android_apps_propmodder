@@ -65,4 +65,8 @@
     <string name="pref_disable_boot_anim_title">Disable Boot Animation</string>
     <string name="pref_disable_boot_anim_summary">Disable system boot animation (requires reboot)</string>
 
+    <!-- Motorola proximity delay -->
+    <string name="pref_prox_delay_title">Proximity sensor delay</string>
+    <string name="pref_prox_delay_summary">When you are incall screen is off when the device moves away from your face this delay value controls how long before screen turns on (requires reboot)</string>
+
 </resources>

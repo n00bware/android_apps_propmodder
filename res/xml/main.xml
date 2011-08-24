@@ -60,6 +60,13 @@
             android:title="@string/pref_disable_boot_anim_title"
             android:summary="@string/pref_disable_boot_anim_summary" />
 
+        <ListPreference android:key="pref_prox_delay"
+            android:dialogTitle="@string/pref_prox_delay_title"
+            android:title="@string/pref_prox_delay_title" android:summary="@string/pref_prox_delay_summary"
+            android:entries="@array/entries_prox_delay_explain"
+            android:entryValues="@array/entries_prox_delay"
+            android:enabled="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

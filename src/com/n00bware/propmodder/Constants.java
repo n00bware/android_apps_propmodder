@@ -9,6 +9,8 @@ public final class Constants {
 
     public static final String SHOWBUILD_PATH = "/system/tmp/showbuild";
 
+    public static final String Pound = "#";
+
     /*
      * Strings for wifi_scan
      */
@@ -80,7 +82,9 @@ public final class Constants {
      */
     public static final String FAST_UP_PREF = "pref_fast_up";
 
-    public static final String FAST_UP_PROP = "ro.ril.hsxpa";
+    public static String FAST_UP_PROP = "ro.ril.hsxpa";
+
+    public static final String FAST_UP_PROP_DISABLE = "#ro.ril.hsxpa";
 
     public static final String FAST_UP_PERSIST_PROP = "persist.fast_up";
 
@@ -96,5 +100,18 @@ public final class Constants {
     public static final String DISABLE_BOOT_ANIM_PROP_2 = "debug.sf.nobootanimation";
 
     public static final String DISABLE_BOOT_ANIM_PERSIST_PROP = "persist.disable_boot_anim";
+
+    /*
+     * Strings for proximity delay
+     */
+    public static final String PROX_DELAY_PREF = "pref_prox_delay";
+
+    public static String PROX_DELAY_PROP = "mot.proximity.delay";
+
+    public static final String PROX_DELAY_PROP_DISABLE = "#mot.proximity.delay";
+
+    public static final String PROX_DELAY_PERSIST_PROP = "persist.prox.delay";
+
+    public static final String PROX_DELAY_DEFAULT = System.getProperty(PROX_DELAY_PROP);
 
 }

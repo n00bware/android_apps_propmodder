@@ -37,6 +37,8 @@ public class MainActivity extends PreferenceActivity implements
 
     private CheckBoxPreference mDisableBootAnimPref;
 
+    private ListPreference mProxDelayPref;
+
     private AlertDialog mAlertDialog;
 
     @Override
@@ -85,6 +87,11 @@ public class MainActivity extends PreferenceActivity implements
         boolean bootAnim2 = SystemProperties.getBoolean(Constants.DISABLE_BOOT_ANIM_PROP_2, false);
         mDisableBootAnimPref.setChecked(SystemProperties.getBoolean(
                 Constants.DISABLE_BOOT_ANIM_PERSIST_PROP, !bootAnim1 && bootAnim2));
+
+        mProxDelayPref = (ListPreference) prefSet.findPreference(Constants.PROX_DELAY_PREF);
+        mProxDelayPref.setValue(SystemProperties.get(Constants.PROX_DELAY_PERSIST_PROP,
+                SystemProperties.get(Constants.PROX_DELAY_PROP, Constants.PROX_DELAY_DEFAULT)));
+        mProxDelayPref.setOnPreferenceChangeListener(this);
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -146,8 +153,20 @@ public class MainActivity extends PreferenceActivity implements
                 return doMod(Constants.VM_HEAPSIZE_PERSIST_PROP, Constants.VM_HEAPSIZE_PROP,
                         newValue.toString());
             } else if (preference == mFastUpPref) {
-                RootHelper.injectFastUp();
+                if (newValue != Constants.Pound) {
+                    Constants.FAST_UP_PROP = Constants.FAST_UP_PROP_DISABLE;
+                } else {
+                    Constants.FAST_UP_PROP = "ro.ril.hsxpa";
+                }
                 return doMod(Constants.FAST_UP_PERSIST_PROP, Constants.FAST_UP_PROP,
+                        newValue.toString());
+            } else if (preference == mProxDelayPref) {
+                if (newValue != Constants.Pound) {
+                    Constants.PROX_DELAY_PROP = Constants.PROX_DELAY_PROP_DISABLE;
+                } else {
+                    Constants.PROX_DELAY_PROP = "mot.proximity.delay";
+                }
+                return doMod(Constants.PROX_DELAY_PERSIST_PROP, Constants.PROX_DELAY_PROP,
                         newValue.toString());
             }
         }
