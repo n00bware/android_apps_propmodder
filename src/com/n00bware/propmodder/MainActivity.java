@@ -101,8 +101,9 @@ public class MainActivity extends PreferenceActivity implements
         boolean exists = tmpDir.exists();
         if (!exists) {
             try {
-                RootHelper.runRootCommand("mkdir /system/tmp");
+                Log.d(TAG, "We need to make /system/tmp dir");
                 RootHelper.remountRW();
+                RootHelper.runRootCommand("mkdir /system/tmp");
             } finally {
                 RootHelper.remountRO();
             }
@@ -153,20 +154,10 @@ public class MainActivity extends PreferenceActivity implements
                 return doMod(Constants.VM_HEAPSIZE_PERSIST_PROP, Constants.VM_HEAPSIZE_PROP,
                         newValue.toString());
             } else if (preference == mFastUpPref) {
-                if (newValue != Constants.Pound) {
-                    Constants.FAST_UP_PROP = Constants.FAST_UP_PROP_DISABLE;
-                } else {
-                    Constants.FAST_UP_PROP = "ro.ril.hsxpa";
-                }
                 return doMod(Constants.FAST_UP_PERSIST_PROP, Constants.FAST_UP_PROP,
                         newValue.toString());
             } else if (preference == mProxDelayPref) {
-                if (newValue != Constants.Pound) {
-                    Constants.PROX_DELAY_PROP = Constants.PROX_DELAY_PROP_DISABLE;
-                } else {
-                    Constants.PROX_DELAY_PROP = "mot.proximity.delay";
-                }
-                return doMod(Constants.PROX_DELAY_PERSIST_PROP, Constants.PROX_DELAY_PROP,
+                 return doMod(Constants.PROX_DELAY_PERSIST_PROP, Constants.PROX_DELAY_PROP,
                         newValue.toString());
             }
         }
@@ -174,10 +165,11 @@ public class MainActivity extends PreferenceActivity implements
     }
 
     private boolean doMod(String persist, String key, String value) {
+//      Log.d(TAG, String.format("doMod called with values:\npersist: %s\nkey: %<s\n prop: %s\nvalue %s", persist, key, value));
         if (persist != null) {
             SystemProperties.set(persist, value);
         }
-        Log.d(TAG, String.format("Calling script with args '%s' and '%s'", key, value));
+        Log.d(TAG, String.format("Calling script with args '%s' and '%s", key, value));
         RootHelper.backupBuildProp();
         if (!RootHelper.remountRW()) {
             throw new RuntimeException("Could not remount /system rw");
@@ -185,8 +177,15 @@ public class MainActivity extends PreferenceActivity implements
         boolean success = false;
         try {
             if (RootHelper.propExists(key)) {
-                success = RootHelper.runRootCommand(String.format(REPLACE_CMD, key, value));
+                if (value == Constants.DISABLE) {
+                    Log.d(TAG, "value == Constants.DISABLE");
+                    success = RootHelper.killProp(String.format(Constants.KILL_PROP_CMD, key));
+                } else {
+                    Log.d(TAG, "value != Constants.DISABLE");
+                    success = RootHelper.runRootCommand(String.format(REPLACE_CMD, key, value));
+                }
             } else {
+                Log.d(TAG, "append command starting");
                 success = RootHelper.runRootCommand(String.format(APPEND_CMD, key, value));
             }
             if (!success) {

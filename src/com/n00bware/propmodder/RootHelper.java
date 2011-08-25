@@ -82,4 +82,9 @@ public final class RootHelper {
         RootHelper.runRootCommand("cp /system/build.prop " + Constants.SHOWBUILD_PATH);
         RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
     }
+
+    public static boolean killProp(String prop) {
+        Log.d(TAG, String.format("User no longer wants to disable %s", prop));
+        return RootHelper.runRootCommand(String.format(Constants.KILL_PROP_CMD, prop));
+    }
 }

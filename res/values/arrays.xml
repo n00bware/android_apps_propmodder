@@ -144,19 +144,21 @@
     </string-array>
 
     <string-array name="entries_fast_up_explain">
+        <item>Remove prop entirely</item>
         <item>Stock HSUPA disabled (Upload speeds capped)</item>
         <item>HSUPA enabled</item>
         <item>HSUPA enabled (Upload speeds uncapped)</item>
     </string-array>
 
     <string-array name="entries_fast_up" translatable="false">
+        <item>disable</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
 
     <string-array name="entries_prox_delay_explain">
-        <item>Disable Moto proximity delay</item>
+        <item>Remove prop entirely</item>
         <item>0 -Not Recommended</item>
         <item>75</item>
         <item>150</item>
@@ -169,7 +171,7 @@
     </string-array>
 
     <string-array name="entries_prox_delay">
-        <item>#</item>
+        <item>disable</item>
         <item>0</item>
         <item>75</item>
         <item>150</item>

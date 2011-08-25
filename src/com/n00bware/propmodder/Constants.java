@@ -9,7 +9,9 @@ public final class Constants {
 
     public static final String SHOWBUILD_PATH = "/system/tmp/showbuild";
 
-    public static final String Pound = "#";
+    public static final String DISABLE = "disable";
+
+    public static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" /system/build.prop";
 
     /*
      * Strings for wifi_scan
@@ -82,7 +84,7 @@ public final class Constants {
      */
     public static final String FAST_UP_PREF = "pref_fast_up";
 
-    public static String FAST_UP_PROP = "ro.ril.hsxpa";
+    public static final String FAST_UP_PROP = "ro.ril.hsxpa";
 
     public static final String FAST_UP_PROP_DISABLE = "#ro.ril.hsxpa";
 
@@ -106,7 +108,7 @@ public final class Constants {
      */
     public static final String PROX_DELAY_PREF = "pref_prox_delay";
 
-    public static String PROX_DELAY_PROP = "mot.proximity.delay";
+    public static final String PROX_DELAY_PROP = "mot.proximity.delay";
 
     public static final String PROX_DELAY_PROP_DISABLE = "#mot.proximity.delay";
 
