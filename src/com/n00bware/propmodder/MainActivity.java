@@ -41,6 +41,8 @@ public class MainActivity extends PreferenceActivity implements
 
     private ListPreference mProxDelayPref;
 
+    private CheckBoxPreference mLogcatPref;
+
     private AlertDialog mAlertDialog;
 
     @Override
@@ -52,6 +54,9 @@ public class MainActivity extends PreferenceActivity implements
 
         Log.d(TAG, "Loading prefs");
         PreferenceScreen prefSet = getPreferenceScreen();
+
+        File logcat = new File(Constants.LOGCAT_PATH);
+        boolean findLog = logcat.exists();
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(Constants.WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(Constants.WIFI_SCAN_PERSIST_PROP,
@@ -95,6 +100,10 @@ public class MainActivity extends PreferenceActivity implements
                 SystemProperties.get(Constants.PROX_DELAY_PROP, Constants.PROX_DELAY_DEFAULT)));
         mProxDelayPref.setOnPreferenceChangeListener(this);
 
+        mLogcatPref = (CheckBoxPreference) prefSet
+                .findPreference(Constants.LOGCAT_PREF);
+        mLogcatPref.setChecked(findLog());
+
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
          * we make it
@@ -133,6 +142,11 @@ public class MainActivity extends PreferenceActivity implements
             return doMod(null, Constants.DISABLE_BOOT_ANIM_PROP_1, String.valueOf(value ? 0 : 1))
                     && doMod(Constants.DISABLE_BOOT_ANIM_PERSIST_PROP,
                             Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
+        }
+        return false;
+        if (preference == mLogcatPref) {
+            value = mDisableBootAnimPref.isChecked();
+            return RootHelper.logcatAlive(String.valueOf(value ? 1 : 0));
         }
         return false;
     }

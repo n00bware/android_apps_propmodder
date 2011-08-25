@@ -114,4 +114,11 @@ public final class Constants {
 
     public static final String PROX_DELAY_DEFAULT = System.getProperty(PROX_DELAY_PROP);
 
+    /*
+     * Strings for removing adb logcat log
+     */
+    public static final String LOGCAT_PREF = "pref_disable_boot_anim";
+
+    public static final String LOGCAT_PATH = "/dev/log/main";
+
 }

@@ -87,4 +87,15 @@ public final class RootHelper {
         Log.d(TAG, String.format("User wants to disable %s", prop));
         return RootHelper.runRootCommand(prop);
     }
+
+    public static boolean logcatAlive(String log) {
+        Log.d(TAG, String.format("1=? 0=? value sent to boolean logcatAlive is: %s", log));
+        if (log.equals(1)) {
+            Log.d(TAG, "Log evaluated as 1");
+            return RootHelper.runRootCommand("rm -f " + Constants.LOGCAT_PATH);
+        } else {
+            Log.d(TAG, "Log evaluated as 0");
+            return RootHelper.runRootCommand("touch " + Constants.LOGCAT_PATH);
+        }
+    }
 }

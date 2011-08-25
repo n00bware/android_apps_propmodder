@@ -11,6 +11,9 @@
     <string name="versionName">Release v1.3.2</string>
     <string name="pm_script">/tmp/pm.sh</string>
 
+    <!-- non build.prop hacks -->
+    <string name="nonProp_category">Hacks that do not involve build.prop</string>
+
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
     <string name="main_warning_title">YOU HAVE BEEN WARNED</string>
     <string name="main_warning_summary">This app was concieved while watching monkeys juggling knives.  It hacks your \'/system/build.prop\' WE ARE NOT RESPONSIBLE FOR ACCIDENTAL KNIFE CUTS! Your device your responsibility</string>
@@ -68,5 +71,9 @@
     <!-- Motorola proximity delay -->
     <string name="pref_prox_delay_title">Proximity sensor delay</string>
     <string name="pref_prox_delay_summary">When you are incall screen is off when the device moves away from your face this delay value controls how long before screen turns on (requires reboot)</string>
+
+    <!-- enable/disable logcat -->
+    <string name="pref_logcat_title">Disable logcat</string>
+    <string name="pref_logcat_summary">Disabling logcat can improve system speed, but makes debugging very difficult</string>
 
 </resources>
