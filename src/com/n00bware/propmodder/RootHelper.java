@@ -84,7 +84,7 @@ public final class RootHelper {
     }
 
     public static boolean killProp(String prop) {
-        Log.d(TAG, String.format("User no longer wants to disable %s", prop));
-        return RootHelper.runRootCommand(String.format(Constants.KILL_PROP_CMD, prop));
+        Log.d(TAG, String.format("User wants to disable %s", prop));
+        return RootHelper.runRootCommand(prop);
     }
 }

@@ -17,11 +17,13 @@ import java.io.File;
 public class MainActivity extends PreferenceActivity implements
         Preference.OnPreferenceChangeListener {
 
-    private static final String TAG = "PropModder";
+    private static final String APPEND_CMD = "echo \"%s=%s\" >> /system/build.prop";
+
+    private static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" /system/build.prop";
 
     private static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
 
-    private static final String APPEND_CMD = "echo \"%s=%s\" >> /system/build.prop";
+    private static final String TAG = "PropModder";
 
     private ListPreference mWifiScanPref;
 
@@ -177,9 +179,9 @@ public class MainActivity extends PreferenceActivity implements
         boolean success = false;
         try {
             if (RootHelper.propExists(key)) {
-                if (value == Constants.DISABLE) {
+                if (value.equals(Constants.DISABLE)) {
                     Log.d(TAG, "value == Constants.DISABLE");
-                    success = RootHelper.killProp(String.format(Constants.KILL_PROP_CMD, key));
+                    success = RootHelper.killProp(String.format(KILL_PROP_CMD, key));
                 } else {
                     Log.d(TAG, "value != Constants.DISABLE");
                     success = RootHelper.runRootCommand(String.format(REPLACE_CMD, key, value));

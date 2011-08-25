@@ -11,8 +11,6 @@ public final class Constants {
 
     public static final String DISABLE = "disable";
 
-    public static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" /system/build.prop";
-
     /*
      * Strings for wifi_scan
      */
