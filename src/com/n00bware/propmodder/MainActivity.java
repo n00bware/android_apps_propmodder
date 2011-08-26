@@ -41,7 +41,7 @@ public class MainActivity extends PreferenceActivity implements
 
     private ListPreference mProxDelayPref;
 
-    private CheckBoxPreference mLogcatPref;
+    private ListPreference mLogcatPref;
 
     private AlertDialog mAlertDialog;
 
@@ -55,8 +55,7 @@ public class MainActivity extends PreferenceActivity implements
         Log.d(TAG, "Loading prefs");
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        File logcat = new File(Constants.LOGCAT_PATH);
-        boolean findLog = logcat.exists();
+
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(Constants.WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(Constants.WIFI_SCAN_PERSIST_PROP,
@@ -100,9 +99,10 @@ public class MainActivity extends PreferenceActivity implements
                 SystemProperties.get(Constants.PROX_DELAY_PROP, Constants.PROX_DELAY_DEFAULT)));
         mProxDelayPref.setOnPreferenceChangeListener(this);
 
-        mLogcatPref = (CheckBoxPreference) prefSet
-                .findPreference(Constants.LOGCAT_PREF);
-        mLogcatPref.setChecked(findLog());
+        mLogcatPref = (ListPreference) prefSet.findPreference(Constants.LOGCAT_PREF);
+        mLogcatPref.setValue(SystemProperties.get(Constants.LOGCAT_PERSIST_PROP,
+                SystemProperties.get(Constants.LOGCAT_PROP, Constants.LOGCAT_DEFAULT)));
+        mLogcatPref.setOnPreferenceChangeListener(this);
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -119,6 +119,22 @@ public class MainActivity extends PreferenceActivity implements
                 RootHelper.remountRO();
             }
         }
+
+        //Install script to control logcat persistance
+        RootHelper.logcatAlive();
+        File logcat_alive_script = new File(Constants.LOGCAT_ALIVE_PATH);
+        boolean logcat_script_exists = logcat_alive_script.exists();
+        if (!logcat_script_exists) {
+            try {
+                Log.d(TAG, String.format("logcat_alive script not found @ '%s'", Constants.LOGCAT_ALIVE_PATH));
+                RootHelper.remountRW();
+                RootHelper.logcatAlive();
+                RootHelper.runRootCommand(String.format("chmod 777 %s", Constants.LOGCAT_ALIVE_PATH));
+            } finally {
+                RootHelper.remountRO();
+            }
+        }
+
 
         // WARN THE MASSES THIS CAN BE DANGEROUS!!!
         mAlertDialog = new AlertDialog.Builder(this).create();
@@ -142,11 +158,6 @@ public class MainActivity extends PreferenceActivity implements
             return doMod(null, Constants.DISABLE_BOOT_ANIM_PROP_1, String.valueOf(value ? 0 : 1))
                     && doMod(Constants.DISABLE_BOOT_ANIM_PERSIST_PROP,
                             Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
-        }
-        return false;
-        if (preference == mLogcatPref) {
-            value = mDisableBootAnimPref.isChecked();
-            return RootHelper.logcatAlive(String.valueOf(value ? 1 : 0));
         }
         return false;
     }
@@ -175,13 +186,15 @@ public class MainActivity extends PreferenceActivity implements
             } else if (preference == mProxDelayPref) {
                  return doMod(Constants.PROX_DELAY_PERSIST_PROP, Constants.PROX_DELAY_PROP,
                         newValue.toString());
+            } else if (preference == mLogcatPref) {
+                 return doMod(Constants.LOGCAT_PERSIST_PROP, Constants.LOGCAT_PROP,
+                        newValue.toString());
             }
         }
         return false;
     }
 
     private boolean doMod(String persist, String key, String value) {
-//      Log.d(TAG, String.format("doMod called with values:\npersist: %s\nkey: %<s\n prop: %s\nvalue %s", persist, key, value));
         if (persist != null) {
             SystemProperties.set(persist, value);
         }
@@ -193,13 +206,19 @@ public class MainActivity extends PreferenceActivity implements
         boolean success = false;
         try {
             if (RootHelper.propExists(key)) {
+                if (value.equals("rm_log")) {
+                    Log.d(TAG, "value == rm_log");
+                    success = RootHelper.runRootCommand(Constants.LOGCAT_REMOVE);
+                }
                 if (value.equals(Constants.DISABLE)) {
-                    Log.d(TAG, "value == Constants.DISABLE");
+                    Log.d(TAG, String.format("value == %s", Constants.DISABLE));
                     success = RootHelper.killProp(String.format(KILL_PROP_CMD, key));
+
                 } else {
-                    Log.d(TAG, "value != Constants.DISABLE");
+                    Log.d(TAG, String.format("value != %s", Constants.DISABLE));
                     success = RootHelper.runRootCommand(String.format(REPLACE_CMD, key, value));
                 }
+
             } else {
                 Log.d(TAG, "append command starting");
                 success = RootHelper.runRootCommand(String.format(APPEND_CMD, key, value));
@@ -212,4 +231,5 @@ public class MainActivity extends PreferenceActivity implements
         }
         return success;
     }
+
 }

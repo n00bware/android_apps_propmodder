@@ -88,14 +88,10 @@ public final class RootHelper {
         return RootHelper.runRootCommand(prop);
     }
 
-    public static boolean logcatAlive(String log) {
-        Log.d(TAG, String.format("1=? 0=? value sent to boolean logcatAlive is: %s", log));
-        if (log.equals(1)) {
-            Log.d(TAG, "Log evaluated as 1");
-            return RootHelper.runRootCommand("rm -f " + Constants.LOGCAT_PATH);
-        } else {
-            Log.d(TAG, "Log evaluated as 0");
-            return RootHelper.runRootCommand("touch " + Constants.LOGCAT_PATH);
-        }
+    public static boolean logcatAlive() {
+        Log.d(TAG, "Installing script to control logcat persistance");
+        RootHelper.runRootCommand(String.format("echo %s > %s", Constants.LOGCAT_ALIVE_SCRIPT, Constants.LOGCAT_ALIVE_PATH));
+        //This should be find because if the chmod fails the install failed
+        return RootHelper.runRootCommand("chmod 777 " + Constants.LOGCAT_ALIVE_PATH);
     }
 }

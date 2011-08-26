@@ -84,8 +84,6 @@ public final class Constants {
 
     public static final String FAST_UP_PROP = "ro.ril.hsxpa";
 
-    public static final String FAST_UP_PROP_DISABLE = "#ro.ril.hsxpa";
-
     public static final String FAST_UP_PERSIST_PROP = "persist.fast_up";
 
     public static final String FAST_UP_DEFAULT = System.getProperty(FAST_UP_PROP);
@@ -108,8 +106,6 @@ public final class Constants {
 
     public static final String PROX_DELAY_PROP = "mot.proximity.delay";
 
-    public static final String PROX_DELAY_PROP_DISABLE = "#mot.proximity.delay";
-
     public static final String PROX_DELAY_PERSIST_PROP = "persist.prox.delay";
 
     public static final String PROX_DELAY_DEFAULT = System.getProperty(PROX_DELAY_PROP);
@@ -117,8 +113,20 @@ public final class Constants {
     /*
      * Strings for removing adb logcat log
      */
-    public static final String LOGCAT_PREF = "pref_disable_boot_anim";
+    public static final String LOGCAT_PREF = "pref_logcat";
+
+    public static final String LOGCAT_PROP = "logcat.alive";
+
+    public static final String LOGCAT_PERSIST_PROP = "persist.logcat";
+
+    public static final String LOGCAT_DEFAULT = System.getProperty(LOGCAT_PROP);
 
     public static final String LOGCAT_PATH = "/dev/log/main";
+
+    public static final String LOGCAT_ALIVE_SCRIPT = "#!/system/bin/sh\nBB=/system/xbin/busybox\nLOGCAT=$(BB grep -o logcat.alive /system/build.prop)\nif BB [ -n $LOGCAT ]\nthen\nrm -f /dev/log/main\nelse\ntouch /dev/log/main\nfi";
+
+    public static final String LOGCAT_ALIVE_PATH = "/system/etc/init.d/73-propmodder_logcat_alive";
+
+    public static final String LOGCAT_REMOVE = "rm -f /dev/log/main";
 
 }

@@ -11,13 +11,31 @@
         <item>90</item>
         <item>120</item>
         <item>150</item>
-        <item>180</item>
+        <item>210</item>
+        <item>240</item>
+        <item>270</item>
+        <item>300</item>
+        <item>330</item>
+        <item>360</item>
+        <item>390</item>
+        <item>420</item>
+
     </string-array>
 
 <!--*
     * Values for ro.sf.lcd_density
     * -->
     <string-array name="entries_lcd_density" translatable="false">
+        <item>140</item>
+        <item>142</item>
+        <item>144</item>
+        <item>146</item>
+        <item>148</item>
+        <item>150</item>
+        <item>152</item>
+        <item>154</item>
+        <item>156</item>
+        <item>158</item>
         <item>160</item>
         <item>162</item>
         <item>164</item>
@@ -59,6 +77,16 @@
         <item>236</item>
         <item>238</item>
         <item>240</item>
+        <item>242</item>
+        <item>244</item>
+        <item>246</item>
+        <item>248</item>
+        <item>250</item>
+        <item>252</item>
+        <item>254</item>
+        <item>256</item>
+        <item>258</item>
+        <item>260</item>
     </string-array>
 
 <!--*
@@ -159,7 +187,7 @@
 
     <string-array name="entries_prox_delay_explain">
         <item>Remove prop entirely</item>
-        <item>0 -Not Recommended</item>
+        <item>0</item>
         <item>75</item>
         <item>150</item>
         <item>225</item>
@@ -181,6 +209,18 @@
         <item>450</item>
         <item>525</item>
         <item>600</item>
+    </string-array>
+
+    <string-array name="entries_logcat_explain">
+        <item>Perminatly remove log (persists through reboot)</item>
+        <item>Remove log till reboot (will NOT persist through reboot)</item>
+        <item>Enable logging (persists through reboot)</item>
+    </string-array>
+
+    <string-array name="entries_logcat">
+        <item>disable</item>
+        <item>rm_log</item>
+        <item>1</item>
     </string-array>
 
 </resources>
