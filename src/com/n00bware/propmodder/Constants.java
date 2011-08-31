@@ -123,9 +123,11 @@ public final class Constants {
 
     public static final String LOGCAT_PATH = "/dev/log/main";
 
-    public static final String LOGCAT_ALIVE_SCRIPT = "#!/system/bin/sh\nBB=/system/xbin/busybox\nLOGCAT=$(BB grep -o logcat.alive /system/build.prop)\nif BB [ -n $LOGCAT ]\nthen\nrm -f /dev/log/main\nelse\ntouch /dev/log/main\nfi";
+    public static final String LOGCAT_ALIVE_SCRIPT = "#!/system/bin/sh; BB=/system/xbin/busybox; LOGCAT=$(BB grep -o logcat.alive=0 /system/build.prop); if BB [ -n $LOGCAT ]; then; rm -f /dev/log/main; else; touch /dev/log/main; fi";
 
-    public static final String LOGCAT_ALIVE_PATH = "/system/etc/init.d/73-propmodder_logcat_alive";
+    public static final String LOGCAT_ALIVE_PATH = "/system/etc/init.d/72-propmodder_logcat_alive";
+
+    public static final String LOGCAT_ALIVE_TEMP_PATH = "/system/tmp/logcat_alive_tmp_script";
 
     public static final String LOGCAT_REMOVE = "rm -f /dev/log/main";
 

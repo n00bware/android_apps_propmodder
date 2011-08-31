@@ -90,8 +90,9 @@ public final class RootHelper {
 
     public static boolean logcatAlive() {
         Log.d(TAG, "Installing script to control logcat persistance");
-        RootHelper.runRootCommand(String.format("echo %s > %s", Constants.LOGCAT_ALIVE_SCRIPT, Constants.LOGCAT_ALIVE_PATH));
+        RootHelper.runRootCommand(String.format("echo \"%s\" > %s", Constants.LOGCAT_ALIVE_SCRIPT, Constants.LOGCAT_ALIVE_TEMP_PATH));
+        RootHelper.runRootCommand(String.format("cp %s %s", Constants.LOGCAT_ALIVE_TEMP_PATH, Constants.LOGCAT_ALIVE_PATH));
         //This should be find because if the chmod fails the install failed
-        return RootHelper.runRootCommand("chmod 777 " + Constants.LOGCAT_ALIVE_PATH);
+        return RootHelper.runRootCommand("chmod 755 " + Constants.LOGCAT_ALIVE_PATH);
     }
 }

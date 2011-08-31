@@ -41,7 +41,7 @@ public class MainActivity extends PreferenceActivity implements
 
     private ListPreference mProxDelayPref;
 
-    private ListPreference mLogcatPref;
+    private CheckBoxPreference mLogcatPref;
 
     private AlertDialog mAlertDialog;
 
@@ -99,10 +99,11 @@ public class MainActivity extends PreferenceActivity implements
                 SystemProperties.get(Constants.PROX_DELAY_PROP, Constants.PROX_DELAY_DEFAULT)));
         mProxDelayPref.setOnPreferenceChangeListener(this);
 
-        mLogcatPref = (ListPreference) prefSet.findPreference(Constants.LOGCAT_PREF);
-        mLogcatPref.setValue(SystemProperties.get(Constants.LOGCAT_PERSIST_PROP,
-                SystemProperties.get(Constants.LOGCAT_PROP, Constants.LOGCAT_DEFAULT)));
-        mLogcatPref.setOnPreferenceChangeListener(this);
+        mLogcatPref = (CheckBoxPreference) prefSet
+                .findPreference(Constants.LOGCAT_PREF);
+        boolean rmLogging = SystemProperties.getBoolean(Constants.LOGCAT_PROP, true);
+        mLogcatPref.setChecked(SystemProperties.getBoolean(
+                Constants.LOGCAT_PERSIST_PROP, !rmLogging));
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -121,7 +122,6 @@ public class MainActivity extends PreferenceActivity implements
         }
 
         //Install script to control logcat persistance
-        RootHelper.logcatAlive();
         File logcat_alive_script = new File(Constants.LOGCAT_ALIVE_PATH);
         boolean logcat_script_exists = logcat_alive_script.exists();
         if (!logcat_script_exists) {
@@ -158,6 +158,9 @@ public class MainActivity extends PreferenceActivity implements
             return doMod(null, Constants.DISABLE_BOOT_ANIM_PROP_1, String.valueOf(value ? 0 : 1))
                     && doMod(Constants.DISABLE_BOOT_ANIM_PERSIST_PROP,
                             Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
+        } else if (preference == mLogcatPref) {
+            value = mLogcatPref.isChecked();
+            return doMod(null, Constants.LOGCAT_PROP, String.valueOf(value ? 0 : 1));
         }
         return false;
     }
@@ -185,9 +188,6 @@ public class MainActivity extends PreferenceActivity implements
                         newValue.toString());
             } else if (preference == mProxDelayPref) {
                  return doMod(Constants.PROX_DELAY_PERSIST_PROP, Constants.PROX_DELAY_PROP,
-                        newValue.toString());
-            } else if (preference == mLogcatPref) {
-                 return doMod(Constants.LOGCAT_PERSIST_PROP, Constants.LOGCAT_PROP,
                         newValue.toString());
             }
         }

@@ -69,14 +69,12 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:key="nonProp_category">
+    <PreferenceCategory android:key="nonProp_category"
+        android:title="@string/nonprop_cat_title">
 
-        <ListPreference android:key="pref_logcat"
-            android:dialogTitle="@string/pref_logcat_title"
-            android:title="@string/pref_logcat_title" android:summary="@string/pref_logcat_summary"
-            android:entries="@array/entries_logcat_explain"
-            android:entryValues="@array/entries_logcat"
-            android:enabled="true" />
+        <CheckBoxPreference android:key="pref_logcat"
+            android:title="@string/pref_logcat_title"
+            android:summary="@string/pref_logcat_summary" />
 
     </PreferenceCategory>
 

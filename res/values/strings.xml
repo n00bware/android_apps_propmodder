@@ -4,15 +4,14 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder v1.3.2</string>
+    <string name="general_title">PropModder v1.4</string>
     <string name="main_title_head">Prop Modder by n00bware</string>
     <string name="main_title_subhead">Click here to reinitialize the app</string>
-    <string name="versionCode">132</string>
-    <string name="versionName">Release v1.3.2</string>
-    <string name="pm_script">/tmp/pm.sh</string>
+    <string name="versionCode">14</string>
+    <string name="versionName">Release v1.4</string>
 
     <!-- non build.prop hacks -->
-    <string name="nonProp_category">Hacks that do not involve build.prop</string>
+    <string name="nonprop_cat_title">Hacks that do not involve build.prop</string>
 
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
     <string name="main_warning_title">YOU HAVE BEEN WARNED</string>
