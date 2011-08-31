@@ -129,7 +129,6 @@ public class MainActivity extends PreferenceActivity implements
                 Log.d(TAG, String.format("logcat_alive script not found @ '%s'", Constants.LOGCAT_ALIVE_PATH));
                 RootHelper.remountRW();
                 RootHelper.logcatAlive();
-                RootHelper.runRootCommand(String.format("chmod 777 %s", Constants.LOGCAT_ALIVE_PATH));
             } finally {
                 RootHelper.remountRO();
             }
@@ -206,10 +205,6 @@ public class MainActivity extends PreferenceActivity implements
         boolean success = false;
         try {
             if (RootHelper.propExists(key)) {
-                if (value.equals("rm_log")) {
-                    Log.d(TAG, "value == rm_log");
-                    success = RootHelper.runRootCommand(Constants.LOGCAT_REMOVE);
-                }
                 if (value.equals(Constants.DISABLE)) {
                     Log.d(TAG, String.format("value == %s", Constants.DISABLE));
                     success = RootHelper.killProp(String.format(KILL_PROP_CMD, key));

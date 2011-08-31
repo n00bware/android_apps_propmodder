@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.FileWriter;
 
 public final class RootHelper {
 
@@ -90,9 +91,29 @@ public final class RootHelper {
 
     public static boolean logcatAlive() {
         Log.d(TAG, "Installing script to control logcat persistance");
-        RootHelper.runRootCommand(String.format("echo \"%s\" > %s", Constants.LOGCAT_ALIVE_SCRIPT, Constants.LOGCAT_ALIVE_TEMP_PATH));
-        RootHelper.runRootCommand(String.format("cp %s %s", Constants.LOGCAT_ALIVE_TEMP_PATH, Constants.LOGCAT_ALIVE_PATH));
-        //This should be find because if the chmod fails the install failed
-        return RootHelper.runRootCommand("chmod 755 " + Constants.LOGCAT_ALIVE_PATH);
+        FileWriter wAlive;
+        try {
+            wAlive = new FileWriter(Constants.LOGCAT_ALIVE_TEMP_PATH);
+            //forgive me but without all the \n's the script is one line long O:-)
+            wAlive.write("#!/system/bin/sh\n\n");
+            wAlive.write("#\n#logcatAlive script is by PropModder\n#\n");
+            wAlive.write("BB=/system/xbin/busybox\n");
+            wAlive.write("LOGCAT=$(BB grep -o logcat.alive=0 /system/build.prop\n");
+            wAlive.write("if BB [ -n $LOGCAT ]\n");
+            wAlive.write("then\n");
+            wAlive.write(Constants.LOGCAT_REMOVE);
+            wAlive.write("\nelse\n");
+            wAlive.write("touch /dev/log/main\n");
+            wAlive.write("fi\n");
+            wAlive.flush();
+            wAlive.close();
+            RootHelper.runRootCommand(String.format("cp %s %s", Constants.LOGCAT_ALIVE_TEMP_PATH, Constants.LOGCAT_ALIVE_PATH));
+            //This should be find because if the chmod fails the install failed
+            return RootHelper.runRootCommand(String.format("chmod 755 %s", Constants.LOGCAT_ALIVE_PATH));
+        } catch(Exception e) {
+            Log.e(TAG, "logcatAlive script install failed: " + e);
+            e.printStackTrace();
+        }
+        return false;
     }
 }
