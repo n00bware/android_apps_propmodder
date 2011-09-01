@@ -1,16 +1,24 @@
 
 package com.n00bware.propmodder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -24,6 +32,9 @@ public class MainActivity extends PreferenceActivity implements
     private static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
 
     private static final String TAG = "PropModder";
+
+    private String ModPrefHolder = SystemProperties.get(Constants.MOD_VERSION_PERSIST_PROP,
+                SystemProperties.get(Constants.MOD_VERSION_PROP, Constants.MOD_VERSION_DEFAULT));
 
     private ListPreference mWifiScanPref;
 
@@ -43,6 +54,8 @@ public class MainActivity extends PreferenceActivity implements
 
     private CheckBoxPreference mLogcatPref;
 
+    private EditTextPreference mModVersionPref;
+
     private AlertDialog mAlertDialog;
 
     @Override
@@ -54,8 +67,6 @@ public class MainActivity extends PreferenceActivity implements
 
         Log.d(TAG, "Loading prefs");
         PreferenceScreen prefSet = getPreferenceScreen();
-
-
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(Constants.WIFI_SCAN_PREF);
         mWifiScanPref.setValue(SystemProperties.get(Constants.WIFI_SCAN_PERSIST_PROP,
@@ -87,8 +98,7 @@ public class MainActivity extends PreferenceActivity implements
                 SystemProperties.get(Constants.FAST_UP_PROP, Constants.FAST_UP_DEFAULT)));
         mFastUpPref.setOnPreferenceChangeListener(this);
 
-        mDisableBootAnimPref = (CheckBoxPreference) prefSet
-                .findPreference(Constants.DISABLE_BOOT_ANIM_PREF);
+        mDisableBootAnimPref = (CheckBoxPreference) prefSet.findPreference(Constants.DISABLE_BOOT_ANIM_PREF);
         boolean bootAnim1 = SystemProperties.getBoolean(Constants.DISABLE_BOOT_ANIM_PROP_1, true);
         boolean bootAnim2 = SystemProperties.getBoolean(Constants.DISABLE_BOOT_ANIM_PROP_2, false);
         mDisableBootAnimPref.setChecked(SystemProperties.getBoolean(
@@ -99,11 +109,15 @@ public class MainActivity extends PreferenceActivity implements
                 SystemProperties.get(Constants.PROX_DELAY_PROP, Constants.PROX_DELAY_DEFAULT)));
         mProxDelayPref.setOnPreferenceChangeListener(this);
 
-        mLogcatPref = (CheckBoxPreference) prefSet
-                .findPreference(Constants.LOGCAT_PREF);
+        mLogcatPref = (CheckBoxPreference) prefSet.findPreference(Constants.LOGCAT_PREF);
         boolean rmLogging = SystemProperties.getBoolean(Constants.LOGCAT_PROP, true);
         mLogcatPref.setChecked(SystemProperties.getBoolean(
                 Constants.LOGCAT_PERSIST_PROP, !rmLogging));
+
+        Log.d(TAG, String.format("ModPrefHoler = '%s'", ModPrefHolder)); 
+        mModVersionPref = (EditTextPreference) prefSet.findPreference(Constants.MOD_VERSION_PREF);
+        //mModVersionPref.setText(ModPrefHolder);
+        //mModVersionPref.setOnPreferenceChangeListener(this);
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -188,6 +202,9 @@ public class MainActivity extends PreferenceActivity implements
             } else if (preference == mProxDelayPref) {
                  return doMod(Constants.PROX_DELAY_PERSIST_PROP, Constants.PROX_DELAY_PROP,
                         newValue.toString());
+            } else if (preference == mModVersionPref) {
+                 return doMod(Constants.MOD_VERSION_PERSIST_PROP, Constants.MOD_VERSION_PROP,
+                        newValue.toString());
             }
         }
         return false;
@@ -226,5 +243,4 @@ public class MainActivity extends PreferenceActivity implements
         }
         return success;
     }
-
 }

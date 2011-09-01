@@ -131,4 +131,13 @@ public final class Constants {
 
     public static final String LOGCAT_REMOVE = "rm -f /dev/log/main";
 
+    /*
+     * Strings for removing adb logcat log
+     */
+    public static final String MOD_VERSION_PREF = "pref_mod_version";
+    public static final String MOD_VERSION_PROP = "ro.build.display.id";
+    public static final String MOD_VERSION_PERSIST_PROP = "persist.build.display.id";
+    public static final String MOD_VERSION_DEFAULT = System.getProperty(MOD_VERSION_PROP);
+    public static final String MOD_BUTTON_TEXT = "doMod";
+    public static final String MOD_VERSION_TEXT = "Mods by PropModder";
 }

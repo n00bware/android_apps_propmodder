@@ -67,6 +67,13 @@
             android:entryValues="@array/entries_prox_delay"
             android:enabled="true" />
 
+        <EditTextPreference android:title="Custom rom name"
+            android:key="mod_name"
+            android:summary="Mod Version"
+            android:singleLine="true"
+            android:dialogTitle="Enter New ModVersion name"
+            android:defaultValue="PropModder -you know you love it" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:key="nonProp_category"
