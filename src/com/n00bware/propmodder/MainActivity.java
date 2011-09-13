@@ -128,7 +128,6 @@ public class MainActivity extends PreferenceActivity implements
                 modET.setSingleLine(true);
             }
         }
-        mModVersionPref.setText(ModPrefHolder);
         mModVersionPref.setOnPreferenceChangeListener(this);
 
         /*

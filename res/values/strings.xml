@@ -74,6 +74,6 @@
     <!-- Mod Version -->
     <string name="pref_mod_version_title">Change your Mod Version</string>
     <string name="pref_mod_version_summary">This is astetic and doesn\'t improve the system</string>
-    <string name="pref_mod_version_default">PropModder ~You know you love it!</string>
+    <string name="pref_mod_version_default">PropModder!!!</string>
 
 </resources>
