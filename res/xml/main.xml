@@ -67,7 +67,7 @@
             android:entryValues="@array/entries_prox_delay"
             android:enabled="true" />
 
-        <EditTextPreferenceandroid:key="pref_mod_version"
+        <EditTextPreference android:key="pref_mod_version"
             android:dialogTitle="@string/pref_mod_version_title"
             android:title="@string/pref_mod_version_title"
             android:summary="@string/pref_mod_version_summary"

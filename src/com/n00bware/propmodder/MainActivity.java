@@ -15,6 +15,8 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.text.InputFilter;
+import android.text.InputFilter.LengthFilter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -116,8 +118,18 @@ public class MainActivity extends PreferenceActivity implements
 
         Log.d(TAG, String.format("ModPrefHoler = '%s'", ModPrefHolder)); 
         mModVersionPref = (EditTextPreference) prefSet.findPreference(Constants.MOD_VERSION_PREF);
-        //mModVersionPref.setText(ModPrefHolder);
-        //mModVersionPref.setOnPreferenceChangeListener(this);
+
+        if (mModVersionPref != null) {
+            EditText modET = mModVersionPref.getEditText();
+            ModPrefHolder = mModVersionPref.getEditText().toString();
+            if (modET != null){
+                InputFilter lengthFilter = new InputFilter.LengthFilter(20);
+                modET.setFilters(new InputFilter[]{lengthFilter});
+                modET.setSingleLine(true);
+            }
+        }
+        mModVersionPref.setText(ModPrefHolder);
+        mModVersionPref.setOnPreferenceChangeListener(this);
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't

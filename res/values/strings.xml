@@ -44,10 +44,6 @@
     <!-- TODO this isn't very clear -->
     <string name="pref_vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to (requires reboot)</string>
 
-    <!--ModVersion -->
-    <string name="pref_mod_version_title">Mod Version in settings</string>
-    <string name="pref_mod_version_summary">This is strictly for appearances and serves NO other purpose</string>
-
     <!-- NOT OUR FAULT Dialoge -->
     <string name="propmodder_warning_title">ROOT IS REQUIRED</string>
     <string name="propmodder_warning">This program changes system properties in /system/build.prop DO NOT USE if you don\'t know what you are doing. We (n00bware, makers of PropModder) are not responsible for your device PERIOD. You have been warned</string>
@@ -77,7 +73,7 @@
 
     <!-- Mod Version -->
     <string name="pref_mod_version_title">Change your Mod Version</string>
-    <string name="pref_mod_version_summary">This is astetic and doesn't improve the system</string>
+    <string name="pref_mod_version_summary">This is astetic and doesn\'t improve the system</string>
     <string name="pref_mod_version_default">PropModder ~You know you love it!</string>
 
 </resources>
