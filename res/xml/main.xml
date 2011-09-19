@@ -74,6 +74,20 @@
             android:singleLine="true"
             android:defaultValue="@string/pref_mod_version_default" />
 
+        <ListPreference android:key="pref_sleep"
+            android:dialogTitle="@string/pref_sleep_title"
+            android:title="@string/pref_sleep_title" android:summary="@string/pref_sleep_summary"
+            android:entries="@array/entries_sleep_explain"
+            android:entryValues="@array/entries_sleep" />
+
+        <CheckBoxPreference android:key="pref_tcp_stack"
+            android:title="@string/pref_tcp_stack_title"
+            android:summary="@string/pref_tcp_stack_summary" />
+
+        <CheckBoxPreference android:key="pref_jit"
+            android:title="@string/pref_jit_title"
+            android:summary="@string/pref_jit_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:key="nonProp_category"

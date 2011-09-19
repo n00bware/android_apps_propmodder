@@ -223,4 +223,22 @@
         <item>1</item>
     </string-array>
 
+    <string-array name="entries_sleep_explain">
+        <item>Disable</item>
+        <item>Power Collapse Suspend</item>
+        <item>Power Collapse (Provides best power savings)</item>
+        <item>Apps Sleep</item>
+        <item>Slow clock and wait for interrupt</item>
+        <item>Wait for Interrupt</item>
+    </string-array>
+
+    <string-array name="entries_sleep">
+        <item>disable</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
 </resources>

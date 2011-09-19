@@ -140,4 +140,33 @@ public final class Constants {
     public static final String MOD_VERSION_DEFAULT = System.getProperty(MOD_VERSION_PROP);
     public static final String MOD_BUTTON_TEXT = "doMod";
     public static final String MOD_VERSION_TEXT = "Mods by PropModder";
+
+    /*
+     * Strings for Sleep mode
+     */
+    public static final String SLEEP_PREF = "pref_sleep";
+    public static final String SLEEP_PROP = "pm.sleep_mode";
+    public static final String SLEEP_PERSIST_PROP = "persist.sleep";
+    public static final String SLEEP_DEFAULT = System.getProperty(SLEEP_PROP);
+
+
+    /*
+     * Strings for TCP Stack Optimizations
+     */
+    public static final String TCP_STACK_PREF = "pref_tcp_stack";
+    public static final String TCP_STACK_PERSIST_PROP = "persist_tcp_stack";
+    public static final String TCP_STACK_PROP_0 = "net.tcp.buffersize.default";
+    public static final String TCP_STACK_PROP_1 = "net.tcp.buffersize.wifi";
+    public static final String TCP_STACK_PROP_2 = "net.tcp.buffersize.umts";
+    public static final String TCP_STACK_PROP_3 = "net.tcp.buffersize.gprs";
+    public static final String TCP_STACK_PROP_4 = "net.tcp.buffersize.edge";
+    public static final String TCP_STACK_BUFFER = "4096,87380,256960,4096,16384,256960";
+
+    /*
+     * Strings for jit compiler
+     */
+    public static final String JIT_PREF = "pref_jit";
+    public static final String JIT_PERSIST_PROP = "persist_jit";
+    public static final String JIT_PROP = "dalvik.vm.execution-mode";
+
 }

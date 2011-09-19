@@ -76,4 +76,16 @@
     <string name="pref_mod_version_summary">This is astetic and doesn\'t improve the system</string>
     <string name="pref_mod_version_default">PropModder!!!</string>
 
+    <!-- pm sleep mode -->
+    <string name="pref_sleep_title">PM Sleep mode</string>
+    <string name="pref_sleep_summary">Moddify Nighttime sleep policy</string>
+
+    <!-- jit complier -->
+    <string name="pref_jit_title">Just In Time Complier</string>
+    <string name="pref_jit_summary">enables/disables JIT complier in dalvik vm</string>
+
+    <!-- TCP Stack optimizations -->
+    <string name="pref_tcp_stack_title">Optimize TCP Stack</string>
+    <string name="pref_tcp_stack_summary">Moddify the buffersize for better preformance</string>
+
 </resources>

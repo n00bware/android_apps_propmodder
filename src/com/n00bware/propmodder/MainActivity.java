@@ -58,6 +58,12 @@ public class MainActivity extends PreferenceActivity implements
 
     private EditTextPreference mModVersionPref;
 
+    private ListPreference mSleepPref;
+
+    private CheckBoxPreference mTcpStackPref;
+
+    private CheckBoxPreference mJitPref;
+
     private AlertDialog mAlertDialog;
 
     @Override
@@ -116,9 +122,27 @@ public class MainActivity extends PreferenceActivity implements
         mLogcatPref.setChecked(SystemProperties.getBoolean(
                 Constants.LOGCAT_PERSIST_PROP, !rmLogging));
 
+        mSleepPref = (ListPreference) prefSet.findPreference(Constants.SLEEP_PREF);
+        mSleepPref.setValue(SystemProperties.get(Constants.SLEEP_PERSIST_PROP,
+                SystemProperties.get(Constants.SLEEP_PROP, Constants.SLEEP_DEFAULT)));
+        mSleepPref.setOnPreferenceChangeListener(this);
+
+        mTcpStackPref = (CheckBoxPreference) prefSet.findPreference(Constants.TCP_STACK_PREF);
+        boolean tcpstack0 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_0, true);
+        boolean tcpstack1 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_1, true);
+        boolean tcpstack2 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_2, true);
+        boolean tcpstack3 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_3, true);
+        boolean tcpstack4 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_4, true);
+        mTcpStackPref.setChecked(SystemProperties.getBoolean(
+                Constants.LOGCAT_PERSIST_PROP, tcpstack0 && tcpstack1 && tcpstack2 && tcpstack3 && tcpstack4));
+
+        mJitPref = (CheckBoxPreference) prefSet.findPreference(Constants.JIT_PREF);
+        boolean jit = SystemProperties.getBoolean(Constants.JIT_PROP, true);
+        mJitPref.setChecked(SystemProperties.getBoolean(
+                Constants.LOGCAT_PERSIST_PROP, !jit));
+
         Log.d(TAG, String.format("ModPrefHoler = '%s'", ModPrefHolder)); 
         mModVersionPref = (EditTextPreference) prefSet.findPreference(Constants.MOD_VERSION_PREF);
-
         if (mModVersionPref != null) {
             EditText modET = mModVersionPref.getEditText();
             ModPrefHolder = mModVersionPref.getEditText().toString();
@@ -185,6 +209,18 @@ public class MainActivity extends PreferenceActivity implements
         } else if (preference == mLogcatPref) {
             value = mLogcatPref.isChecked();
             return doMod(null, Constants.LOGCAT_PROP, String.valueOf(value ? 0 : 1));
+        } else if (preference == mTcpStackPref) {
+            Log.d(TAG, "mTcpStackPref.onPreferenceTreeClick()");
+            value = mTcpStackPref.isChecked();
+            return doMod(null, Constants.TCP_STACK_PROP_0, String.valueOf(value ? Constants.TCP_STACK_BUFFER : Constants.DISABLE))
+                    && doMod(null, Constants.TCP_STACK_PROP_1, String.valueOf(value ? Constants.TCP_STACK_BUFFER : Constants.DISABLE))
+                    && doMod(null, Constants.TCP_STACK_PROP_2, String.valueOf(value ? Constants.TCP_STACK_BUFFER : Constants.DISABLE))
+                    && doMod(null, Constants.TCP_STACK_PROP_3, String.valueOf(value ? Constants.TCP_STACK_BUFFER : Constants.DISABLE))
+                    && doMod(Constants.TCP_STACK_PERSIST_PROP, Constants.TCP_STACK_PROP_4, String.valueOf(value ? Constants.TCP_STACK_BUFFER : Constants.DISABLE));
+        } else if (preference == mJitPref) {
+            Log.d(TAG, "mJitPref.onPreferenceTreeClick()");
+            value = mJitPref.isChecked();
+            return doMod(Constants.JIT_PERSIST_PROP, Constants.JIT_PROP, String.valueOf(value ? "int:fast" : "int:jit"));
         }
         return false;
     }
