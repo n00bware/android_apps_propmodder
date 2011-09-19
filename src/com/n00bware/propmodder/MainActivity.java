@@ -64,6 +64,8 @@ public class MainActivity extends PreferenceActivity implements
 
     private CheckBoxPreference mJitPref;
 
+    private CheckBoxPreference mCheckInPref;
+
     private AlertDialog mAlertDialog;
 
     @Override
@@ -137,9 +139,9 @@ public class MainActivity extends PreferenceActivity implements
                 Constants.LOGCAT_PERSIST_PROP, tcpstack0 && tcpstack1 && tcpstack2 && tcpstack3 && tcpstack4));
 
         mJitPref = (CheckBoxPreference) prefSet.findPreference(Constants.JIT_PREF);
-        boolean jit = SystemProperties.getBoolean(Constants.JIT_PROP, true);
+        boolean jitVM = SystemProperties.getBoolean(Constants.JIT_PROP, true);
         mJitPref.setChecked(SystemProperties.getBoolean(
-                Constants.LOGCAT_PERSIST_PROP, !jit));
+                Constants.LOGCAT_PERSIST_PROP, !jitVM));
 
         Log.d(TAG, String.format("ModPrefHoler = '%s'", ModPrefHolder)); 
         mModVersionPref = (EditTextPreference) prefSet.findPreference(Constants.MOD_VERSION_PREF);
@@ -153,6 +155,11 @@ public class MainActivity extends PreferenceActivity implements
             }
         }
         mModVersionPref.setOnPreferenceChangeListener(this);
+
+        mCheckInPref = (CheckBoxPreference) prefSet.findPreference(Constants.CHECK_IN_PREF);
+        boolean jit = SystemProperties.getBoolean(Constants.CHECK_IN_PROP, true);
+        mCheckInPref.setChecked(SystemProperties.getBoolean(
+                Constants.CHECK_IN_PERSIST_PROP, !jit));
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -221,6 +228,10 @@ public class MainActivity extends PreferenceActivity implements
             Log.d(TAG, "mJitPref.onPreferenceTreeClick()");
             value = mJitPref.isChecked();
             return doMod(Constants.JIT_PERSIST_PROP, Constants.JIT_PROP, String.valueOf(value ? "int:fast" : "int:jit"));
+        } else if (preference == mCheckInPref) {
+            value = mCheckInPref.isChecked();
+            doMod(null, Constants.CHECK_IN_PROP_HTC, String.valueOf(value ? 1 : Constants.DISABLE));
+            return doMod(Constants.CHECK_IN_PERSIST_PROP, Constants.CHECK_IN_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
         }
         return false;
     }

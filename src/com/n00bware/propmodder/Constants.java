@@ -169,4 +169,11 @@ public final class Constants {
     public static final String JIT_PERSIST_PROP = "persist_jit";
     public static final String JIT_PROP = "dalvik.vm.execution-mode";
 
+    /*
+     * Strings for disabling check in service
+     */
+    public static final String CHECK_IN_PREF = "pref_check_in";
+    public static final String CHECK_IN_PERSIST_PROP = "persist_check_in";
+    public static final String CHECK_IN_PROP = "ro.config.nocheckin";
+    public static final String CHECK_IN_PROP_HTC = "ro.config.htc.nocheckin";
 }

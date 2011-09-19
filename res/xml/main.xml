@@ -88,6 +88,10 @@
             android:title="@string/pref_jit_title"
             android:summary="@string/pref_jit_summary" />
 
+        <CheckBoxPreference android:key="pref_check_in"
+            android:title="@string/pref_check_in_title"
+            android:summary="@string/pref_check_in_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:key="nonProp_category"

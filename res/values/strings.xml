@@ -88,4 +88,8 @@
     <string name="pref_tcp_stack_title">Optimize TCP Stack</string>
     <string name="pref_tcp_stack_summary">Moddify the buffersize for better preformance</string>
 
+    <!-- disable check in service -->
+    <string name="pref_check_in_title">Check in service</string>
+    <string name="pref_check_in_summary">Stop sending system usage data to Google and HTC</string>
+
 </resources>
