@@ -72,7 +72,7 @@
             android:title="@string/pref_mod_version_title"
             android:summary="@string/pref_mod_version_summary"
             android:singleLine="true"
-            android:defaultValue="@string/pref_mod_version_default" />
+            android:hint="@string/pref_mod_version_default" />
 
         <ListPreference android:key="pref_sleep"
             android:dialogTitle="@string/pref_sleep_title"

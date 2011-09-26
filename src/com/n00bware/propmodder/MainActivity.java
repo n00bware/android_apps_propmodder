@@ -130,11 +130,11 @@ public class MainActivity extends PreferenceActivity implements
         mSleepPref.setOnPreferenceChangeListener(this);
 
         mTcpStackPref = (CheckBoxPreference) prefSet.findPreference(Constants.TCP_STACK_PREF);
-        boolean tcpstack0 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_0, true);
-        boolean tcpstack1 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_1, true);
-        boolean tcpstack2 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_2, true);
-        boolean tcpstack3 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_3, true);
-        boolean tcpstack4 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_4, true);
+        boolean tcpstack0 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_0, false);
+        boolean tcpstack1 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_1, false);
+        boolean tcpstack2 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_2, false);
+        boolean tcpstack3 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_3, false);
+        boolean tcpstack4 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_4, false);
         mTcpStackPref.setChecked(SystemProperties.getBoolean(
                 Constants.LOGCAT_PERSIST_PROP, tcpstack0 && tcpstack1 && tcpstack2 && tcpstack3 && tcpstack4));
 
@@ -279,7 +279,9 @@ public class MainActivity extends PreferenceActivity implements
         }
         boolean success = false;
         try {
-            if (RootHelper.propExists(key)) {
+            if (!RootHelper.propExists(key) && value.equals(Constants.DISABLE)) {
+                Log.d(TAG, String.format("We want {%s} DISABLED however it doesn't exist so we do nothing and move on", key));
+            } else if (RootHelper.propExists(key)) {
                 if (value.equals(Constants.DISABLE)) {
                     Log.d(TAG, String.format("value == %s", Constants.DISABLE));
                     success = RootHelper.killProp(String.format(KILL_PROP_CMD, key));

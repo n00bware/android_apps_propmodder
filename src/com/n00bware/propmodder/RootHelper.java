@@ -80,8 +80,13 @@ public final class RootHelper {
 
     public static void updateShowBuild() {
         Log.d(TAG, "Setting up /system/tmp/showbuild");
-        RootHelper.runRootCommand("cp /system/build.prop " + Constants.SHOWBUILD_PATH);
-        RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
+        try {
+            RootHelper.remountRW();
+            RootHelper.runRootCommand("cp /system/build.prop " + Constants.SHOWBUILD_PATH);
+            RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
+        } finally {
+            RootHelper.remountRO();
+        }
     }
 
     public static boolean killProp(String prop) {
