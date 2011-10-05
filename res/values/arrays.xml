@@ -241,4 +241,44 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="entries_jbirdvegas_explain">
+        <item>Donate</item>
+        <item>GitHub</item>
+        <item>Market</item>
+        <item>Twitter</item>
+        <item>Google+</item>
+    </string-array>
+
+    <string-array name="entries_jbirdvegas">
+        <item>http://bit.ly/oCWMo0</item>
+        <item>https://github.com/JBirdVegas</item>
+        <item>https://market.android.com/developer?pub=n00bware</item>
+        <item>http://twitter.com/#!/JBird_Vegas</item>
+        <item>https://plus.google.com/115602572254983357301</item>
+    </string-array>
+
+    <string-array name="entries_revnumbers_explain">
+        <item>Donate</item>
+        <item>GitHub</item>
+        <item>Twitter</item>
+        <item>Google+</item>
+    </string-array>
+
+    <string-array name="entries_revnumbers">
+        <item>http://bit.ly/nNB7tK</item>
+        <item>https://github.com/revnumbers</item>
+        <item>http://twitter.com/#!/RevNumbers</item>
+        <item>https://plus.google.com/108022993108279010175</item>
+    </string-array>
+
+    <string-array name="entries_spitemare_explain">
+        <item>GitHub</item>
+        <item>Google+</item>
+    </string-array>
+
+    <string-array name="entries_spitemare">
+        <item>https://github.com/Spitemare</item>
+        <item>https://plus.google.com/</item>
+    </string-array>
+
 </resources>
