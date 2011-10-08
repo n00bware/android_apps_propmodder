@@ -82,7 +82,7 @@ public final class RootHelper {
         Log.d(TAG, "Setting up /system/tmp/showbuild");
         try {
             RootHelper.remountRW();
-            RootHelper.runRootCommand("cp /system/build.prop " + Constants.SHOWBUILD_PATH);
+            RootHelper.runRootCommand("mv -f /system/build.prop " + Constants.SHOWBUILD_PATH);
             RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
         } finally {
             RootHelper.remountRO();
@@ -94,29 +94,21 @@ public final class RootHelper {
         return RootHelper.runRootCommand(prop);
     }
 
-    public static boolean logcatAlive() {
-        Log.d(TAG, "Installing script to control logcat persistance");
+    public static boolean initScript() {
         FileWriter wAlive;
         try {
-            wAlive = new FileWriter(Constants.LOGCAT_ALIVE_TEMP_PATH);
+            wAlive = new FileWriter(Constants.INIT_SCRIPT_TEMP_PATH);
             //forgive me but without all the \n's the script is one line long O:-)
-            wAlive.write("#!/system/bin/sh\n\n");
-            wAlive.write("#\n#logcatAlive script is by PropModder\n#\n");
-            wAlive.write("BB=/system/xbin/busybox\n");
-            wAlive.write("LOGCAT=$(BB grep -o logcat.alive=0 /system/build.prop\n");
-            wAlive.write("if BB [ -n $LOGCAT ]\n");
-            wAlive.write("then\n");
-            wAlive.write(Constants.LOGCAT_REMOVE);
-            wAlive.write("\nelse\n");
-            wAlive.write("touch /dev/log/main\n");
-            wAlive.write("fi\n");
+            wAlive.write("#\n#init.d script by PropModder\n#\n\n");
+            wAlive.write("#rm -f /dev/log/main\n");
+            wAlive.write("#echo 2048 > /sys/devices/virtual/bdi/179:0/read_ahead_kb");
             wAlive.flush();
             wAlive.close();
-            RootHelper.runRootCommand(String.format("cp %s %s", Constants.LOGCAT_ALIVE_TEMP_PATH, Constants.LOGCAT_ALIVE_PATH));
+            RootHelper.runRootCommand(String.format("mv -f %s %s", Constants.INIT_SCRIPT_TEMP_PATH, Constants.INIT_SCRIPT_PATH));
             //This should be find because if the chmod fails the install failed
-            return RootHelper.runRootCommand(String.format("chmod 755 %s", Constants.LOGCAT_ALIVE_PATH));
+            return RootHelper.runRootCommand(String.format("chmod 755 %s", Constants.INIT_SCRIPT_PATH));
         } catch(Exception e) {
-            Log.e(TAG, "logcatAlive script install failed: " + e);
+            Log.e(TAG, "initScript install failed: " + e);
             e.printStackTrace();
         }
         return false;

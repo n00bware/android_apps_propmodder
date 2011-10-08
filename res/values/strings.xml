@@ -4,11 +4,11 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder v1.5.2</string>
+    <string name="general_title">PropModder v1.6.1</string>
     <string name="main_title_head">Prop Modder by n00bware</string>
     <string name="main_title_subhead">Click here to reinitialize the app</string>
-    <string name="versionCode">152</string>
-    <string name="versionName">Release v1.5.2</string>
+    <string name="versionCode">161</string>
+    <string name="versionName">Release v1.6.1</string>
 
     <!-- non build.prop hacks -->
     <string name="nonprop_cat_title">Hacks that do not involve build.prop</string>
@@ -20,8 +20,6 @@
     <string name="pref_jbirdvegas_summary">Lead Developer</string>
     <string name="pref_revnumbers_title">RevNumbers</string>
     <string name="pref_revnumbers_summary">Developer / Linux expert</string>
-    <string name="pref_spitemare_title">Spitemare</string>
-    <string name="pref_spitemare_summary">...a teaching develper nice enough to show us the ways :)</string>
 
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
     <string name="main_warning_title">YOU HAVE BEEN WARNED</string>
@@ -101,5 +99,9 @@
     <!-- disable check in service -->
     <string name="pref_check_in_title">Check in service</string>
     <string name="pref_check_in_summary">Stop sending system usage data to Google and HTC</string>
+
+    <!-- sdcard speed hack (sdcard buffer) -->
+    <string name="pref_sdcard_buffer_title">Sdcard speed hack</string>
+    <string name="pref_sdcard_buffer_summary">Moddify the sdcard buffersize for better performance</string>
 
 </resources>

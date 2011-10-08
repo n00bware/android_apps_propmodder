@@ -17,11 +17,5 @@
             android:entries="@array/entries_revnumbers_explain"
             android:entryValues="@array/entries_revnumbers" />
 
-        <ListPreference android:key="pref_spitemare"
-            android:dialogTitle="@string/pref_spitemare_title"
-            android:title="@string/pref_spitemare_title" android:summary="@string/pref_spitemare_summary"
-            android:entries="@array/entries_spitemare_explain"
-            android:entryValues="@array/entries_spitemare" />
-
     </PreferenceCategory>
 </PreferenceScreen>

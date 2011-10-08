@@ -16,11 +16,9 @@ public class Credit extends PreferenceActivity implements
 
     private static final String JBIRDVEGAS_PREF = "pref_jbirdvegas";
     private static final String REVNUMBERS_PREF = "pref_revnumbers";
-    private static final String SPITEMARE_PREF = "pref_spitemare";
 
     private ListPreference mJBirdVegas;
     private ListPreference mRevNumbers;
-    private ListPreference mSpitemare;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,9 +33,6 @@ public class Credit extends PreferenceActivity implements
 
         mRevNumbers = (ListPreference) prefSet.findPreference(REVNUMBERS_PREF);
         mRevNumbers.setOnPreferenceChangeListener(this);
-
-        mSpitemare = (ListPreference) prefSet.findPreference(SPITEMARE_PREF);
-        mSpitemare.setOnPreferenceChangeListener(this);
 
     }
 

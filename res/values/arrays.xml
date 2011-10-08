@@ -271,14 +271,24 @@
         <item>https://plus.google.com/108022993108279010175</item>
     </string-array>
 
-    <string-array name="entries_spitemare_explain">
-        <item>GitHub</item>
-        <item>Google+</item>
+    <string-array name="entries_sdcard_buffer_explain">
+        <item>128 kb</item>
+        <item>1024 kb</item>
+        <item>2048 kb (recommended)</item>
+        <item>3072 kb</item>
+        <item>4096 kb</item>
+        <item>5120 kb</item>
+        <item>6144 kb</item>
     </string-array>
 
-    <string-array name="entries_spitemare">
-        <item>https://github.com/Spitemare</item>
-        <item>https://plus.google.com/</item>
+    <string-array name="entries_sdcard_buffer">
+        <item>128</item>
+        <item>1024</item>
+        <item>2048</item>
+        <item>3072</item>
+        <item>4096</item>
+        <item>5120</item>
+        <item>6144</item>
     </string-array>
 
 </resources>

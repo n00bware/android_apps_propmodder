@@ -28,44 +28,31 @@ public class MainActivity extends PreferenceActivity implements
         Preference.OnPreferenceChangeListener {
 
     private static final String APPEND_CMD = "echo \"%s=%s\" >> /system/build.prop";
-
     private static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" /system/build.prop";
-
     private static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
-
+    private static final String LOGCAT_CMD = "busybox sed -i \"/log/ c %s\" /system/etc/init.d/72propmodder_script";
+    private static final String SDCARD_BUFFER_CMD = "busybox sed -i \"/179:0/ c echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb\" /system/etc/init.d/72propmodder_script";
+    private static final String SDCARD_BUFFER_ON_THE_FLY_CMD = "echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb";
     private static final String TAG = "PropModder";
 
     private String ModPrefHolder = SystemProperties.get(Constants.MOD_VERSION_PERSIST_PROP,
                 SystemProperties.get(Constants.MOD_VERSION_PROP, Constants.MOD_VERSION_DEFAULT));
 
     private ListPreference mWifiScanPref;
-
     private ListPreference mLcdDensityPref;
-
     private ListPreference mMaxEventsPref;
-
     private ListPreference mRingDelayPref;
-
     private ListPreference mVmHeapsizePref;
-
     private ListPreference mFastUpPref;
-
     private CheckBoxPreference mDisableBootAnimPref;
-
     private ListPreference mProxDelayPref;
-
     private CheckBoxPreference mLogcatPref;
-
     private EditTextPreference mModVersionPref;
-
     private ListPreference mSleepPref;
-
     private CheckBoxPreference mTcpStackPref;
-
     private CheckBoxPreference mJitPref;
-
     private CheckBoxPreference mCheckInPref;
-
+    private ListPreference mSdcardBufferPref;
     private AlertDialog mAlertDialog;
 
     @Override
@@ -120,9 +107,8 @@ public class MainActivity extends PreferenceActivity implements
         mProxDelayPref.setOnPreferenceChangeListener(this);
 
         mLogcatPref = (CheckBoxPreference) prefSet.findPreference(Constants.LOGCAT_PREF);
-        boolean rmLogging = SystemProperties.getBoolean(Constants.LOGCAT_PROP, true);
-        mLogcatPref.setChecked(SystemProperties.getBoolean(
-                Constants.LOGCAT_PERSIST_PROP, !rmLogging));
+        boolean rmLogging = RootHelper.runRootCommand(String.format("grep -q \"#rm -f /dev/log/main\" %s", Constants.INIT_SCRIPT_PATH));
+        mLogcatPref.setChecked(!rmLogging);
 
         mSleepPref = (ListPreference) prefSet.findPreference(Constants.SLEEP_PREF);
         mSleepPref.setValue(SystemProperties.get(Constants.SLEEP_PERSIST_PROP,
@@ -161,6 +147,9 @@ public class MainActivity extends PreferenceActivity implements
         mCheckInPref.setChecked(SystemProperties.getBoolean(
                 Constants.CHECK_IN_PERSIST_PROP, !jit));
 
+        mSdcardBufferPref = (ListPreference) prefSet.findPreference(Constants.SDCARD_BUFFER_PREF);
+        mSdcardBufferPref.setOnPreferenceChangeListener(this);
+
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
          * we make it
@@ -178,13 +167,13 @@ public class MainActivity extends PreferenceActivity implements
         }
 
         //Install script to control logcat persistance
-        File logcat_alive_script = new File(Constants.LOGCAT_ALIVE_PATH);
-        boolean logcat_script_exists = logcat_alive_script.exists();
-        if (!logcat_script_exists) {
+        File initScript = new File(Constants.INIT_SCRIPT_PATH);
+        boolean initScript_exists = initScript.exists();
+        if (!initScript_exists) {
             try {
-                Log.d(TAG, String.format("logcat_alive script not found @ '%s'", Constants.LOGCAT_ALIVE_PATH));
+                Log.d(TAG, String.format("init.d script not found @ '%s'", Constants.INIT_SCRIPT_PATH));
                 RootHelper.remountRW();
-                RootHelper.logcatAlive();
+                RootHelper.initScript();
             } finally {
                 RootHelper.remountRO();
             }
@@ -215,7 +204,7 @@ public class MainActivity extends PreferenceActivity implements
                             Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
         } else if (preference == mLogcatPref) {
             value = mLogcatPref.isChecked();
-            return doMod(null, Constants.LOGCAT_PROP, String.valueOf(value ? 0 : 1));
+            return RootHelper.remountRW() && RootHelper.runRootCommand(String.format(LOGCAT_CMD, String.valueOf(value ? Constants.LOGCAT_ENABLE : Constants.LOGCAT_DISABLE))) && RootHelper.remountRO();
         } else if (preference == mTcpStackPref) {
             Log.d(TAG, "mTcpStackPref.onPreferenceTreeClick()");
             value = mTcpStackPref.isChecked();
@@ -263,6 +252,10 @@ public class MainActivity extends PreferenceActivity implements
             } else if (preference == mModVersionPref) {
                  return doMod(Constants.MOD_VERSION_PERSIST_PROP, Constants.MOD_VERSION_PROP,
                         newValue.toString());
+            } else if (preference == mSdcardBufferPref) {
+                 RootHelper.remountRW();
+                 return RootHelper.runRootCommand(String.format(SDCARD_BUFFER_ON_THE_FLY_CMD, newValue.toString())) 
+                        && RootHelper.runRootCommand(String.format(SDCARD_BUFFER_CMD, newValue.toString())) && RootHelper.remountRO();
             }
         }
         return false;

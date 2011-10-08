@@ -107,6 +107,12 @@
             android:title="@string/pref_logcat_title"
             android:summary="@string/pref_logcat_summary" />
 
+        <ListPreference android:key="pref_sdcard_buffer"
+            android:dialogTitle="@string/pref_sdcard_buffer_title"
+            android:title="@string/pref_sdcard_buffer_title" android:summary="@string/pref_sdcard_buffer_summary"
+            android:entries="@array/entries_sdcard_buffer_explain"
+            android:entryValues="@array/entries_sdcard_buffer" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
