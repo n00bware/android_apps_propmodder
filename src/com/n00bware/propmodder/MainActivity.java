@@ -4,6 +4,8 @@ package com.n00bware.propmodder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
@@ -12,11 +14,13 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.text.InputFilter;
 import android.text.InputFilter.LengthFilter;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,6 +41,10 @@ public class MainActivity extends PreferenceActivity implements
 
     private String ModPrefHolder = SystemProperties.get(Constants.MOD_VERSION_PERSIST_PROP,
                 SystemProperties.get(Constants.MOD_VERSION_PROP, Constants.MOD_VERSION_DEFAULT));
+
+    //handles for our menu hard key press
+    private final int MENU_MARKET = 1;
+    private final int MENU_REBOOT = 2;
 
     private ListPreference mWifiScanPref;
     private ListPreference mLcdDensityPref;
@@ -295,5 +303,27 @@ public class MainActivity extends PreferenceActivity implements
             RootHelper.remountRO();
         }
         return success;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        boolean result = super.onCreateOptionsMenu(menu);
+        menu.add(0, MENU_MARKET, 0, "Please Rate PropModder").setIcon(R.drawable.market);
+        menu.add(0, MENU_REBOOT, 0, "!!! REBOOT NOW !!!").setIcon(R.drawable.reboot);
+        return result;
+    }
+ 
+    /* Handle the menu selection */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case MENU_MARKET:
+            Intent PropModderMarket = null;
+            PropModderMarket = new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=com.n00bware.propmodder"));
+            startActivity(PropModderMarket);
+            return true;
+        case MENU_REBOOT:
+            Toast.makeText(MainActivity.this, "REBOOTING", Toast.LENGTH_SHORT).show();
+            return RootHelper.runRootCommand("reboot");
+        }
+        return false;
     }
 }

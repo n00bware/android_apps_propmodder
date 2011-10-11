@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:n00bware="http://schemas.android.com/apk/res/com.n00bware.propmodder">
 
     <!-- General settings -->
     <PreferenceCategory android:key="general_category"
         android:title="@string/general_title">
 
-        <PreferenceScreen android:key="credit" android:title="@string/credit_title" android:summary="@string/credit_summary">
+         <com.n00bware.propmodder.IconPreference
+            android:key="credit"
+            android:title="@string/credit_title" android:summary="@string/credit_summary"
+            n00bware:icon="@drawable/java">
             <intent android:action="android.intent.action.MAIN"
                 android:targetPackage="com.n00bware.propmodder"
                 android:targetClass="com.n00bware.propmodder.Credit" />
-        </PreferenceScreen>
+        </com.n00bware.propmodder.IconPreference>
 
-        <PreferenceScreen android:key="propmodder" android:title="@string/showbuild_title" android:summary="@string/showbuild_label">
+        <com.n00bware.propmodder.IconPreference
+            android:key="propmodder"
+            android:title="@string/showbuild_title" android:summary="@string/showbuild_label"
+            n00bware:icon="@drawable/showbuild_icon">
             <intent android:action="android.intent.action.MAIN"
                 android:targetPackage="com.n00bware.propmodder"
                 android:targetClass="com.n00bware.propmodder.ShowBuildProp" />
-        </PreferenceScreen>
+        </com.n00bware.propmodder.IconPreference>
 
         <ListPreference android:key="pref_wifi_scan_interval"
             android:dialogTitle="@string/pref_wifi_scan_interval_title"

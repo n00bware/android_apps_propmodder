@@ -4,14 +4,13 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder v1.6.1</string>
-    <string name="main_title_head">Prop Modder by n00bware</string>
-    <string name="main_title_subhead">Click here to reinitialize the app</string>
-    <string name="versionCode">161</string>
-    <string name="versionName">Release v1.6.1</string>
+    <string name="general_title">PropModder v2.0.0</string>
+    <string name="main_title_head">PropModder by n00bware</string>
+    <string name="versionCode">200</string>
+    <string name="versionName">Release v2.0.0</string>
 
     <!-- non build.prop hacks -->
-    <string name="nonprop_cat_title">Hacks that do not involve build.prop</string>
+    <string name="nonprop_cat_title">Mods involving init.d script</string>
 
     <!-- Credit Screen -->
     <string name="credit_title">n00bware</string>
