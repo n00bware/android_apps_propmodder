@@ -113,4 +113,24 @@ public final class RootHelper {
         }
         return false;
     }
+
+    public static boolean enableInit() {
+        FileWriter wAlive;
+        try {
+            wAlive = new FileWriter("/system/tmp/initscript");
+            //forgive me but without all the \n's the script is one line long O:-)
+            wAlive.write("#\n#enable init.d script by PropModder\n#\n\n");
+            wAlive.write("log -p I -t boot \"Starting init.d ...\"\n");
+            wAlive.write("busybox run-parts /system/etc/init.d");
+            wAlive.flush();
+            wAlive.close();
+            RootHelper.runRootCommand("mv -f /system/tmp/initscript /system/usr/bin/init.sh");
+            //This should be find because if the chmod fails the install failed
+            return RootHelper.runRootCommand("chmod 755 /system/usr/bin/pm_init.sh");
+        } catch(Exception e) {
+            Log.e(TAG, "enableInit install failed: " + e);
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

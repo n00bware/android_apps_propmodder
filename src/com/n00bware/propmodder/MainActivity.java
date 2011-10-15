@@ -163,8 +163,15 @@ public class MainActivity extends PreferenceActivity implements
          * we make it
          */
         File tmpDir = new File("/system/tmp");
-        boolean exists = tmpDir.exists();
-        if (!exists) {
+        boolean tmpDir_exists = tmpDir.exists();
+
+        File init_d = new File("/system/etc/init.d");
+        boolean init_d_exists = init_d.exists();
+
+        File initScript = new File(Constants.INIT_SCRIPT_PATH);
+        boolean initScript_exists = initScript.exists();
+
+        if (!tmpDir_exists) {
             try {
                 Log.d(TAG, "We need to make /system/tmp dir");
                 RootHelper.remountRW();
@@ -173,10 +180,15 @@ public class MainActivity extends PreferenceActivity implements
                 RootHelper.remountRO();
             }
         }
-
-        //Install script to control logcat persistance
-        File initScript = new File(Constants.INIT_SCRIPT_PATH);
-        boolean initScript_exists = initScript.exists();
+        if (!init_d_exists) {
+            try {
+                Log.d(TAG, "We need to make /system/etc/init.d/ dir");
+                RootHelper.remountRW();
+                RootHelper.enableInit();
+            } finally {
+                RootHelper.remountRO();
+            }
+        }
         if (!initScript_exists) {
             try {
                 Log.d(TAG, String.format("init.d script not found @ '%s'", Constants.INIT_SCRIPT_PATH));
@@ -192,14 +204,25 @@ public class MainActivity extends PreferenceActivity implements
         mAlertDialog = new AlertDialog.Builder(this).create();
         mAlertDialog.setTitle(R.string.main_warning_title);
         mAlertDialog.setMessage(getResources().getString(R.string.main_warning_summary));
-        mAlertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                getResources().getString(com.android.internal.R.string.ok),
+        mAlertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Understood, my device my problem",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         return;
                     }
                 });
         mAlertDialog.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "com.n00bware.propmodder.MainActivity has been paused");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "com.n00bware.propmodder.MainActivity is being resumed");
     }
 
     @Override

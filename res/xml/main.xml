@@ -42,14 +42,6 @@
             android:entries="@array/entries_max_events"
             android:entryValues="@array/entries_max_events" />
 
-<!-- This may be a bad idea
-        <ListPreference android:key="pref_usb_mode"
-            android:dialogTitle="@string/pref_usb_mode_title"
-            android:title="@string/pref_usb_mode_title" android:summary="@string/pref_usb_mode_summary"
-            android:entries="@array/entries_usb_mode"
-            android:entryValues="@array/entries_usb_mode_values" />
--->
-
         <ListPreference android:key="pref_ring_delay"
             android:dialogTitle="@string/pref_ring_delay_title"
             android:title="@string/pref_ring_delay_title" android:summary="@string/pref_ring_delay_summary"
