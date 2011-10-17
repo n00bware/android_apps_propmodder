@@ -82,7 +82,7 @@ public final class RootHelper {
         Log.d(TAG, "Setting up /system/tmp/showbuild");
         try {
             RootHelper.remountRW();
-            RootHelper.runRootCommand("mv -f /system/build.prop " + Constants.SHOWBUILD_PATH);
+            RootHelper.runRootCommand("cp -f /system/build.prop " + Constants.SHOWBUILD_PATH);
             RootHelper.runRootCommand("chmod 777 " + Constants.SHOWBUILD_PATH);
         } finally {
             RootHelper.remountRO();

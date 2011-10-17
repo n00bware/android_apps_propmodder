@@ -111,5 +111,8 @@
     <string name="pref_gpu_title">GPU Acceleration</string>
     <string name="pref_gpu_summary">To enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
 
+    <!-- enable vvmail on sense roms -->
+    <string name="pref_vvmail_title">VVMail (Sense ROMs ONLY)</string>
+    <string name="pref_vvmail_summary">force Sense ROMS compatibility with VVMail</string>
 
 </resources>

@@ -63,6 +63,7 @@ public class MainActivity extends PreferenceActivity implements
     private ListPreference mSdcardBufferPref;
     private CheckBoxPreference m3gSpeedPref;
     private CheckBoxPreference mGpuPref;
+    private CheckBoxPreference mVvmailPref;
     private AlertDialog mAlertDialog;
 
     @Override
@@ -174,7 +175,11 @@ public class MainActivity extends PreferenceActivity implements
         mGpuPref = (CheckBoxPreference) prefSet.findPreference(Constants.GPU_PREF);
         boolean gpu = SystemProperties.getBoolean(Constants.GPU_PROP, false);
         mGpuPref.setChecked(SystemProperties.getBoolean(Constants.GPU_PERSIST_PROP, gpu));
-        
+
+        mVvmailPref = (CheckBoxPreference) prefSet.findPreference(Constants.VVMAIL_PREF);
+        boolean vvmail0 = SystemProperties.getBoolean(Constants.VVMAIL_PROP_0, false);
+        boolean vvmail1 = SystemProperties.getBoolean(Constants.VVMAIL_PROP_1, false);
+        mVvmailPref.setChecked(SystemProperties.getBoolean(Constants.VVMAIL_PERSIST_PROP, vvmail0 && vvmail1));
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -268,23 +273,27 @@ public class MainActivity extends PreferenceActivity implements
             return doMod(Constants.JIT_PERSIST_PROP, Constants.JIT_PROP, String.valueOf(value ? "int:fast" : "int:jit"));
         } else if (preference == mCheckInPref) {
             value = mCheckInPref.isChecked();
-            doMod(null, Constants.CHECK_IN_PROP_HTC, String.valueOf(value ? 1 : Constants.DISABLE));
-            return doMod(Constants.CHECK_IN_PERSIST_PROP, Constants.CHECK_IN_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
+            return doMod(null, Constants.CHECK_IN_PROP_HTC, String.valueOf(value ? 1 : Constants.DISABLE))
+            && doMod(Constants.CHECK_IN_PERSIST_PROP, Constants.CHECK_IN_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
         } else if (preference == m3gSpeedPref) {
             value = m3gSpeedPref.isChecked();
             return doMod(Constants.THREE_G_PERSIST_PROP, Constants.THREE_G_PROP_0, String.valueOf(value ? 1 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_1, String.valueOf(value ? 1 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_2, String.valueOf(value ? 2 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_3, String.valueOf(value ? 1 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_4, String.valueOf(value ? 12 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_5, String.valueOf(value ? 8 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_6, String.valueOf(value ? 1 : Constants.DISABLE))
-            && doMod(null, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
+                && doMod(null, Constants.THREE_G_PROP_1, String.valueOf(value ? 1 : Constants.DISABLE))
+                && doMod(null, Constants.THREE_G_PROP_2, String.valueOf(value ? 2 : Constants.DISABLE))
+                && doMod(null, Constants.THREE_G_PROP_3, String.valueOf(value ? 1 : Constants.DISABLE))
+                && doMod(null, Constants.THREE_G_PROP_4, String.valueOf(value ? 12 : Constants.DISABLE))
+                && doMod(null, Constants.THREE_G_PROP_5, String.valueOf(value ? 8 : Constants.DISABLE))
+                && doMod(null, Constants.THREE_G_PROP_6, String.valueOf(value ? 1 : Constants.DISABLE))
+                && doMod(null, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(Constants.GPU_PERSIST_PROP, Constants.GPU_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
+        } else if (preference == mVvmailPref) {
+            value = mVvmailPref.isChecked();
+            return doMod(Constants.VVMAIL_PERSIST_PROP, Constants.VVMAIL_PROP_0, String.valueOf(value ? true : Constants.DISABLE))
+                && doMod(null, Constants.VVMAIL_PROP_1, String.valueOf(value ? true : Constants.DISABLE));
         }
-        return false;
+    return false;
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -327,7 +336,7 @@ public class MainActivity extends PreferenceActivity implements
         if (persist != null) {
             SystemProperties.set(persist, value);
         }
-        Log.d(TAG, String.format("Calling script with args '%s' and '%s", key, value));
+        Log.d(TAG, String.format("Calling script with args '%s' and '%s'", key, value));
         RootHelper.backupBuildProp();
         if (!RootHelper.remountRW()) {
             throw new RuntimeException("Could not remount /system rw");

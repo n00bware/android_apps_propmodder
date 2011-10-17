@@ -105,6 +105,10 @@
             android:title="@string/pref_gpu_title"
             android:summary="@string/pref_gpu_summary" />
 
+        <CheckBoxPreference android:key="pref_vvmail"
+            android:title="@string/pref_vvmail_title"
+            android:summary="@string/pref_vvmail_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:key="nonProp_category"

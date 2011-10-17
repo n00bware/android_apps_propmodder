@@ -166,4 +166,13 @@ public final class Constants {
     public static final String GPU_PREF = "pref_gpu";
     public static final String GPU_PERSIST_PROP = "persist_gpu";
     public static final String GPU_PROP = "debug.sf.hw";
+
+    /*
+     * Strings for VVMail to work on Sense ROMs
+     */
+
+    public static final String VVMAIL_PREF = "pref_vvmail";
+    public static final String VVMAIL_PERSIST_PROP = "persist_vvmail";
+    public static final String VVMAIL_PROP_0 = "HorizontalVVM";
+    public static final String VVMAIL_PROP_1 = "HorizontalBUA";
 }
