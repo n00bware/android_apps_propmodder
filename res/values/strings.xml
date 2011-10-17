@@ -4,10 +4,10 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder v2.1</string>
+    <string name="general_title">PropModder v2.2</string>
     <string name="main_title_head">PropModder by n00bware</string>
-    <string name="versionCode">210</string>
-    <string name="versionName">Release v2.1</string>
+    <string name="versionCode">220</string>
+    <string name="versionName">Release v2.2</string>
 
     <!-- non build.prop hacks -->
     <string name="nonprop_cat_title">Mods involving init.d script</string>
@@ -22,7 +22,7 @@
 
     <!-- WARN THE MASSES THIS CAN BE DANGEROUS!!! -->
     <string name="main_warning_title">YOU HAVE BEEN WARNED</string>
-    <string name="main_warning_summary">This app was concieved while watching monkeys juggling knives.  It hacks your \'/system/build.prop\' WE ARE NOT RESPONSIBLE FOR ACCIDENTAL KNIFE CUTS! Your device your responsibility</string>
+    <string name="main_warning_summary">This app was conceived while watching monkeys juggling knives.  It hacks your \'/system/build.prop\' WE ARE NOT RESPONSIBLE FOR ACCIDENTAL KNIFE CUTS! Your device your responsibility</string>
 
     <!-- Wifi scan policy -->
     <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>
@@ -34,7 +34,7 @@
 
     <!-- Max events per second -->
     <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
-    <!--TODO find good explaination of this value -->
+    <!--TODO find good explanation of this value -->
     <string name="pref_max_events_summary">This is a runtime value that controls the number of events the system will allow in a second (requires reboot)</string>
 
     <!-- Default USB mode -->
@@ -44,14 +44,14 @@
 
     <!-- Telephony ring delay -->
     <string name="pref_ring_delay_title">Telephone ringer delay</string>
-    <string name="pref_ring_delay_summary">The amount of time from when the system registars an incoming phone call until the ringer starts (requires reboot)</string>
+    <string name="pref_ring_delay_summary">The amount of time from when the system registers an incoming phone call until the ringer starts (requires reboot)</string>
 
-    <!-- Dalvik heapsize -->
+    <!-- Dalvik heap size -->
     <string name="pref_vm_heapsize_title">Dalvik cache heapsize</string>
     <!-- TODO this isn't very clear -->
     <string name="pref_vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to (requires reboot)</string>
 
-    <!-- NOT OUR FAULT Dialoge -->
+    <!-- NOT OUR FAULT Dialog -->
     <string name="propmodder_warning_title">ROOT IS REQUIRED</string>
     <string name="propmodder_warning">This program changes system properties in /system/build.prop DO NOT USE if you don\'t know what you are doing. We (n00bware, makers of PropModder) are not responsible for your device PERIOD. You have been warned</string>
 
@@ -72,7 +72,7 @@
 
     <!-- Motorola proximity delay -->
     <string name="pref_prox_delay_title">Proximity sensor delay</string>
-    <string name="pref_prox_delay_summary">When you are incall screen is off when the device moves away from your face this delay value controls how long before screen turns on (requires reboot)</string>
+    <string name="pref_prox_delay_summary">When you are in-call screen is off when the device moves away from your face this delay value controls how long before screen turns on (requires reboot)</string>
 
     <!-- enable/disable logcat -->
     <string name="pref_logcat_title">Disable logcat</string>
@@ -85,7 +85,7 @@
 
     <!-- pm sleep mode -->
     <string name="pref_sleep_title">PM Sleep mode</string>
-    <string name="pref_sleep_summary">Moddify Nighttime sleep policy</string>
+    <string name="pref_sleep_summary">Modify Nighttime sleep policy</string>
 
     <!-- jit complier -->
     <string name="pref_jit_title">Just In Time Complier</string>
@@ -93,7 +93,7 @@
 
     <!-- TCP Stack optimizations -->
     <string name="pref_tcp_stack_title">Optimize TCP Stack</string>
-    <string name="pref_tcp_stack_summary">Moddify the buffersize for better preformance</string>
+    <string name="pref_tcp_stack_summary">Modify the buffer-size for better performance</string>
 
     <!-- disable check in service -->
     <string name="pref_check_in_title">Check in service</string>
@@ -101,6 +101,15 @@
 
     <!-- sdcard speed hack (sdcard buffer) -->
     <string name="pref_sdcard_buffer_title">Sdcard speed hack</string>
-    <string name="pref_sdcard_buffer_summary">Moddify the sdcard buffersize for better performance</string>
+    <string name="pref_sdcard_buffer_summary">Modify the sdcard buffer-size for better performance</string>
+
+    <!-- 3g speed hack -->
+    <string name="pref_g_speed_title">3G Speed Hack</string>
+    <string name="pref_g_speed_summary">Uncap 3g speed</string>
+
+    <!-- gpu acceleration -->
+    <string name="pref_gpu_title">GPU Acceleration</string>
+    <string name="pref_gpu_summary">To enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
+
 
 </resources>

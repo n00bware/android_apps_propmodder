@@ -90,7 +90,7 @@ public final class RootHelper {
     }
 
     public static boolean killProp(String prop) {
-        Log.d(TAG, String.format("User wants to disable %s", prop));
+        Log.d(TAG, String.format("User wants to disable so lets run { %s }", prop));
         return RootHelper.runRootCommand(prop);
     }
 

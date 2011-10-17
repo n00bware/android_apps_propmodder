@@ -145,4 +145,25 @@ public final class Constants {
     public static final String SDCARD_BUFFER_PREF = "pref_sdcard_buffer";
     public static final String SDCARD_BUFFER_PRESIST_PROP = "persist_sdcard_buffer";
 
+    /*
+     * Strings for applying ThreeG speed hack
+     */
+
+    public static final String THREE_G_PREF = "pref_g_speed";
+    public static final String THREE_G_PERSIST_PROP = "persist_3g_speed";
+    public static final String THREE_G_PROP_0 = "ro.ril.enable.3g.prefix";
+    public static final String THREE_G_PROP_1 = "ro.ril.hep";
+    public static final String THREE_G_PROP_2 = Constants.FAST_UP_PROP;
+    public static final String THREE_G_PROP_3 = "ro.ril.enable.dtm";
+    public static final String THREE_G_PROP_4 = "ro.ril.gprsclass";
+    public static final String THREE_G_PROP_5 = "ro.ril.hsdpa.category";
+    public static final String THREE_G_PROP_6 = "ro.ril.enable.a53";
+    public static final String THREE_G_PROP_7 = "ro.ril.hsupa.category";
+
+    /*
+     * Strings for applying GPU acceleration
+     */
+    public static final String GPU_PREF = "pref_gpu";
+    public static final String GPU_PERSIST_PROP = "persist_gpu";
+    public static final String GPU_PROP = "debug.sf.hw";
 }

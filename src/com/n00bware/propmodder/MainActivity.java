@@ -61,6 +61,8 @@ public class MainActivity extends PreferenceActivity implements
     private CheckBoxPreference mJitPref;
     private CheckBoxPreference mCheckInPref;
     private ListPreference mSdcardBufferPref;
+    private CheckBoxPreference m3gSpeedPref;
+    private CheckBoxPreference mGpuPref;
     private AlertDialog mAlertDialog;
 
     @Override
@@ -116,7 +118,7 @@ public class MainActivity extends PreferenceActivity implements
 
         mLogcatPref = (CheckBoxPreference) prefSet.findPreference(Constants.LOGCAT_PREF);
         boolean rmLogging = RootHelper.runRootCommand(String.format("grep -q \"#rm -f /dev/log/main\" %s", Constants.INIT_SCRIPT_PATH));
-        mLogcatPref.setChecked(!rmLogging);
+        mLogcatPref.setChecked(rmLogging);
 
         mSleepPref = (ListPreference) prefSet.findPreference(Constants.SLEEP_PREF);
         mSleepPref.setValue(SystemProperties.get(Constants.SLEEP_PERSIST_PROP,
@@ -130,7 +132,7 @@ public class MainActivity extends PreferenceActivity implements
         boolean tcpstack3 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_3, false);
         boolean tcpstack4 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_4, false);
         mTcpStackPref.setChecked(SystemProperties.getBoolean(
-                Constants.LOGCAT_PERSIST_PROP, tcpstack0 && tcpstack1 && tcpstack2 && tcpstack3 && tcpstack4));
+                Constants.TCP_STACK_PERSIST_PROP, tcpstack0 && tcpstack1 && tcpstack2 && tcpstack3 && tcpstack4));
 
         mJitPref = (CheckBoxPreference) prefSet.findPreference(Constants.JIT_PREF);
         boolean jitVM = SystemProperties.getBoolean(Constants.JIT_PROP, true);
@@ -151,12 +153,28 @@ public class MainActivity extends PreferenceActivity implements
         mModVersionPref.setOnPreferenceChangeListener(this);
 
         mCheckInPref = (CheckBoxPreference) prefSet.findPreference(Constants.CHECK_IN_PREF);
-        boolean jit = SystemProperties.getBoolean(Constants.CHECK_IN_PROP, true);
+        boolean checkin = SystemProperties.getBoolean(Constants.CHECK_IN_PROP, true);
         mCheckInPref.setChecked(SystemProperties.getBoolean(
-                Constants.CHECK_IN_PERSIST_PROP, !jit));
+                Constants.CHECK_IN_PERSIST_PROP, !checkin));
 
         mSdcardBufferPref = (ListPreference) prefSet.findPreference(Constants.SDCARD_BUFFER_PREF);
         mSdcardBufferPref.setOnPreferenceChangeListener(this);
+
+        m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(Constants.THREE_G_PREF);
+        boolean speed3g0 = SystemProperties.getBoolean(Constants.THREE_G_PROP_0, false);
+        boolean speed3g1 = SystemProperties.getBoolean(Constants.THREE_G_PROP_1, false);
+        boolean speed3g2 = SystemProperties.getBoolean(Constants.THREE_G_PROP_2, false);
+        boolean speed3g3 = SystemProperties.getBoolean(Constants.THREE_G_PROP_3, false);
+        boolean speed3g4 = SystemProperties.getBoolean(Constants.THREE_G_PROP_4, false);
+        boolean speed3g5 = SystemProperties.getBoolean(Constants.THREE_G_PROP_5, false);
+        boolean speed3g6 = SystemProperties.getBoolean(Constants.THREE_G_PROP_6, false);
+        boolean speed3g7 = SystemProperties.getBoolean(Constants.THREE_G_PROP_7, false);
+        m3gSpeedPref.setChecked(SystemProperties.getBoolean(Constants.THREE_G_PERSIST_PROP, speed3g0 && speed3g1 && speed3g2 && speed3g3 && speed3g4 && speed3g5 && speed3g6 && speed3g7));
+
+        mGpuPref = (CheckBoxPreference) prefSet.findPreference(Constants.GPU_PREF);
+        boolean gpu = SystemProperties.getBoolean(Constants.GPU_PROP, false);
+        mGpuPref.setChecked(SystemProperties.getBoolean(Constants.GPU_PERSIST_PROP, gpu));
+        
 
         /*
          * Mount /system RW and determine if /system/tmp exists; if it doesn't
@@ -235,7 +253,7 @@ public class MainActivity extends PreferenceActivity implements
                             Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
         } else if (preference == mLogcatPref) {
             value = mLogcatPref.isChecked();
-            return RootHelper.remountRW() && RootHelper.runRootCommand(String.format(LOGCAT_CMD, String.valueOf(value ? Constants.LOGCAT_ENABLE : Constants.LOGCAT_DISABLE))) && RootHelper.remountRO();
+            return RootHelper.runRootCommand(String.format(LOGCAT_CMD, String.valueOf(value ? Constants.LOGCAT_ENABLE : Constants.LOGCAT_DISABLE)));
         } else if (preference == mTcpStackPref) {
             Log.d(TAG, "mTcpStackPref.onPreferenceTreeClick()");
             value = mTcpStackPref.isChecked();
@@ -252,6 +270,19 @@ public class MainActivity extends PreferenceActivity implements
             value = mCheckInPref.isChecked();
             doMod(null, Constants.CHECK_IN_PROP_HTC, String.valueOf(value ? 1 : Constants.DISABLE));
             return doMod(Constants.CHECK_IN_PERSIST_PROP, Constants.CHECK_IN_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
+        } else if (preference == m3gSpeedPref) {
+            value = m3gSpeedPref.isChecked();
+            return doMod(Constants.THREE_G_PERSIST_PROP, Constants.THREE_G_PROP_0, String.valueOf(value ? 1 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_1, String.valueOf(value ? 1 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_2, String.valueOf(value ? 2 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_3, String.valueOf(value ? 1 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_4, String.valueOf(value ? 12 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_5, String.valueOf(value ? 8 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_6, String.valueOf(value ? 1 : Constants.DISABLE))
+            && doMod(null, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
+        } else if (preference == mGpuPref) {
+            value = mGpuPref.isChecked();
+            return doMod(Constants.GPU_PERSIST_PROP, Constants.GPU_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
         }
         return false;
     }
