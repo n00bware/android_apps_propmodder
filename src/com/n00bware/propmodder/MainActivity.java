@@ -324,9 +324,10 @@ public class MainActivity extends PreferenceActivity implements
                  return doMod(Constants.MOD_VERSION_PERSIST_PROP, Constants.MOD_VERSION_PROP,
                         newValue.toString());
             } else if (preference == mSdcardBufferPref) {
-                 RootHelper.remountRW();
-                 return RootHelper.runRootCommand(String.format(SDCARD_BUFFER_ON_THE_FLY_CMD, newValue.toString())) 
-                        && RootHelper.runRootCommand(String.format(SDCARD_BUFFER_CMD, newValue.toString())) && RootHelper.remountRO();
+                 return RootHelper.remountRW() && RootHelper.runRootCommand(String.format(
+                            SDCARD_BUFFER_ON_THE_FLY_CMD, newValue.toString()))
+                            && RootHelper.runRootCommand(String.format(SDCARD_BUFFER_CMD,
+                            newValue.toString())) && RootHelper.remountRO();
             }
         }
         return false;

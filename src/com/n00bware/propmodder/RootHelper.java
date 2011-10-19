@@ -104,7 +104,7 @@ public final class RootHelper {
             wAlive.write("#echo 2048 > /sys/devices/virtual/bdi/179:0/read_ahead_kb");
             wAlive.flush();
             wAlive.close();
-            RootHelper.runRootCommand(String.format("mv -f %s %s", Constants.INIT_SCRIPT_TEMP_PATH, Constants.INIT_SCRIPT_PATH));
+            RootHelper.runRootCommand(String.format("cp -f %s %s", Constants.INIT_SCRIPT_TEMP_PATH, Constants.INIT_SCRIPT_PATH));
             //This should be find because if the chmod fails the install failed
             return RootHelper.runRootCommand(String.format("chmod 755 %s", Constants.INIT_SCRIPT_PATH));
         } catch(Exception e) {
@@ -124,7 +124,7 @@ public final class RootHelper {
             wAlive.write("busybox run-parts /system/etc/init.d");
             wAlive.flush();
             wAlive.close();
-            RootHelper.runRootCommand("mv -f /system/tmp/initscript /system/usr/bin/init.sh");
+            RootHelper.runRootCommand("cp -f /system/tmp/initscript /system/usr/bin/init.sh");
             //This should be find because if the chmod fails the install failed
             return RootHelper.runRootCommand("chmod 755 /system/usr/bin/pm_init.sh");
         } catch(Exception e) {
