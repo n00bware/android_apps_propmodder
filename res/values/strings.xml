@@ -4,10 +4,8 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder v2.2</string>
+    <string name="general_title">PropModder v2.2.2</string>
     <string name="main_title_head">PropModder by n00bware</string>
-    <string name="versionCode">220</string>
-    <string name="versionName">Release v2.2</string>
 
     <!-- non build.prop hacks -->
     <string name="nonprop_cat_title">Mods involving init.d script</string>

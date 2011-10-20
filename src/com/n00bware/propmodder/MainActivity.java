@@ -3,6 +3,10 @@ package com.n00bware.propmodder;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -38,6 +42,7 @@ public class MainActivity extends PreferenceActivity implements
     private static final String SDCARD_BUFFER_CMD = "busybox sed -i \"/179:0/ c echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb\" /system/etc/init.d/72propmodder_script";
     private static final String SDCARD_BUFFER_ON_THE_FLY_CMD = "echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb";
     private static final String TAG = "PropModder";
+    private String placeholder;
 
     private String ModPrefHolder = SystemProperties.get(Constants.MOD_VERSION_PERSIST_PROP,
                 SystemProperties.get(Constants.MOD_VERSION_PROP, Constants.MOD_VERSION_DEFAULT));
@@ -45,6 +50,7 @@ public class MainActivity extends PreferenceActivity implements
     //handles for our menu hard key press
     private final int MENU_MARKET = 1;
     private final int MENU_REBOOT = 2;
+    private int NOTE_ID;
 
     private ListPreference mWifiScanPref;
     private ListPreference mLcdDensityPref;
@@ -65,6 +71,8 @@ public class MainActivity extends PreferenceActivity implements
     private CheckBoxPreference mGpuPref;
     private CheckBoxPreference mVvmailPref;
     private AlertDialog mAlertDialog;
+    private NotificationManager mNotificationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +127,7 @@ public class MainActivity extends PreferenceActivity implements
 
         mLogcatPref = (CheckBoxPreference) prefSet.findPreference(Constants.LOGCAT_PREF);
         boolean rmLogging = RootHelper.runRootCommand(String.format("grep -q \"#rm -f /dev/log/main\" %s", Constants.INIT_SCRIPT_PATH));
-        mLogcatPref.setChecked(rmLogging);
+        mLogcatPref.setChecked(!rmLogging);
 
         mSleepPref = (ListPreference) prefSet.findPreference(Constants.SLEEP_PREF);
         mSleepPref.setValue(SystemProperties.get(Constants.SLEEP_PERSIST_PROP,
@@ -222,7 +230,6 @@ public class MainActivity extends PreferenceActivity implements
             }
         }
 
-
         // WARN THE MASSES THIS CAN BE DANGEROUS!!!
         mAlertDialog = new AlertDialog.Builder(this).create();
         mAlertDialog.setTitle(R.string.main_warning_title);
@@ -258,7 +265,9 @@ public class MainActivity extends PreferenceActivity implements
                             Constants.DISABLE_BOOT_ANIM_PROP_2, String.valueOf(value ? 1 : 0));
         } else if (preference == mLogcatPref) {
             value = mLogcatPref.isChecked();
-            return RootHelper.runRootCommand(String.format(LOGCAT_CMD, String.valueOf(value ? Constants.LOGCAT_ENABLE : Constants.LOGCAT_DISABLE)));
+            placeholder = String.valueOf(value ? Constants.LOGCAT_ENABLE : Constants.LOGCAT_DISABLE);
+            SystemProperties.set(Constants.LOGCAT_PERSIST_PROP, placeholder);
+            return RootHelper.runRootCommand(String.format(LOGCAT_CMD, placeholder));
         } else if (preference == mTcpStackPref) {
             Log.d(TAG, "mTcpStackPref.onPreferenceTreeClick()");
             value = mTcpStackPref.isChecked();
@@ -277,14 +286,14 @@ public class MainActivity extends PreferenceActivity implements
             && doMod(Constants.CHECK_IN_PERSIST_PROP, Constants.CHECK_IN_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
         } else if (preference == m3gSpeedPref) {
             value = m3gSpeedPref.isChecked();
-            return doMod(Constants.THREE_G_PERSIST_PROP, Constants.THREE_G_PROP_0, String.valueOf(value ? 1 : Constants.DISABLE))
+            return doMod(null, Constants.THREE_G_PROP_0, String.valueOf(value ? 1 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_1, String.valueOf(value ? 1 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_2, String.valueOf(value ? 2 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_3, String.valueOf(value ? 1 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_4, String.valueOf(value ? 12 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_5, String.valueOf(value ? 8 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_6, String.valueOf(value ? 1 : Constants.DISABLE))
-                && doMod(null, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
+                && doMod(Constants.THREE_G_PERSIST_PROP, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(Constants.GPU_PERSIST_PROP, Constants.GPU_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
@@ -334,6 +343,7 @@ public class MainActivity extends PreferenceActivity implements
     }
 
     private boolean doMod(String persist, String key, String value) {
+
         if (persist != null) {
             SystemProperties.set(persist, value);
         }
@@ -366,7 +376,15 @@ public class MainActivity extends PreferenceActivity implements
         } finally {
             RootHelper.remountRO();
         }
-        return success;
+        if (success) {
+            //quick notification when we are successfull
+            displayNotification("success", key, value);
+        }
+        if (!success) {
+            //quick notification when we are unsuccessfull
+            displayNotification("fail", key, value);
+        }
+    return success;
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -389,5 +407,19 @@ public class MainActivity extends PreferenceActivity implements
             return RootHelper.runRootCommand("reboot");
         }
         return false;
+    }
+
+    public void displayNotification(String success, String prop, String value) {
+        mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        final Notification notifyDetails = new Notification(R.drawable.blackhat_ic, String.format("%s: { %s to %s } reboot to apply", success, prop, value),System.currentTimeMillis());
+
+        Context context = getApplicationContext();
+        CharSequence contentTitle = "Rate PropModder";
+        CharSequence contentText = "show your support";
+        Intent notifyIntent = new Intent(android.content.Intent.ACTION_VIEW,Uri.parse("market://com.n00bware.propmodder"));
+        PendingIntent intent = PendingIntent.getActivity(MainActivity.this, 0, notifyIntent, android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+        notifyDetails.setLatestEventInfo(context, contentTitle, contentText, intent);
+        mNotificationManager.notify(NOTE_ID, notifyDetails);
+        mNotificationManager.cancel(NOTE_ID);
     }
 }
