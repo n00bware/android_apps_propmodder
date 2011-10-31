@@ -43,6 +43,8 @@ public class MainActivity extends PreferenceActivity implements
     private static final String SDCARD_BUFFER_ON_THE_FLY_CMD = "echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb";
     private static final String TAG = "PropModder";
     private String placeholder;
+    private String tcpstack0;
+    private String jitVM;
 
     private String ModPrefHolder = SystemProperties.get(Constants.MOD_VERSION_PERSIST_PROP,
                 SystemProperties.get(Constants.MOD_VERSION_PROP, Constants.MOD_VERSION_DEFAULT));
@@ -135,18 +137,21 @@ public class MainActivity extends PreferenceActivity implements
         mSleepPref.setOnPreferenceChangeListener(this);
 
         mTcpStackPref = (CheckBoxPreference) prefSet.findPreference(Constants.TCP_STACK_PREF);
-        boolean tcpstack0 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_0, false);
-        boolean tcpstack1 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_1, false);
-        boolean tcpstack2 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_2, false);
-        boolean tcpstack3 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_3, false);
-        boolean tcpstack4 = SystemProperties.getBoolean(Constants.TCP_STACK_PROP_4, false);
-        mTcpStackPref.setChecked(SystemProperties.getBoolean(
-                Constants.TCP_STACK_PERSIST_PROP, tcpstack0 && tcpstack1 && tcpstack2 && tcpstack3 && tcpstack4));
+        tcpstack0 = SystemProperties.get(Constants.TCP_STACK_PROP_0);
+        if (tcpstack0.equals(Constants.TCP_STACK_BUFFER)) {
+            mTcpStackPref.setChecked(true);
+        } else {
+            mTcpStackPref.setChecked(false);
+        }
 
         mJitPref = (CheckBoxPreference) prefSet.findPreference(Constants.JIT_PREF);
-        boolean jitVM = SystemProperties.getBoolean(Constants.JIT_PROP, true);
-        mJitPref.setChecked(SystemProperties.getBoolean(
-                Constants.LOGCAT_PERSIST_PROP, !jitVM));
+        //we have to look for a string as this boolean will always be false
+        jitVM = SystemProperties.get(Constants.JIT_PROP);
+        if (jitVM.equals("int:jit")) {
+            mJitPref.setChecked(true);
+        } else {
+            mJitPref.setChecked(false);
+        }
 
         Log.d(TAG, String.format("ModPrefHoler = '%s'", ModPrefHolder)); 
         mModVersionPref = (EditTextPreference) prefSet.findPreference(Constants.MOD_VERSION_PREF);
@@ -154,7 +159,7 @@ public class MainActivity extends PreferenceActivity implements
             EditText modET = mModVersionPref.getEditText();
             ModPrefHolder = mModVersionPref.getEditText().toString();
             if (modET != null){
-                InputFilter lengthFilter = new InputFilter.LengthFilter(20);
+                InputFilter lengthFilter = new InputFilter.LengthFilter(32);
                 modET.setFilters(new InputFilter[]{lengthFilter});
                 modET.setSingleLine(true);
             }
@@ -162,23 +167,23 @@ public class MainActivity extends PreferenceActivity implements
         mModVersionPref.setOnPreferenceChangeListener(this);
 
         mCheckInPref = (CheckBoxPreference) prefSet.findPreference(Constants.CHECK_IN_PREF);
-        boolean checkin = SystemProperties.getBoolean(Constants.CHECK_IN_PROP, true);
+        boolean checkin = SystemProperties.getBoolean(Constants.CHECK_IN_PROP, false);
         mCheckInPref.setChecked(SystemProperties.getBoolean(
-                Constants.CHECK_IN_PERSIST_PROP, !checkin));
+                Constants.CHECK_IN_PERSIST_PROP, checkin));
 
         mSdcardBufferPref = (ListPreference) prefSet.findPreference(Constants.SDCARD_BUFFER_PREF);
         mSdcardBufferPref.setOnPreferenceChangeListener(this);
 
+        /* 
+         * we are only looking for the values that will be 1 when on we are using
+         * we have 4 properties we can check so that should mostly eliminate false positives
+         */
         m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(Constants.THREE_G_PREF);
         boolean speed3g0 = SystemProperties.getBoolean(Constants.THREE_G_PROP_0, false);
         boolean speed3g1 = SystemProperties.getBoolean(Constants.THREE_G_PROP_1, false);
-        boolean speed3g2 = SystemProperties.getBoolean(Constants.THREE_G_PROP_2, false);
         boolean speed3g3 = SystemProperties.getBoolean(Constants.THREE_G_PROP_3, false);
-        boolean speed3g4 = SystemProperties.getBoolean(Constants.THREE_G_PROP_4, false);
-        boolean speed3g5 = SystemProperties.getBoolean(Constants.THREE_G_PROP_5, false);
         boolean speed3g6 = SystemProperties.getBoolean(Constants.THREE_G_PROP_6, false);
-        boolean speed3g7 = SystemProperties.getBoolean(Constants.THREE_G_PROP_7, false);
-        m3gSpeedPref.setChecked(SystemProperties.getBoolean(Constants.THREE_G_PERSIST_PROP, speed3g0 && speed3g1 && speed3g2 && speed3g3 && speed3g4 && speed3g5 && speed3g6 && speed3g7));
+        m3gSpeedPref.setChecked(SystemProperties.getBoolean(Constants.THREE_G_PERSIST_PROP, speed3g0 && speed3g1 && speed3g3 && speed3g6));
 
         mGpuPref = (CheckBoxPreference) prefSet.findPreference(Constants.GPU_PREF);
         boolean gpu = SystemProperties.getBoolean(Constants.GPU_PROP, false);
@@ -286,14 +291,14 @@ public class MainActivity extends PreferenceActivity implements
             && doMod(Constants.CHECK_IN_PERSIST_PROP, Constants.CHECK_IN_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
         } else if (preference == m3gSpeedPref) {
             value = m3gSpeedPref.isChecked();
-            return doMod(null, Constants.THREE_G_PROP_0, String.valueOf(value ? 1 : Constants.DISABLE))
+            return doMod(Constants.THREE_G_PERSIST_PROP, Constants.THREE_G_PROP_0, String.valueOf(value ? 1 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_1, String.valueOf(value ? 1 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_2, String.valueOf(value ? 2 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_3, String.valueOf(value ? 1 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_4, String.valueOf(value ? 12 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_5, String.valueOf(value ? 8 : Constants.DISABLE))
                 && doMod(null, Constants.THREE_G_PROP_6, String.valueOf(value ? 1 : Constants.DISABLE))
-                && doMod(Constants.THREE_G_PERSIST_PROP, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
+                && doMod(null, Constants.THREE_G_PROP_7, String.valueOf(value ? 5 : Constants.DISABLE));
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(Constants.GPU_PERSIST_PROP, Constants.GPU_PROP, String.valueOf(value ? 1 : Constants.DISABLE));
