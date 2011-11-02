@@ -40,6 +40,7 @@ public class MainActivity extends PreferenceActivity implements
     private static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
     private static final String LOGCAT_CMD = "busybox sed -i \"/log/ c %s\" /system/etc/init.d/72propmodder_script";
     private static final String SDCARD_BUFFER_CMD = "busybox sed -i \"/179:0/ c echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb\" /system/etc/init.d/72propmodder_script";
+    private static final String FIND_CMD = "grep -q \"%s\" /system/build.prop";
     private static final String SDCARD_BUFFER_ON_THE_FLY_CMD = "echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb";
     private static final String TAG = "PropModder";
     private String placeholder;
@@ -137,8 +138,7 @@ public class MainActivity extends PreferenceActivity implements
         mSleepPref.setOnPreferenceChangeListener(this);
 
         mTcpStackPref = (CheckBoxPreference) prefSet.findPreference(Constants.TCP_STACK_PREF);
-        tcpstack0 = SystemProperties.get(Constants.TCP_STACK_PROP_0);
-        if (tcpstack0.equals(Constants.TCP_STACK_BUFFER)) {
+        if (RootHelper.runRootCommand(String.format(FIND_CMD, Constants.TCP_STACK_PROP_0))) {
             mTcpStackPref.setChecked(true);
         } else {
             mTcpStackPref.setChecked(false);
@@ -179,10 +179,11 @@ public class MainActivity extends PreferenceActivity implements
          * we have 4 properties we can check so that should mostly eliminate false positives
          */
         m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(Constants.THREE_G_PREF);
-        boolean speed3g0 = SystemProperties.getBoolean(Constants.THREE_G_PROP_0, false);
-        boolean speed3g1 = SystemProperties.getBoolean(Constants.THREE_G_PROP_1, false);
-        boolean speed3g3 = SystemProperties.getBoolean(Constants.THREE_G_PROP_3, false);
-        boolean speed3g6 = SystemProperties.getBoolean(Constants.THREE_G_PROP_6, false);
+
+        boolean speed3g0 = RootHelper.runRootCommand(String.format(FIND_CMD, Constants.THREE_G_PROP_0));
+        boolean speed3g1 = RootHelper.runRootCommand(String.format(FIND_CMD, Constants.THREE_G_PROP_1));
+        boolean speed3g3 = RootHelper.runRootCommand(String.format(FIND_CMD, Constants.THREE_G_PROP_3));
+        boolean speed3g6 = RootHelper.runRootCommand(String.format(FIND_CMD, Constants.THREE_G_PROP_6));
         m3gSpeedPref.setChecked(SystemProperties.getBoolean(Constants.THREE_G_PERSIST_PROP, speed3g0 && speed3g1 && speed3g3 && speed3g6));
 
         mGpuPref = (CheckBoxPreference) prefSet.findPreference(Constants.GPU_PREF);

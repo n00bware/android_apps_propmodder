@@ -4,7 +4,7 @@
 
     <!-- Generic -->
     <string name="app_name">PropModder</string>
-    <string name="general_title">PropModder v2.3.0</string>
+    <string name="general_title">PropModder v2.3.1</string>
     <string name="main_title_head">PropModder by n00bware</string>
 
     <!-- non build.prop hacks -->
