@@ -145,9 +145,8 @@ public class MainActivity extends PreferenceActivity implements
         }
 
         mJitPref = (CheckBoxPreference) prefSet.findPreference(Constants.JIT_PREF);
-        //we have to look for a string as this boolean will always be false
-        jitVM = SystemProperties.get(Constants.JIT_PROP);
-        if (jitVM.equals("int:jit")) {
+        boolean jitVM = RootHelper.runRootCommand(String.format(FIND_CMD, "int:jit"));
+        if (jitVM) {
             mJitPref.setChecked(true);
         } else {
             mJitPref.setChecked(false);
@@ -174,10 +173,6 @@ public class MainActivity extends PreferenceActivity implements
         mSdcardBufferPref = (ListPreference) prefSet.findPreference(Constants.SDCARD_BUFFER_PREF);
         mSdcardBufferPref.setOnPreferenceChangeListener(this);
 
-        /* 
-         * we are only looking for the values that will be 1 when on we are using
-         * we have 4 properties we can check so that should mostly eliminate false positives
-         */
         m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(Constants.THREE_G_PREF);
 
         boolean speed3g0 = RootHelper.runRootCommand(String.format(FIND_CMD, Constants.THREE_G_PROP_0));
@@ -196,8 +191,12 @@ public class MainActivity extends PreferenceActivity implements
         mVvmailPref.setChecked(SystemProperties.getBoolean(Constants.VVMAIL_PERSIST_PROP, vvmail0 && vvmail1));
 
         /*
-         * Mount /system RW and determine if /system/tmp exists; if it doesn't
-         * we make it
+         * we have some requirements so we check
+         * and create if needed
+         * TODO: .exists() is ok but we should use
+         *     : .isDirectory() and .isFile() to be sure
+         *     : as .exists() returns positive if a txt file
+         *     : exists @ /system/tmp
          */
         File tmpDir = new File("/system/tmp");
         boolean tmpDir_exists = tmpDir.exists();
@@ -261,6 +260,7 @@ public class MainActivity extends PreferenceActivity implements
         Log.d(TAG, "com.n00bware.propmodder.MainActivity is being resumed");
     }
 
+    /* handle CheckBoxPreference clicks */
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
@@ -311,6 +311,7 @@ public class MainActivity extends PreferenceActivity implements
     return false;
     }
 
+    /* handle ListPreferences and EditTextPreferences */
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
             Log.e(TAG, "New preference selected: " + newValue);
@@ -348,6 +349,7 @@ public class MainActivity extends PreferenceActivity implements
         return false;
     }
 
+    /* method to handle mods */
     private boolean doMod(String persist, String key, String value) {
 
         if (persist != null) {
@@ -393,6 +395,7 @@ public class MainActivity extends PreferenceActivity implements
     return success;
     }
 
+    /* Create menu hardkey press Menu */
     public boolean onCreateOptionsMenu(Menu menu){
         boolean result = super.onCreateOptionsMenu(menu);
         menu.add(0, MENU_MARKET, 0, "Please Rate PropModder").setIcon(R.drawable.market);
@@ -415,6 +418,7 @@ public class MainActivity extends PreferenceActivity implements
         return false;
     }
 
+    /* use status bar to notify users of success/failure */
     public void displayNotification(String success, String prop, String value) {
         mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         final Notification notifyDetails = new Notification(R.drawable.blackhat_ic, String.format("%s: { %s to %s } reboot to apply", success, prop, value),System.currentTimeMillis());
