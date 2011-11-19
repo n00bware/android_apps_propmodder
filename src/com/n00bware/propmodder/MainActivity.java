@@ -249,6 +249,12 @@ public class MainActivity extends PreferenceActivity implements
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        setTitle(R.string.main_title_head);
+        addPreferencesFromResource(R.xml.main);
+
+    @Override
     public void onPause() {
         super.onPause();
         Log.d(TAG, "com.n00bware.propmodder.MainActivity has been paused");
